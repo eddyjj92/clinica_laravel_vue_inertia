@@ -1,0 +1,42 @@
+/*Clases Personalizadas*/
+.dataTables_length{
+    margin-right: 10px !important;
+}
+.dt-button{
+    border-radius: 11px !important;
+}
+
+@media print {
+
+}
+
+a{
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+#nprogress .bar {
+    z-index: 1101!important;
+    height: 5px !important;
+}
+#nprogress .spinner {
+    z-index: 1101!important;
+}
+
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.4);
+    animation: ripple-animation 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes ripple-animation {
+    from { opacity: 1; transform: scale(0) }
+    to { opacity: 0; transform: scale(1) }
+}
