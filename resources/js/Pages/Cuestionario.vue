@@ -53,15 +53,15 @@ let form = useForm({
         grado_estudios: formGuardado.value !== null ? formGuardado.value.escolaridad.grado_estudios : null,
     },
     oficio_profesion: {
-        oficio: null,
-        profesion: null,
-        ultimo_trabajo: null,
-        hasta_cuando: null
+        oficio: formGuardado.value !== null ? formGuardado.value.oficio_profesion.oficio : null,
+        profesion: formGuardado.value !== null ? formGuardado.value.oficio_profesion.profesion : null,
+        ultimo_trabajo: formGuardado.value !== null ? formGuardado.value.oficio_profesion.ultimo_trabajo : null,
+        hasta_cuando: formGuardado.value !== null ? formGuardado.value.oficio_profesion.hasta_cuando : null,
     },
     toxicomanias: {
-        fuma: null,
-        cuantos_cigarillos: null,
-        bebe: null,
+        fuma: formGuardado.value !== null ? formGuardado.value.toxicomanias.fuma : null,
+        cuantos_cigarillos: formGuardado.value !== null ? formGuardado.value.toxicomanias.cuantos_cigarillos : null,
+        bebe: formGuardado.value !== null ? formGuardado.value.toxicomanias.bebe : null,
     },
     vivienda: {
         personas_vivienda: [],
@@ -183,6 +183,20 @@ onMounted(()=>{
         form.estado_civil.estado = null;
     })
 
+    const flexRadioDefault16 = document.querySelector('#flexRadioDefault16');
+    flexRadioDefault16.addEventListener('click', () => {
+        const oficio_otros = document.querySelector('#oficio_otros');
+        oficio_otros.focus();
+        form.oficio_profesion.oficio = null;
+    })
+
+    const flexRadioDefault18 = document.querySelector('#flexRadioDefault18');
+    flexRadioDefault18.addEventListener('click', () => {
+        const profesion_otros = document.querySelector('#profesion_otros');
+        profesion_otros.focus();
+        form.oficio_profesion.profesion = null;
+    })
+
 })
 
 let idProcessing = ref(null);
@@ -255,12 +269,22 @@ const validarEtapa = (etapa) =>{
         return true
     }
     if(etapa === 8){
-        if(form.oficio_profesion.oficio === null || form.oficio_profesion.oficio === '') return validationMessage('La empresa es un campo requerido')
-        if(form.oficio_profesion.profesion === null || form.oficio_profesion.profesion === '') return validationMessage('El nombre es un campo requerido');
-        if(form.oficio_profesion.ultimo_trabajo === null || form.oficio_profesion.ultimo_trabajo === '') return validationMessage('La fecha de nacimiento es un campo requerido');
-        if(form.oficio_profesion.hasta_cuando === null || form.oficio_profesion.hasta_cuando === '') return validationMessage('La edad es un campo requerido');
+        if(form.oficio_profesion.oficio === null || form.oficio_profesion.oficio === '') return validationMessage('El oficio es un campo requerido')
+        if(form.oficio_profesion.profesion === null || form.oficio_profesion.profesion === '') return validationMessage('La profesión es un campo requerido');
+        if(form.oficio_profesion.ultimo_trabajo === null || form.oficio_profesion.ultimo_trabajo === '') return validationMessage('El ultimo trabajo es un campo requerido');
+        if(form.oficio_profesion.hasta_cuando === null || form.oficio_profesion.hasta_cuando === '') return validationMessage('Hasta cuando es un campo requerido');
         return true
     }
+    if(etapa === 9){
+        if(form.toxicomanias.fuma === null || form.toxicomanias.fuma === '') return validationMessage('Marcar si usted fuma es un campo requerido')
+        if((form.toxicomanias.cuantos_cigarillos === null || form.toxicomanias.cuantos_cigarillos === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Ingrese la cantidad de cigarrillos que fuma en la semana');
+        if(form.toxicomanias.bebe === null || form.toxicomanias.bebe === '') return validationMessage('Marcar si usted bebe es un campo requerido');
+        return true
+    }
+}
+
+const validaPersonasVivienda = (persona) =>{
+    form.vivienda.personas_vivienda.includes(persona) ? form.vivienda.personas_vivienda = form.vivienda.personas_vivienda.filter(per => per !== persona) : form.vivienda.personas_vivienda.push(persona);
 }
 
 </script>
@@ -599,31 +623,31 @@ const validarEtapa = (etapa) =>{
                                                 <div class="col-md-6 mb-4">
                                                     <label class="mx-2"><i class="bi bi-hammer"></i> Que OFICIO tiene y desde hace cuanto tiempo (Ya sea que lo desempeñe o no)</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="oficio" id="flexRadioDefault15"/>
+                                                        <input v-model="form.oficio_profesion.oficio" value="Sin oficio" class="form-check-input" type="radio" name="oficio" id="flexRadioDefault15"/>
                                                         <label class="form-check-label" for="flexRadioDefault15"> Sin oficio</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="oficio" id="flexRadioDefault16"/>
-                                                        <label class="form-check-label" for="flexRadioDefault16"> Otro: <input type="text" class="form-control"></label>
+                                                        <input class="form-check-input" type="radio" name="oficio" id="flexRadioDefault16" :checked="form.oficio_profesion.oficio !== 'Sin oficio' && form.oficio_profesion.oficio !== null"/>
+                                                        <label class="form-check-label" for="flexRadioDefault16"> Otro: <input v-model="form.oficio_profesion.oficio" type="text" class="form-control" id="oficio_otros"></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-4">
                                                     <label class="mx-2"><i class="bi bi-person-workspace"></i> Que PROFESIÓN tiene y desde hace cuanto tiempo (Ya sea que lo desempeñe o no)</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="profesion" id="flexRadioDefault17"/>
+                                                        <input v-model="form.oficio_profesion.profesion" value="Sin profesión" class="form-check-input" type="radio" name="profesion" id="flexRadioDefault17"/>
                                                         <label class="form-check-label" for="flexRadioDefault17"> Sin profesión</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="profesion" id="flexRadioDefault18"/>
-                                                        <label class="form-check-label" for="flexRadioDefault18"> Otro: <input type="text" class="form-control"></label>
+                                                        <input class="form-check-input" type="radio" name="profesion" id="flexRadioDefault18" :checked="form.oficio_profesion.profesion !== 'Sin profesión' && form.oficio_profesion.profesion !== null"/>
+                                                        <label class="form-check-label" for="flexRadioDefault18"> Otro: <input v-model="form.oficio_profesion.profesion" type="text" class="form-control" id="profesion_otros"></label>
                                                     </div>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
-                                                    <input type="text" class="form-control shadow-3-strong" id="floatingInput20" placeholder="Último trabajo">
+                                                    <input v-model="form.oficio_profesion.ultimo_trabajo" type="text" class="form-control shadow-3-strong" id="floatingInput20" placeholder="Último trabajo">
                                                     <label for="floatingInput20" class="mx-2"><i class="fa fa-hammer"></i> Último trabajo</label>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
-                                                    <input type="date" class="form-control shadow-3-strong" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?">
+                                                    <input v-model="form.oficio_profesion.hasta_cuando" type="date" class="form-control shadow-3-strong" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?">
                                                     <label for="floatingInput21" class="mx-2"><i class="fa fa-hammer"></i> ¿Hasta cuando trabajo ahí?</label>
                                                 </div>
                                             </div>
@@ -638,27 +662,27 @@ const validarEtapa = (etapa) =>{
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-smoking"></i> ¿Usted fuma?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault19"/>
-                                                    <label class="form-check-label" for="flexRadioDefault19"> NEGATIVO</label>
+                                                    <input v-model="form.toxicomanias.fuma" value="positivo" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault19"/>
+                                                    <label class="form-check-label" for="flexRadioDefault19"> POSITIVO</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault20"/>
-                                                    <label class="form-check-label" for="flexRadioDefault20"> POSITIVO</label>
+                                                    <input v-model="form.toxicomanias.fuma" value="negativo" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault20"/>
+                                                    <label class="form-check-label" for="flexRadioDefault20"> NEGATIVO</label>
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-6 mb-4">
-                                                <input type="text" class="form-control shadow-3-strong" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?">
-                                                <label for="floatingInput21" class="mx-2"><i class="fa fa-question-circle"></i> ¿Cuántos cigarrillos a la semana?</label>
+                                                <input v-model="form.toxicomanias.cuantos_cigarillos" :disabled="form.toxicomanias.fuma === 'negativo'" type="text" class="form-control shadow-3-strong" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?">
+                                                <label for="floatingInput21" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="mx-2"><i class="fa fa-question-circle"></i> ¿Cuántos cigarrillos a la semana?</label>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="fa fa-wine-bottle"></i> ¿Consume bebidas alcohólicas?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault21"/>
-                                                    <label class="form-check-label" for="flexRadioDefault21"> NEGATIVO</label>
+                                                    <input v-model="form.toxicomanias.bebe" value="positivo" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault21"/>
+                                                    <label class="form-check-label" for="flexRadioDefault21"> POSITIVO</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault22"/>
-                                                    <label class="form-check-label" for="flexRadioDefault22"> POSITIVO</label>
+                                                    <input v-model="form.toxicomanias.bebe" value="negativo" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault22"/>
+                                                    <label class="form-check-label" for="flexRadioDefault22"> NEGATIVO</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -672,24 +696,24 @@ const validarEtapa = (etapa) =>{
                                             <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="fa fa-users"></i> ¿Con qué personas vive?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
-                                                    <label class="form-check-label" for="flexCheckDefault1"> Solo</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" value="solo" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault1"> Solo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
-                                                    <label class="form-check-label" for="flexCheckDefault2"> Cónyuge</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" value="cónyuge" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault2"> Cónyuge</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
-                                                    <label class="form-check-label" for="flexCheckDefault3"> Hijos</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" value="hijos" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault3"> Hijos</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
-                                                    <label class="form-check-label" for="flexCheckDefault4"> Padres</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" value="padres" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault4"> Padres</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
-                                                    <label class="form-check-label" for="flexCheckDefault5"> Suegros</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" value="suegros" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault5"> Suegros</label>
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
@@ -799,7 +823,6 @@ const validarEtapa = (etapa) =>{
                                                         <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault44"/>
                                                         <label class="form-check-label" for="flexRadioDefault44"> 7</label>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-md-4 mb-4">
                                                     <label class="mx-2"><i class="fa fa-restroom"></i> Cuartos</label>
