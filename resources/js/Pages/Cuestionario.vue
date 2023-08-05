@@ -197,6 +197,20 @@ onMounted(()=>{
         form.oficio_profesion.profesion = null;
     })
 
+    const flexRadioDefault30 = document.querySelector('#flexRadioDefault30');
+    flexRadioDefault30.addEventListener('click', () => {
+        const propietario_vivienda = document.querySelector('#propietario_vivienda');
+        propietario_vivienda.focus();
+        form.vivienda.propietario_vivienda = null;
+    })
+
+    const flexRadioDefault54 = document.querySelector('#flexRadioDefault54');
+    flexRadioDefault54.addEventListener('click', () => {
+        const material_vivienda = document.querySelector('#material_vivienda');
+        material_vivienda.focus();
+        form.vivienda.material_vivienda = null;
+    })
+
 })
 
 let idProcessing = ref(null);
@@ -284,6 +298,7 @@ const validarEtapa = (etapa) =>{
 }
 
 const validaPersonasVivienda = (persona) =>{
+    persona === 'solo' ? form.vivienda.cantidad_personas = 1 : form.vivienda.cantidad_personas = null;
     form.vivienda.personas_vivienda.includes(persona) ? form.vivienda.personas_vivienda = form.vivienda.personas_vivienda.filter(per => per !== persona) : form.vivienda.personas_vivienda.push(persona);
 }
 
@@ -696,66 +711,66 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="fa fa-users"></i> ¿Con qué personas vive?</label>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" value="solo" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
-                                                    <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault1"> Solo</label>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('cónyuge') || form.vivienda.personas_vivienda.includes('hijos') || form.vivienda.personas_vivienda.includes('padres') || form.vivienda.personas_vivienda.includes('suegros')" value="solo" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
+                                                    <label :class="form.vivienda.personas_vivienda.includes('cónyuge') || form.vivienda.personas_vivienda.includes('hijos') || form.vivienda.personas_vivienda.includes('padres') || form.vivienda.personas_vivienda.includes('suegros') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault1"> Solo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" value="cónyuge" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="cónyuge" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault2"> Cónyuge</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" value="hijos" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="hijos" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault3"> Hijos</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" value="padres" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="padres" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault4"> Padres</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" value="suegros" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="suegros" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault5"> Suegros</label>
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input type="text" class="form-control shadow-3-strong" id="floatingInput23" placeholder="¿Cuántos cigarrillos consume a la semana?">
+                                                <input v-model="form.vivienda.cantidad_personas"  :readonly="form.vivienda.personas_vivienda.includes('solo')" type="number" class="form-control shadow-3-strong" id="floatingInput23" placeholder="¿Cuántos cigarrillos consume a la semana?">
                                                 <label for="floatingInput23" class="mx-2"><i class="bi bi-123"></i> ¿Cuántas personas viven en su casa?</label>
                                             </div>
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-house"></i> Mencione el estado actual de casa</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault23"/>
+                                                    <input v-model="form.vivienda.estado_vivienda" value="Casa pagada" class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault23"/>
                                                     <label class="form-check-label" for="flexRadioDefault23"> Casa pagada</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault24"/>
+                                                    <input v-model="form.vivienda.estado_vivienda" value="En proceso de adquisición" class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault24"/>
                                                     <label class="form-check-label" for="flexRadioDefault24"> En proceso de adquisición</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault25"/>
+                                                    <input v-model="form.vivienda.estado_vivienda" value="Renta" class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault25"/>
                                                     <label class="form-check-label" for="flexRadioDefault25"> Renta</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault26"/>
+                                                    <input v-model="form.vivienda.estado_vivienda" value="Casa prestada" class="form-check-input" type="radio" name="estado_casa" id="flexRadioDefault26"/>
                                                     <label class="form-check-label" for="flexRadioDefault26"> Casa prestada</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-house-circle-exclamation"></i> ¿De quién es  propiedad el domicilio en donde vive?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault27" />
+                                                    <input v-model="form.vivienda.propietario_vivienda" value="Propia" class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault27" />
                                                     <label class="form-check-label" for="flexRadioDefault27"> Propia</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault28"/>
+                                                    <input v-model="form.vivienda.propietario_vivienda" value="Padres" class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault28"/>
                                                     <label class="form-check-label" for="flexRadioDefault28"> Padres</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault29"/>
+                                                    <input v-model="form.vivienda.propietario_vivienda" value="Cónyuge" class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault29"/>
                                                     <label class="form-check-label" for="flexRadioDefault29"> Cónyuge</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault30"/>
-                                                    <label class="form-check-label" for="flexRadioDefault30"> Otro: <input type="text" class="form-control"></label>
+                                                    <label class="form-check-label" for="flexRadioDefault30"> Otro: <input v-model="form.vivienda.propietario_vivienda" type="text" class="form-control" id="propietario_vivienda"></label>
                                                 </div>
                                             </div>
                                             <div class="row justify-content-center align-items-center col-md-8">
@@ -765,93 +780,93 @@ const validaPersonasVivienda = (persona) =>{
                                                 <div class="col-md-4 mb-4">
                                                     <label class="mx-2"><i class="fa fa-house-circle-exclamation"></i> Recamaras</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault31"/>
+                                                        <input v-model="form.vivienda.recamaras" value="1" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault31"/>
                                                         <label class="form-check-label" for="flexRadioDefault31"> 1</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault32"/>
+                                                        <input v-model="form.vivienda.recamaras" value="2" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault32"/>
                                                         <label class="form-check-label" for="flexRadioDefault32"> 2</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault33"/>
+                                                        <input v-model="form.vivienda.recamaras" value="3" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault33"/>
                                                         <label class="form-check-label" for="flexRadioDefault33"> 3</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault34"/>
+                                                        <input v-model="form.vivienda.recamaras" value="4" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault34"/>
                                                         <label class="form-check-label" for="flexRadioDefault34"> 4</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault35"/>
+                                                        <input v-model="form.vivienda.recamaras" value="5" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault35"/>
                                                         <label class="form-check-label" for="flexRadioDefault35"> 5</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault36"/>
+                                                        <input v-model="form.vivienda.recamaras" value="6" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault36"/>
                                                         <label class="form-check-label" for="flexRadioDefault36"> 6</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault37"/>
+                                                        <input v-model="form.vivienda.recamaras" value="7" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault37"/>
                                                         <label class="form-check-label" for="flexRadioDefault37"> 7</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-4">
                                                     <label class="mx-2"><i class="fa fa-house-flood-water-circle-arrow-right"></i> Baños</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault38"/>
+                                                        <input v-model="form.vivienda.banos" value="1" class="form-check-input" type="radio" name="baños" id="flexRadioDefault38"/>
                                                         <label class="form-check-label" for="flexRadioDefault38"> 1</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault39"/>
+                                                        <input v-model="form.vivienda.banos" value="2" class="form-check-input" type="radio" name="baños" id="flexRadioDefault39"/>
                                                         <label class="form-check-label" for="flexRadioDefault39"> 2</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault40"/>
+                                                        <input v-model="form.vivienda.banos" value="3" class="form-check-input" type="radio" name="baños" id="flexRadioDefault40"/>
                                                         <label class="form-check-label" for="flexRadioDefault40"> 3</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault41"/>
+                                                        <input v-model="form.vivienda.banos" value="4" class="form-check-input" type="radio" name="baños" id="flexRadioDefault41"/>
                                                         <label class="form-check-label" for="flexRadioDefault41"> 4</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault42"/>
+                                                        <input v-model="form.vivienda.banos" value="5" class="form-check-input" type="radio" name="baños" id="flexRadioDefault42"/>
                                                         <label class="form-check-label" for="flexRadioDefault42"> 5</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault43"/>
+                                                        <input v-model="form.vivienda.banos" value="6" class="form-check-input" type="radio" name="baños" id="flexRadioDefault43"/>
                                                         <label class="form-check-label" for="flexRadioDefault43"> 6</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="baños" id="flexRadioDefault44"/>
+                                                        <input v-model="form.vivienda.banos" value="7" class="form-check-input" type="radio" name="baños" id="flexRadioDefault44"/>
                                                         <label class="form-check-label" for="flexRadioDefault44"> 7</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-4">
                                                     <label class="mx-2"><i class="fa fa-restroom"></i> Cuartos</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault45"/>
+                                                        <input v-model="form.vivienda.cuartos" value="1" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault45"/>
                                                         <label class="form-check-label" for="flexRadioDefault45"> 1</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault46"/>
+                                                        <input v-model="form.vivienda.cuartos" value="2" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault46"/>
                                                         <label class="form-check-label" for="flexRadioDefault46"> 2</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault47"/>
+                                                        <input v-model="form.vivienda.cuartos" value="3" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault47"/>
                                                         <label class="form-check-label" for="flexRadioDefault47"> 3</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault48"/>
+                                                        <input v-model="form.vivienda.cuartos" value="4" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault48"/>
                                                         <label class="form-check-label" for="flexRadioDefault48"> 4</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault49"/>
+                                                        <input v-model="form.vivienda.cuartos" value="5" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault49"/>
                                                         <label class="form-check-label" for="flexRadioDefault49"> 5</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault50"/>
+                                                        <input v-model="form.vivienda.cuartos" value="6" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault50"/>
                                                         <label class="form-check-label" for="flexRadioDefault50"> 6</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault51"/>
+                                                        <input v-model="form.vivienda.cuartos" value="7" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault51"/>
                                                         <label class="form-check-label" for="flexRadioDefault51"> 7</label>
                                                     </div>
                                                 </div>
@@ -859,16 +874,16 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="bi bi-bricks"></i> De qué está construida su vivienda</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault52"/>
+                                                        <input v-model="form.vivienda.material_vivienda" value="Concreto" class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault52"/>
                                                         <label class="form-check-label" for="flexRadioDefault52"> Concreto</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault53"/>
+                                                        <input v-model="form.vivienda.material_vivienda" value="Madera" class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault53"/>
                                                         <label class="form-check-label" for="flexRadioDefault53"> Madera</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
-                                                        <label class="form-check-label" for="flexRadioDefault54"> Otro: <input type="text" class="form-control"></label>
+                                                        <label class="form-check-label" for="flexRadioDefault54"> Otro: <input v-model="form.vivienda.material_vivienda" type="text" class="form-control" id="material_vivienda"></label>
                                                     </div>
                                             </div>
                                         </div>
