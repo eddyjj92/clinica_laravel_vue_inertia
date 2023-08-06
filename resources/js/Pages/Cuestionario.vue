@@ -64,25 +64,24 @@ let form = useForm({
         bebe: formGuardado.value !== null ? formGuardado.value.toxicomanias.bebe : null,
     },
     vivienda: {
-        personas_vivienda: [],
-        cantidad_personas: null,
-        estado_vivienda: null,
-        propietario_vivienda: null,
-        capacidad_vivienda: {
-            recamaras: null,
-            banos: null,
-            cuartos: null,
-        },
-        material_vivienda: null
+        personas_vivienda: formGuardado.value !== null ? formGuardado.value.vivienda.personas_vivienda : [],
+        cantidad_personas: formGuardado.value !== null ? formGuardado.value.vivienda.cantidad_personas : null,
+        estado_vivienda: formGuardado.value !== null ? formGuardado.value.vivienda.estado_vivienda : null,
+        propietario_vivienda: formGuardado.value !== null ? formGuardado.value.vivienda.propietario_vivienda : null,
+        recamaras: formGuardado.value !== null ? formGuardado.value.vivienda.recamaras : null,
+        banos: formGuardado.value !== null ? formGuardado.value.vivienda.banos : null,
+        cuartos: formGuardado.value !== null ? formGuardado.value.vivienda.cuartos : null,
+        material_vivienda: formGuardado.value !== null ? formGuardado.value.vivienda.material_vivienda : null,
     },
     estado_salud: {
-        vacuna_influenza: null,
-        vacuna_covid: null,
-        ejercicio_semana: null,
+        vacuna_influenza: formGuardado.value !== null ? formGuardado.value.estado_salud.vacuna_influenza : null,
+        vacuna_covid: formGuardado.value !== null ? formGuardado.value.estado_salud.vacuna_covid : null,
+        ejercicio_semana: formGuardado.value !== null ? formGuardado.value.estado_salud.ejercicio_semana : null,
     },
     habitos_sueno: {
-        ronca: null,
-        deja_respirar: null,
+        ronca: formGuardado.value !== null ? formGuardado.value.habitos_sueno.ronca : null,
+        deja_respirar: formGuardado.value !== null ? formGuardado.value.habitos_sueno.deja_respirar : null,
+        adormilado: formGuardado.value !== null ? formGuardado.value.habitos_sueno.adormilado : null,
     },
     senas_particulares: {
         tono_piel: null,
@@ -293,6 +292,32 @@ const validarEtapa = (etapa) =>{
         if(form.toxicomanias.fuma === null || form.toxicomanias.fuma === '') return validationMessage('Marcar si usted fuma es un campo requerido')
         if((form.toxicomanias.cuantos_cigarillos === null || form.toxicomanias.cuantos_cigarillos === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Ingrese la cantidad de cigarrillos que fuma en la semana');
         if(form.toxicomanias.bebe === null || form.toxicomanias.bebe === '') return validationMessage('Marcar si usted bebe es un campo requerido');
+        return true
+    }
+
+    if(etapa === 10){
+        if(form.vivienda.personas_vivienda === null || form.vivienda.personas_vivienda === '') return validationMessage('Marcar las personas con las q convive es un campo requerido')
+        if((form.vivienda.cantidad_personas === null || form.vivienda.cantidad_personas === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Ingrese la cantidad de personas con las q convive');
+        if(form.vivienda.estado_vivienda === null || form.vivienda.estado_vivienda === '') return validationMessage('El estado de la vivienda es un campo requerido');
+        if(form.vivienda.propietario_vivienda === null || form.vivienda.propietario_vivienda === '') return validationMessage('El propietario de la vivienda bebe es un campo requerido');
+        if(form.vivienda.recamaras === null || form.vivienda.recamaras === '') return validationMessage('La cantidad de recámaras es un campo requerido');
+        if(form.vivienda.banos === null || form.vivienda.banos === '') return validationMessage('La cantidad de baños es un campo requerido');
+        if(form.vivienda.cuartos === null || form.vivienda.cuartos === '') return validationMessage('La cantidad de cuartos es un campo requerido');
+        if(form.vivienda.material_vivienda === null || form.vivienda.material_vivienda === '') return validationMessage('El material de construcción de la vivienda es un campo requerido');
+        return true
+    }
+
+    if(etapa === 11){
+        if(form.estado_salud.vacuna_influenza === null || form.estado_salud.vacuna_influenza === '') return validationMessage('Marcar si ha recibido la vacuna de influenza es un campo requerido')
+        if((form.estado_salud.vacuna_covid === null || form.estado_salud.vacuna_covid === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Marcar si ha recibido la vacuna de covid es un campo requerido');
+        if(form.estado_salud.ejercicio_semana === null || form.estado_salud.ejercicio_semana === '') return validationMessage('Marcar si hace ejercicios en la semana es un campo requerido');
+        return true
+    }
+
+    if(etapa === 12){
+        if(form.habitos_sueno.ronca === null || form.habitos_sueno.ronca === '') return validationMessage('Marcar si usted ronca es un campo requerido')
+        if((form.habitos_sueno.deja_respirar === null || form.habitos_sueno.deja_respirar === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Marcar si deja de respirar mientras duerme es un campo requerido');
+        if(form.habitos_sueno.adormilado === null || form.habitos_sueno.adormilado === '') return validationMessage('Marcar si se ha sentido adormilado frecuentemente es un campo requerido');
         return true
     }
 }
@@ -681,7 +706,7 @@ const validaPersonasVivienda = (persona) =>{
                                                     <label class="form-check-label" for="flexRadioDefault19"> POSITIVO</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.toxicomanias.fuma" value="negativo" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault20"/>
+                                                    <input @click="form.toxicomanias.cuantos_cigarillos = null" v-model="form.toxicomanias.fuma" value="negativo" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault20"/>
                                                     <label class="form-check-label" for="flexRadioDefault20"> NEGATIVO</label>
                                                 </div>
                                             </div>
@@ -711,23 +736,23 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="fa fa-users"></i> ¿Con qué personas vive?</label>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('cónyuge') || form.vivienda.personas_vivienda.includes('hijos') || form.vivienda.personas_vivienda.includes('padres') || form.vivienda.personas_vivienda.includes('suegros')" value="solo" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :checked="form.vivienda.personas_vivienda.includes('solo')" :disabled="form.vivienda.personas_vivienda.includes('cónyuge') || form.vivienda.personas_vivienda.includes('hijos') || form.vivienda.personas_vivienda.includes('padres') || form.vivienda.personas_vivienda.includes('suegros')" value="solo" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault1"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('cónyuge') || form.vivienda.personas_vivienda.includes('hijos') || form.vivienda.personas_vivienda.includes('padres') || form.vivienda.personas_vivienda.includes('suegros') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault1"> Solo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="cónyuge" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :checked="form.vivienda.personas_vivienda.includes('cónyuge')" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="cónyuge" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault2"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault2"> Cónyuge</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="hijos" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :checked="form.vivienda.personas_vivienda.includes('hijos')" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="hijos" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault3"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault3"> Hijos</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="padres" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :checked="form.vivienda.personas_vivienda.includes('padres')" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="padres" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault4"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault4"> Padres</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input @click="validaPersonasVivienda($event.target.value)" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="suegros" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
+                                                    <input @click="validaPersonasVivienda($event.target.value)" :checked="form.vivienda.personas_vivienda.includes('suegros')" :disabled="form.vivienda.personas_vivienda.includes('solo')" value="suegros" class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault5"/>
                                                     <label :class="form.vivienda.personas_vivienda.includes('solo') ? 'text-decoration-line-through': ''" class="form-check-label" for="flexCheckDefault5"> Suegros</label>
                                                 </div>
                                             </div>
@@ -882,7 +907,7 @@ const validaPersonasVivienda = (persona) =>{
                                                         <label class="form-check-label" for="flexRadioDefault53"> Madera</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
+                                                        <input class="form-check-input" :checked="form.vivienda.material_vivienda !== 'Concreto' && form.vivienda.material_vivienda !== 'Madera'" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
                                                         <label class="form-check-label" for="flexRadioDefault54"> Otro: <input v-model="form.vivienda.material_vivienda" type="text" class="form-control" id="material_vivienda"></label>
                                                     </div>
                                             </div>
@@ -897,49 +922,49 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="fa fa-briefcase-medical"></i> ¿Ya recibió su inyección anual contra la influenza?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault55"/>
+                                                    <input v-model="form.estado_salud.vacuna_influenza" value="Si" class="form-check-input" type="radio" name="influenza" id="flexRadioDefault55"/>
                                                     <label class="form-check-label" for="flexRadioDefault55"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault56"/>
+                                                    <input v-model="form.estado_salud.vacuna_influenza" value="No" class="form-check-input" type="radio" name="influenza" id="flexRadioDefault56"/>
                                                     <label class="form-check-label" for="flexRadioDefault56"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label class="mx-2"><i class="fa fa-mask-face"></i> Vacunas contra la COVID 19</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault57"/>
+                                                    <input v-model="form.estado_salud.vacuna_covid" value="Ninguna" class="form-check-input" type="radio" name="covid" id="flexRadioDefault57"/>
                                                     <label class="form-check-label" for="flexRadioDefault57"> Ninguna</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault58"/>
+                                                    <input v-model="form.estado_salud.vacuna_covid" value="1ra Dosis" class="form-check-input" type="radio" name="covid" id="flexRadioDefault58"/>
                                                     <label class="form-check-label" for="flexRadioDefault58"> 1ra Dosis</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault59"/>
+                                                    <input v-model="form.estado_salud.vacuna_covid" value="2da Dosis" class="form-check-input" type="radio" name="covid" id="flexRadioDefault59"/>
                                                     <label class="form-check-label" for="flexRadioDefault59"> 2da Dosis</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault60"/>
+                                                    <input v-model="form.estado_salud.vacuna_covid" value="3ra Dosis" class="form-check-input" type="radio" name="covid" id="flexRadioDefault60"/>
                                                     <label class="form-check-label" for="flexRadioDefault60"> 3ra Dosis</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label class="mx-2"><i class="bi bi-universal-access"></i> Hábitos de ejercicio durante semana</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault61"/>
+                                                    <input v-model="form.estado_salud.ejercicio_semana" value="No hago ejercicio" class="form-check-input" type="radio" name="ejercicios" id="flexRadioDefault61"/>
                                                     <label class="form-check-label" for="flexRadioDefault61"> No hago ejercicio</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault62"/>
+                                                    <input v-model="form.estado_salud.ejercicio_semana" value="1-2 días" class="form-check-input" type="radio" name="ejercicios" id="flexRadioDefault62"/>
                                                     <label class="form-check-label" for="flexRadioDefault62"> 1-2 días</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault63"/>
+                                                    <input v-model="form.estado_salud.ejercicio_semana" value="3-4 días"  class="form-check-input" type="radio" name="ejercicios" id="flexRadioDefault63"/>
                                                     <label class="form-check-label" for="flexRadioDefault63"> 3-4 días</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault64"/>
+                                                    <input v-model="form.estado_salud.ejercicio_semana" value="5 ó más días" class="form-check-input" type="radio" name="ejercicios" id="flexRadioDefault64"/>
                                                     <label class="form-check-label" for="flexRadioDefault64"> 5 ó más días</label>
                                                 </div>
                                             </div>
@@ -954,33 +979,33 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="bi bi-person-lines-fill"></i> ¿Le han mencionado si ronca?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault65"/>
+                                                    <input v-model="form.habitos_sueno.ronca" value="Si" class="form-check-input" type="radio" name="ronca" id="flexRadioDefault65"/>
                                                     <label class="form-check-label" for="flexRadioDefault65"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault66"/>
+                                                    <input v-model="form.habitos_sueno.ronca" value="No" class="form-check-input" type="radio" name="ronca" id="flexRadioDefault66"/>
                                                     <label class="form-check-label" for="flexRadioDefault66"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Le han mencionado si deja de respirar mientras duerme?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault67"/>
+                                                    <input v-model="form.habitos_sueno.deja_respirar" value="Si" class="form-check-input" type="radio" name="respira" id="flexRadioDefault67"/>
                                                     <label class="form-check-label" for="flexRadioDefault67"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault68"/>
+                                                    <input v-model="form.habitos_sueno.deja_respirar" value="No" class="form-check-input" type="radio" name="respira" id="flexRadioDefault68"/>
                                                     <label class="form-check-label" for="flexRadioDefault68"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label class="mx-2"><i class="fa fa-bed"></i> ¿Se siente cansado o adormilado frecuentemente?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault69"/>
+                                                    <input v-model="form.habitos_sueno.adormilado" value="Si" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault69"/>
                                                     <label class="form-check-label" for="flexRadioDefault69"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault70"/>
+                                                    <input v-model="form.habitos_sueno.adormilado" value="No" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault70"/>
                                                     <label class="form-check-label" for="flexRadioDefault70"> No</label>
                                                 </div>
                                             </div>
