@@ -24,7 +24,7 @@ onMounted(()=>{
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input :disabled="$page.props.auth.user === null" :class="$page.props.auth.user === null ? 'text-decoration-line-through' : ''" class="form-control form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
-                <button :disabled="$page.props.auth.user === null" class="btn btn-primary ripple" id="btnNavbarSearch" type="button"><i :class="$page.props.auth.user !== null ? 'fa-search' : 'fa-cancel'" class="fas"></i></button>
+                <button :disabled="$page.props.auth.user === null" :class="$page.props.auth.user === null ? 'btn-secondary' : 'btn-primary ripple'" class="btn" id="btnNavbarSearch" type="button"><i :class="$page.props.auth.user !== null ? 'fa-search' : 'fa-cancel'" class="fas"></i></button>
             </div>
         </form>
         <!-- Navbar-->
