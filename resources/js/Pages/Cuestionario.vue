@@ -217,6 +217,20 @@ onMounted(()=>{
         form.senas_particulares.tono_piel = null;
     })
 
+    const flexRadioDefault79 = document.querySelector('#flexRadioDefault79');
+    flexRadioDefault79.addEventListener('click', () => {
+        const color_cabello_otros = document.querySelector('#color_cabello_otros');
+        color_cabello_otros.focus();
+        form.senas_particulares.color_cabello = null;
+    })
+
+    const flexRadioDefault88 = document.querySelector('#flexRadioDefault88');
+    flexRadioDefault88.addEventListener('click', () => {
+        const longitud_cabello_otros = document.querySelector('#longitud_cabello_otros');
+        longitud_cabello_otros.focus();
+        form.senas_particulares.longitud_cabello = null;
+    })
+
 })
 
 let idProcessing = ref(null);
@@ -325,6 +339,24 @@ const validarEtapa = (etapa) =>{
         if(form.habitos_sueno.ronca === null || form.habitos_sueno.ronca === '') return validationMessage('Marcar si usted ronca es un campo requerido')
         if((form.habitos_sueno.deja_respirar === null || form.habitos_sueno.deja_respirar === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Marcar si deja de respirar mientras duerme es un campo requerido');
         if(form.habitos_sueno.adormilado === null || form.habitos_sueno.adormilado === '') return validationMessage('Marcar si se ha sentido adormilado frecuentemente es un campo requerido');
+        return true
+    }
+
+    if(etapa === 13){
+        if(form.senas_particulares.tono_piel === null || form.senas_particulares.tono_piel === '') return validationMessage('El tono de la piel es un campo requerido')
+        if(form.senas_particulares.color_cabello === null || form.senas_particulares.color_cabello === '') return validationMessage('El color del cabello es un campo requerido');
+        if(form.senas_particulares.pelo_tenido === null || form.senas_particulares.pelo_tenido === '') return validationMessage('Marcar si posee el pelo teñido es un campo requerido');
+        if(form.senas_particulares.tipo_cabello === null || form.senas_particulares.tipo_cabello === '') return validationMessage('El tipo de cabello es un campo requerido');
+        if(form.senas_particulares.longitud_cabello === null || form.senas_particulares.longitud_cabello === '') return validationMessage('La longitud del cabello es un campo requerido');
+        if(form.senas_particulares.complexion_fisica === null || form.senas_particulares.complexion_fisica === '') return validationMessage('La complexión física es un campo requerido');
+        if(form.senas_particulares.forma_nariz === null || form.senas_particulares.forma_nariz === '') return validationMessage('La forma de la nariz es un campo requerido');
+        if(form.senas_particulares.color_ojos === null || form.senas_particulares.color_ojos === '') return validationMessage('El color de los ojos es un campo requerido');
+        if(form.senas_particulares.lunar === null || form.senas_particulares.lunar === '') return validationMessage('Marcar si posee lunares es un campo requerido');
+        if(form.senas_particulares.lunar_descripcion === null || form.senas_particulares.lunar_descripcion === '') return validationMessage('La descripción de los lunares es un campo requerido');
+        if(form.senas_particulares.tatuaje === null || form.senas_particulares.tatuaje === '') return validationMessage('Marcar si posee tatuajes es un campo requerido');
+        if(form.senas_particulares.tatuaje_descripcion === null || form.senas_particulares.tatuaje_descripcion === '') return validationMessage('La descripción de los tatuajes es un campo requerido');
+        if(form.senas_particulares.cicatriz === null || form.senas_particulares.cicatriz === '') return validationMessage('Marcar si posee cicatrices es un campo requerido');
+        if(form.senas_particulares.cicatriz_descripcion === null || form.senas_particulares.cicatriz_descripcion === '') return validationMessage('La descricpción de las cicatrices es un campo requerido');
         return true
     }
 }
@@ -1025,7 +1057,7 @@ const validaPersonasVivienda = (persona) =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-md-4 mb-4">
-                                                <label class="mx-2"><i class="bi bi-person-lines-fill"></i> Tono de piel</label>
+                                                <label class="mx-2"><i class="bi bi-person-fill"></i> Tono de piel</label>
                                                 <div class="form-check">
                                                     <input v-model="form.senas_particulares.tono_piel" value="Morena" class="form-check-input" type="radio" name="piel" id="flexRadioDefault71"/>
                                                     <label class="form-check-label" for="flexRadioDefault71"> Morena</label>
@@ -1044,212 +1076,212 @@ const validaPersonasVivienda = (persona) =>{
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="bi bi-person-slash"></i> Color de cabello</label>
+                                                <label class="mx-2"><i class="bi bi-person-fill-up"></i> Color de cabello</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault75"/>
+                                                    <input v-model="form.senas_particulares.color_cabello" value="Negro" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault75"/>
                                                     <label class="form-check-label" for="flexRadioDefault75"> Negro</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault76"/>
+                                                    <input v-model="form.senas_particulares.color_cabello" value="Café" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault76"/>
                                                     <label class="form-check-label" for="flexRadioDefault76"> Café</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault77"/>
+                                                    <input v-model="form.senas_particulares.color_cabello" value="Rubio" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault77"/>
                                                     <label class="form-check-label" for="flexRadioDefault77"> Rubio</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault78"/>
+                                                    <input v-model="form.senas_particulares.color_cabello" value="Pelirojo" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault78"/>
                                                     <label class="form-check-label" for="flexRadioDefault78"> Pelirojo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault79"/>
-                                                    <label class="form-check-label" for="flexRadioDefault79"> Otro: <input type="text" class="form-control"></label>
+                                                    <input class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault79"/>
+                                                    <label class="form-check-label" for="flexRadioDefault79"> Otro: <input v-model="form.senas_particulares.color_cabello" type="text" class="form-control" id="color_cabello_otros"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="fa fa-bed"></i> ¿Su pelo está teñido?</label>
+                                                <label class="mx-2"><i class="fa fa-question"></i> ¿Su pelo está teñido?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault80"/>
+                                                    <input v-model="form.senas_particulares.pelo_tenido" value="Pelo teñido" class="form-check-input" type="radio" name="pelo_tenido" id="flexRadioDefault80"/>
                                                     <label class="form-check-label" for="flexRadioDefault80"> Pelo teñido</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault81"/>
+                                                    <input v-model="form.senas_particulares.pelo_tenido" value="Sin teñir" class="form-check-input" type="radio" name="pelo_tenido" id="flexRadioDefault81"/>
                                                     <label class="form-check-label" for="flexRadioDefault81"> Sin teñir</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="fa fa-bed"></i> Tipo de cabello</label>
+                                                <label class="mx-2"><i class="bi bi-subtract"></i> Tipo de cabello</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault82"/>
+                                                    <input v-model="form.senas_particulares.tipo_cabello" value="Ondulado" class="form-check-input" type="radio" name="tipo_cabello" id="flexRadioDefault82"/>
                                                     <label class="form-check-label" for="flexRadioDefault82"> Ondulado</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault83"/>
+                                                    <input v-model="form.senas_particulares.tipo_cabello" value="Rizado" class="form-check-input" type="radio" name="tipo_cabello" id="flexRadioDefault83"/>
                                                     <label class="form-check-label" for="flexRadioDefault83"> Rizado</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault84"/>
+                                                    <input v-model="form.senas_particulares.tipo_cabello" value="Lacio" class="form-check-input" type="radio" name="tipo_cabello" id="flexRadioDefault84"/>
                                                     <label class="form-check-label" for="flexRadioDefault84"> Lacio</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="fa fa-bed"></i> Longitud de cabello</label>
+                                                <label class="mx-2"><i class="fa fa-ruler"></i> Longitud de cabello</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault85"/>
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Corto" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault85"/>
                                                     <label class="form-check-label" for="flexRadioDefault85"> Corto</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault86"/>
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Mediano" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault86"/>
                                                     <label class="form-check-label" for="flexRadioDefault86"> Mediano</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault87"/>
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault87"/>
                                                     <label class="form-check-label" for="flexRadioDefault87"> Largo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault88"/>
-                                                    <label class="form-check-label" for="flexRadioDefault88"> Otro: <input type="text" class="form-control"></label>
+                                                    <input class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88"> Otro: <input v-model="form.senas_particulares.longitud_cabello" type="text" class="form-control" id="longitud_cabello_otros"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="fa fa-person-cane"></i> Complexión física</label>
+                                                <label class="mx-2"><i class="fa fa-person-breastfeeding"></i> Complexión física</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault89"/>
+                                                    <input v-model="form.senas_particulares.complexion_fisica" value="Delgada" class="form-check-input" type="radio" name="complexion_fisica" id="flexRadioDefault89"/>
                                                     <label class="form-check-label" for="flexRadioDefault89"> Delgada</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault90"/>
+                                                    <input v-model="form.senas_particulares.complexion_fisica" value="Media" class="form-check-input" type="radio" name="complexion_fisica" id="flexRadioDefault90"/>
                                                     <label class="form-check-label" for="flexRadioDefault90"> Media</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault91"/>
+                                                    <input v-model="form.senas_particulares.complexion_fisica" value="Corpulenta" class="form-check-input" type="radio" name="complexion_fisica" id="flexRadioDefault91"/>
                                                     <label class="form-check-label" for="flexRadioDefault91"> Corpulenta</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault92"/>
+                                                    <input v-model="form.senas_particulares.complexion_fisica" value="Obesa" class="form-check-input" type="radio" name="complexion_fisica" id="flexRadioDefault92"/>
                                                     <label class="form-check-label" for="flexRadioDefault92"> Obesa</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 row align-items-center justify-content-center border rounded rounded-2">
-                                                <label class="mx-2 col-12"><i class="fa fa-person-cane"></i> Forma de nariz</label>
+                                                <label class="mx-2 col-12"><i class="fa fa-person-circle-check"></i> Forma de nariz</label>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault93"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Romana" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault93"/>
                                                     <label class="form-check-label" for="flexRadioDefault93"> Romana: <img style="width: 100px; height: 100px;" src="/img/nariz/romana.jpg" alt="romana"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault94"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Corta" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault94"/>
                                                     <label class="form-check-label" for="flexRadioDefault94"> Corta: <img style="width: 100px; height: 100px;" src="/img/nariz/corta.jpg" alt="corta"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault95"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Aguileña" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault95"/>
                                                     <label class="form-check-label" for="flexRadioDefault95"> Aguileña: <img style="width: 100px; height: 100px;" src="/img/nariz/aguileña.jpg" alt="aguileña"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault96"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Chata" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault96"/>
                                                     <label class="form-check-label" for="flexRadioDefault96"> Chata: <img style="width: 100px; height: 100px;" src="/img/nariz/chata.jpg" alt="chata"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault97"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Respingada" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault97"/>
                                                     <label class="form-check-label" for="flexRadioDefault97"> Respingada: <img style="width: 100px; height: 100px;" src="/img/nariz/respingada.jpg" alt="respingada"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault98"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Griega" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault98"/>
                                                     <label class="form-check-label" for="flexRadioDefault98"> Griega (Recta): <img style="width: 100px; height: 100px;" src="/img/nariz/griega(recta).jpg" alt="griega(recta)"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault99"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Ganchuda" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault99"/>
                                                     <label class="form-check-label" for="flexRadioDefault99"> Ganchuda: <img style="width: 100px; height: 100px;" src="/img/nariz/ganchuda.jpg" alt="ganchuda"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault100"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Irregular" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault100"/>
                                                     <label class="form-check-label" for="flexRadioDefault100"> Irregular: <img style="width: 100px; height: 100px;" src="/img/nariz/irregular.jpg" alt="irregular"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault101"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Plana" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault101"/>
                                                     <label class="form-check-label" for="flexRadioDefault101"> Plana: <img style="width: 100px; height: 100px;" src="/img/nariz/plana.jpg" alt="plana"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault102"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Angosta" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault102"/>
                                                     <label class="form-check-label" for="flexRadioDefault102"> Angosta: <img style="width: 100px; height: 100px;" src="/img/nariz/angosta.jpg" alt="angosta"></label>
                                                 </div>
                                                 <div class="form-check col-md-2 col-6">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault103"/>
+                                                    <input v-model="form.senas_particulares.forma_nariz" value="Alta" class="form-check-input" type="radio" name="forma_nariz" id="flexRadioDefault103"/>
                                                     <label class="form-check-label" for="flexRadioDefault103"> Alta: <img style="width: 100px; height: 100px;" src="/img/nariz/alta.jpg" alt="alta"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
-                                                <label class="mx-2"><i class="fa fa-person-cane"></i> Color de ojos</label>
+                                                <label class="mx-2"><i class="fa fa-arrows-to-eye"></i> Color de ojos</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault104"/>
+                                                    <input v-model="form.senas_particulares.color_ojos" value="Café claro" class="form-check-input" type="radio" name="color_ojos" id="flexRadioDefault104"/>
                                                     <label class="form-check-label" for="flexRadioDefault104"> Café claro</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault105"/>
+                                                    <input v-model="form.senas_particulares.color_ojos" value="Café Oscuro" class="form-check-input" type="radio" name="color_ojos" id="flexRadioDefault105"/>
                                                     <label class="form-check-label" for="flexRadioDefault105"> Café Oscuro</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault106"/>
+                                                    <input v-model="form.senas_particulares.color_ojos" value="Azul" class="form-check-input" type="radio" name="color_ojos" id="flexRadioDefault106"/>
                                                     <label class="form-check-label" for="flexRadioDefault106"> Azul</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault107"/>
+                                                    <input v-model="form.senas_particulares.color_ojos" value="Verde" class="form-check-input" type="radio" name="color_ojos" id="flexRadioDefault107"/>
                                                     <label class="form-check-label" for="flexRadioDefault107"> Verde</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 mb-3 row align-items-center justify-content-center">
-                                                <label class="mx-2 col-12"><i class="fa fa-person-cane"></i> ¿Tiene algún lunar que destaque?</label>
+                                                <label class="mx-2 col-12"><i class="fa fa-person-circle-exclamation"></i> ¿Tiene algún lunar que destaque?</label>
                                                 <div class="form-check col-5 col-md-4">
                                                     <img style="width: 90px; height: 100px;" src="/img/lunares/lunares.jpg" alt="lunares">
                                                 </div>
                                                 <div class="col-7 col-md-8">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault108"/>
+                                                        <input v-model="form.senas_particulares.lunar" value="Con lunares visibles" class="form-check-input" type="radio" name="lunar" id="flexRadioDefault108"/>
                                                         <label class="form-check-label" for="flexRadioDefault108"> Con lunares visibles</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault109"/>
+                                                        <input v-model="form.senas_particulares.lunar" value="Sin lunares visibles" class="form-check-input" type="radio" name="lunar" id="flexRadioDefault109"/>
                                                         <label class="form-check-label" for="flexRadioDefault109"> Sin lunares visibles</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea class="form-control" name="bebidas" id="textArea1" style="height: 100px;" placeholder="(Lunar) Mencione su ubicación, tamaño y forma"></textarea>
-                                                    <label for="textArea1" class="mx-2"><i class="bi bi-heart-pulse"></i> (Lunar) Mencione su ubicación, tamaño y forma</label>
+                                                    <textarea v-model="form.senas_particulares.lunar_descripcion" :disabled="form.senas_particulares.lunar === 'Sin lunares visibles'" class="form-control"  name="lunar_descripcion" id="textArea1" style="height: 100px;" placeholder="(Lunar) Mencione su ubicación, tamaño y forma"></textarea>
+                                                    <label for="textArea1" :class="form.senas_particulares.lunar === 'Sin lunares visibles' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-exclamation-circle"></i> (Lunar) Mencione su ubicación, tamaño y forma</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
-                                                <label class="mx-2"><i class="fa fa-person-cane"></i> ¿Tiene algún tatuaje?</label>
+                                                <label class="mx-2"><i class="bi bi-question-circle"></i> ¿Tiene algún tatuaje?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault110"/>
+                                                    <input v-model="form.senas_particulares.tatuaje" value="Con tatuajes" class="form-check-input" type="radio" name="tatuaje" id="flexRadioDefault110"/>
                                                     <label class="form-check-label" for="flexRadioDefault110"> Con tatuajes</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault111"/>
+                                                    <input v-model="form.senas_particulares.tatuaje" value="Sin tatuajes" class="form-check-input" type="radio" name="tatuaje" id="flexRadioDefault111"/>
                                                     <label class="form-check-label" for="flexRadioDefault111"> Sin tatuajes</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea class="form-control" name="bebidas" id="textArea2" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
-                                                    <label for="textArea1" class="mx-2"><i class="bi bi-heart-pulse"></i> (Tatuaje) Describa la ubicación, tamaño y figura del tatuaje</label>
+                                                    <textarea v-model="form.senas_particulares.tatuaje_descripcion" :disabled="form.senas_particulares.tatuaje === 'Sin tatuajes'" class="form-control" name="tatuaje_descripcion" id="textArea2" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
+                                                    <label for="textArea2" :class="form.senas_particulares.tatuaje === 'Sin tatuajes' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-person-badge-fill"></i> (Tatuaje) Describa la ubicación, tamaño y figura del tatuaje</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
-                                                <label class="mx-2"><i class="fa fa-person-cane"></i> ¿Tiene alguna cicatriz?</label>
+                                                <label class="mx-2"><i class="fa fa-question-circle"></i> ¿Tiene alguna cicatriz?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault112"/>
+                                                    <input v-model="form.senas_particulares.cicatriz" value="Con cicatrices" class="form-check-input" type="radio" name="cicatriz" id="flexRadioDefault112"/>
                                                     <label class="form-check-label" for="flexRadioDefault112"> Con cicatrices</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault113"/>
+                                                    <input v-model="form.senas_particulares.cicatriz" value="Sin cicatrices" class="form-check-input" type="radio" name="cicatriz" id="flexRadioDefault113"/>
                                                     <label class="form-check-label" for="flexRadioDefault113"> Sin cicatrices</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea class="form-control" name="bebidas" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
-                                                    <label for="textArea1" class="mx-2"><i class="bi bi-heart-pulse"></i> (Cicatriz) Describa su forma, ubicación y tamaño</label>
+                                                    <textarea v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" class="form-control" name="bebidas" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
+                                                    <label for="textArea3" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-check-circle-fill"></i> (Cicatriz) Describa su forma, ubicación y tamaño</label>
                                                 </div>
                                             </div>
                                         </div>
