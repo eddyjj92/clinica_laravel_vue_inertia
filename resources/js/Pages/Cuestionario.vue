@@ -84,20 +84,20 @@ let form = useForm({
         adormilado: formGuardado.value !== null ? formGuardado.value.habitos_sueno.adormilado : null,
     },
     senas_particulares: {
-        tono_piel: null,
-        color_cabello: null,
-        pelo_tenido: null,
-        tipo_cabello: null,
-        longitud_cabello: null,
-        complexion_fisica: null,
-        forma_nariz: null,
-        color_ojos: null,
-        lunar: null,
-        lunar_descripcion: null,
-        tatuaje: null,
-        tatuaje_descripcion: null,
-        cicatriz: null,
-        cicatriz_descripcion: null
+        tono_piel: formGuardado.value !== null ? formGuardado.value.senas_particulares.tono_piel : null,
+        color_cabello: formGuardado.value !== null ? formGuardado.value.senas_particulares.color_cabello : null,
+        pelo_tenido: formGuardado.value !== null ? formGuardado.value.senas_particulares.pelo_tenido : null,
+        tipo_cabello: formGuardado.value !== null ? formGuardado.value.senas_particulares.tipo_cabello : null,
+        longitud_cabello: formGuardado.value !== null ? formGuardado.value.senas_particulares.longitud_cabello : null,
+        complexion_fisica: formGuardado.value !== null ? formGuardado.value.senas_particulares.complexion_fisica : null,
+        forma_nariz: formGuardado.value !== null ? formGuardado.value.senas_particulares.forma_nariz : null,
+        color_ojos: formGuardado.value !== null ? formGuardado.value.senas_particulares.color_ojos : null,
+        lunar: formGuardado.value !== null ? formGuardado.value.senas_particulares.lunar : null,
+        lunar_descripcion: formGuardado.value !== null ? formGuardado.value.senas_particulares.lunar_descripcion : null,
+        tatuaje: formGuardado.value !== null ? formGuardado.value.senas_particulares.tatuaje : null,
+        tatuaje_descripcion: formGuardado.value !== null ? formGuardado.value.senas_particulares.tatuaje_descripcion : null,
+        cicatriz: formGuardado.value !== null ? formGuardado.value.senas_particulares.cicatriz : null,
+        cicatriz_descripcion: formGuardado.value !== null ? formGuardado.value.senas_particulares.cicatriz_descripcion : null,
     },
     discapacidades: {
         discapacidad: null,
@@ -208,6 +208,13 @@ onMounted(()=>{
         const material_vivienda = document.querySelector('#material_vivienda');
         material_vivienda.focus();
         form.vivienda.material_vivienda = null;
+    })
+
+    const flexRadioDefault74 = document.querySelector('#flexRadioDefault74');
+    flexRadioDefault74.addEventListener('click', () => {
+        const piel_otras = document.querySelector('#piel_otras');
+        piel_otras.focus();
+        form.senas_particulares.tono_piel = null;
     })
 
 })
@@ -1020,20 +1027,20 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="bi bi-person-lines-fill"></i> Tono de piel</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault71"/>
+                                                    <input v-model="form.senas_particulares.tono_piel" value="Morena" class="form-check-input" type="radio" name="piel" id="flexRadioDefault71"/>
                                                     <label class="form-check-label" for="flexRadioDefault71"> Morena</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault72"/>
+                                                    <input v-model="form.senas_particulares.tono_piel" value="Aperlada" class="form-check-input" type="radio" name="piel" id="flexRadioDefault72"/>
                                                     <label class="form-check-label" for="flexRadioDefault72"> Aperlada</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault73"/>
+                                                    <input v-model="form.senas_particulares.tono_piel" value="Clara" class="form-check-input" type="radio" name="piel" id="flexRadioDefault73"/>
                                                     <label class="form-check-label" for="flexRadioDefault73"> Clara</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault74"/>
-                                                    <label class="form-check-label" for="flexRadioDefault74"> Otro: <input type="text" class="form-control"></label>
+                                                    <input class="form-check-input" type="radio" name="piel" id="flexRadioDefault74"/>
+                                                    <label class="form-check-label" for="flexRadioDefault74"> Otro: <input v-model="form.senas_particulares.tono_piel" type="text" class="form-control" id="piel_otras"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
