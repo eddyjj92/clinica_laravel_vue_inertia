@@ -100,17 +100,17 @@ let form = useForm({
         cicatriz_descripcion: formGuardado.value !== null ? formGuardado.value.senas_particulares.cicatriz_descripcion : null,
     },
     discapacidades: {
-        discapacidad: null,
-        protesis: null,
-        funcion_protesis: null,
-        claudica: null,
-        discapacidad_visual: [],
-        lentes_pupilentes: null,
-        falta_pieza_dental: null,
-        empastes: null,
+        discapacidad: formGuardado.value !== null ? formGuardado.value.discapacidades.discapacidad : null,
+        protesis: formGuardado.value !== null ? formGuardado.value.discapacidades.protesis : null,
+        funcion_protesis: formGuardado.value !== null ? formGuardado.value.discapacidades.funcion_protesis : null,
+        claudica: formGuardado.value !== null ? formGuardado.value.discapacidades.claudica : null,
+        discapacidad_visual: formGuardado.value !== null ? formGuardado.value.discapacidades.discapacidad_visual : [],
+        lentes_pupilentes: formGuardado.value !== null ? formGuardado.value.discapacidades.lentes_pupilentes : null,
+        falta_pieza_dental: formGuardado.value !== null ? formGuardado.value.discapacidades.falta_pieza_dental : null,
+        empastes: formGuardado.value !== null ? formGuardado.value.discapacidades.empastes : null,
     }
-
 })
+let discapacidad_visual_otros = ref(null);
 let aceptar_politica = ref(JSON.parse(localStorage.getItem('aceptar_politica')) === true ? true: false);
 let modal_politica = ref(null);
 let step = ref(1);
@@ -231,9 +231,24 @@ onMounted(()=>{
         form.senas_particulares.longitud_cabello = null;
     })
 
+    const flexRadioDefault115 = document.querySelector('#flexRadioDefault115');
+    flexRadioDefault115.addEventListener('click', () => {
+        const discapacidad_otros = document.querySelector('#discapacidad_otros');
+        discapacidad_otros.focus();
+        form.discapacidades.discapacidad = null;
+    })
+
+    const flexCheckDefault11 = document.querySelector('#flexCheckDefault11');
+    flexCheckDefault11.addEventListener('click', () => {
+        const discapacidad_visual_otros_input = document.querySelector('#discapacidad_visual_otros');
+        discapacidad_visual_otros_input.focus();
+        form.discapacidades.discapacidad_visual = form.discapacidades.discapacidad_visual.filter(dis => dis !== discapacidad_visual_otros.value)
+        discapacidad_visual_otros.value = null;
+    })
+
 })
 
-let idProcessing = ref(null);
+/*let idProcessing = ref(null);
 const options = {
     preserveScroll: true,
     onError: errors => {
@@ -247,7 +262,7 @@ const options = {
     onSuccess: () =>{
         idProcessing.value = null;
     },
-}
+}*/
 
 const validationMessage = (msg) => {
     Swal.fire({
@@ -320,7 +335,7 @@ const validarEtapa = (etapa) =>{
         if(form.vivienda.personas_vivienda === null || form.vivienda.personas_vivienda === '') return validationMessage('Marcar las personas con las q convive es un campo requerido')
         if((form.vivienda.cantidad_personas === null || form.vivienda.cantidad_personas === '') && form.toxicomanias.fuma === 'positivo') return validationMessage('Ingrese la cantidad de personas con las q convive');
         if(form.vivienda.estado_vivienda === null || form.vivienda.estado_vivienda === '') return validationMessage('El estado de la vivienda es un campo requerido');
-        if(form.vivienda.propietario_vivienda === null || form.vivienda.propietario_vivienda === '') return validationMessage('El propietario de la vivienda bebe es un campo requerido');
+        if(form.vivienda.propietario_vivienda === null || form.vivienda.propietario_vivienda === '') return validationMessage('El propietario de la vivienda donde vive es un campo requerido');
         if(form.vivienda.recamaras === null || form.vivienda.recamaras === '') return validationMessage('La cantidad de recámaras es un campo requerido');
         if(form.vivienda.banos === null || form.vivienda.banos === '') return validationMessage('La cantidad de baños es un campo requerido');
         if(form.vivienda.cuartos === null || form.vivienda.cuartos === '') return validationMessage('La cantidad de cuartos es un campo requerido');
@@ -352,20 +367,65 @@ const validarEtapa = (etapa) =>{
         if(form.senas_particulares.forma_nariz === null || form.senas_particulares.forma_nariz === '') return validationMessage('La forma de la nariz es un campo requerido');
         if(form.senas_particulares.color_ojos === null || form.senas_particulares.color_ojos === '') return validationMessage('El color de los ojos es un campo requerido');
         if(form.senas_particulares.lunar === null || form.senas_particulares.lunar === '') return validationMessage('Marcar si posee lunares es un campo requerido');
-        if(form.senas_particulares.lunar_descripcion === null || form.senas_particulares.lunar_descripcion === '') return validationMessage('La descripción de los lunares es un campo requerido');
+        if((form.senas_particulares.lunar_descripcion === null || form.senas_particulares.lunar_descripcion === '') && form.senas_particulares.lunar === 'Con lunares visibles') return validationMessage('La descripción de los lunares es un campo requerido');
         if(form.senas_particulares.tatuaje === null || form.senas_particulares.tatuaje === '') return validationMessage('Marcar si posee tatuajes es un campo requerido');
-        if(form.senas_particulares.tatuaje_descripcion === null || form.senas_particulares.tatuaje_descripcion === '') return validationMessage('La descripción de los tatuajes es un campo requerido');
+        if((form.senas_particulares.tatuaje_descripcion === null || form.senas_particulares.tatuaje_descripcion === '') && form.senas_particulares.tatuaje === 'Con tatuajes') return validationMessage('La descripción de los tatuajes es un campo requerido');
         if(form.senas_particulares.cicatriz === null || form.senas_particulares.cicatriz === '') return validationMessage('Marcar si posee cicatrices es un campo requerido');
-        if(form.senas_particulares.cicatriz_descripcion === null || form.senas_particulares.cicatriz_descripcion === '') return validationMessage('La descricpción de las cicatrices es un campo requerido');
+        if((form.senas_particulares.cicatriz_descripcion === null || form.senas_particulares.cicatriz_descripcion === '') && form.senas_particulares.cicatriz === 'Con cicatrices') return validationMessage('La descricpción de las cicatrices es un campo requerido');
+        return true
+    }
+
+    if(etapa === 14){
+        if(form.discapacidades.discapacidad === null || form.discapacidades.discapacidad === '') return validationMessage('Marcar si posee algunas discapacidad es un campo requerido');
+        if(form.discapacidades.protesis === null || form.discapacidades.protesis === '') return validationMessage('Marcar si posee prótesis es un campo requerido');
+        if((form.discapacidades.funcion_protesis === null || form.discapacidades.funcion_protesis === '') && form.discapacidades.protesis === 'Si') return validationMessage('La función de la prótesis es un campo requerido');
+        if(form.discapacidades.claudica === null || form.discapacidades.claudica === '') return validationMessage('Marcar si claudica al caminar es un campo requerido');
+        if(form.discapacidades.discapacidad_visual.length === 0) return validationMessage('Debe marcar si posee alguna disacapacidad visual, sino marque ninguna');
+        if(form.discapacidades.lentes_pupilentes === null || form.discapacidades.lentes_pupilentes === '') return validationMessage('Marcar si usa lentes o pupilentes es un campo requerido');
+        if(form.discapacidades.falta_pieza_dental === null || form.discapacidades.falta_pieza_dental === '') return validationMessage('Marcar si le falta alguna pieza dental es un campo requerido');
+        if(form.discapacidades.empastes === null || form.discapacidades.empastes === '') return validationMessage('Marcar si posee algun empaste es un campo requerido');
         return true
     }
 }
 
-const validaPersonasVivienda = (persona) =>{
+const validaPersonasVivienda = (persona) => {
     persona === 'solo' ? form.vivienda.cantidad_personas = 1 : form.vivienda.cantidad_personas = null;
     form.vivienda.personas_vivienda.includes(persona) ? form.vivienda.personas_vivienda = form.vivienda.personas_vivienda.filter(per => per !== persona) : form.vivienda.personas_vivienda.push(persona);
 }
 
+const validaDiscapacidadVisual = (discapacidad, otro = false) => {
+    otro ? discapacidad_visual_otros.value = null : null;
+    form.discapacidades.discapacidad_visual.includes(discapacidad) ? form.discapacidades.discapacidad_visual = form.discapacidades.discapacidad_visual.filter(dis => dis !== discapacidad) : form.discapacidades.discapacidad_visual.push(discapacidad);
+}
+
+const validaDiscapacidadVisualOtros = (discapacidad) => {
+    form.discapacidades.discapacidad_visual = form.discapacidades.discapacidad_visual.filter(dis => dis !== discapacidad);
+    discapacidad_visual_otros.value = null;
+}
+
+
+const options = {
+    preserveScroll: true,
+    onError: errors => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Validación',
+            text: errors.validacion
+        })
+    },
+    onSuccess: page => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Operacion Exitosa',
+            text: page.props.flash.message
+        })
+        localStorage.clear();
+    }
+}
+
+const submit = () =>{
+    form.post(`/cuestionarios`, options)
+}
 </script>
 
 <template>
@@ -946,7 +1006,7 @@ const validaPersonasVivienda = (persona) =>{
                                                         <label class="form-check-label" for="flexRadioDefault53"> Madera</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" :checked="form.vivienda.material_vivienda !== 'Concreto' && form.vivienda.material_vivienda !== 'Madera'" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
+                                                        <input class="form-check-input" :checked="form.vivienda.material_vivienda !== null && form.vivienda.material_vivienda !== 'Concreto' && form.vivienda.material_vivienda !== 'Madera'" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
                                                         <label class="form-check-label" for="flexRadioDefault54"> Otro: <input v-model="form.vivienda.material_vivienda" type="text" class="form-control" id="material_vivienda"></label>
                                                     </div>
                                             </div>
@@ -1239,7 +1299,7 @@ const validaPersonasVivienda = (persona) =>{
                                                         <label class="form-check-label" for="flexRadioDefault108"> Con lunares visibles</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input v-model="form.senas_particulares.lunar" value="Sin lunares visibles" class="form-check-input" type="radio" name="lunar" id="flexRadioDefault109"/>
+                                                        <input @click="form.senas_particulares.lunar_descripcion = null" v-model="form.senas_particulares.lunar" value="Sin lunares visibles" class="form-check-input" type="radio" name="lunar" id="flexRadioDefault109"/>
                                                         <label class="form-check-label" for="flexRadioDefault109"> Sin lunares visibles</label>
                                                     </div>
                                                 </div>
@@ -1257,7 +1317,7 @@ const validaPersonasVivienda = (persona) =>{
                                                     <label class="form-check-label" for="flexRadioDefault110"> Con tatuajes</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.senas_particulares.tatuaje" value="Sin tatuajes" class="form-check-input" type="radio" name="tatuaje" id="flexRadioDefault111"/>
+                                                    <input @click="form.senas_particulares.tatuaje_descripcion = null" v-model="form.senas_particulares.tatuaje" value="Sin tatuajes" class="form-check-input" type="radio" name="tatuaje" id="flexRadioDefault111"/>
                                                     <label class="form-check-label" for="flexRadioDefault111"> Sin tatuajes</label>
                                                 </div>
                                             </div>
@@ -1274,13 +1334,13 @@ const validaPersonasVivienda = (persona) =>{
                                                     <label class="form-check-label" for="flexRadioDefault112"> Con cicatrices</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.senas_particulares.cicatriz" value="Sin cicatrices" class="form-check-input" type="radio" name="cicatriz" id="flexRadioDefault113"/>
+                                                    <input @click="form.senas_particulares.cicatriz_descripcion = null" v-model="form.senas_particulares.cicatriz" value="Sin cicatrices" class="form-check-input" type="radio" name="cicatriz" id="flexRadioDefault113"/>
                                                     <label class="form-check-label" for="flexRadioDefault113"> Sin cicatrices</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" class="form-control" name="bebidas" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
+                                                    <textarea v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" class="form-control" name="cicatriz_descripcion" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
                                                     <label for="textArea3" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-check-circle-fill"></i> (Cicatriz) Describa su forma, ubicación y tamaño</label>
                                                 </div>
                                             </div>
@@ -1295,99 +1355,99 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="bi bi-person-lines-fill"></i> ¿Tiene alguna discapacidad?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault114"/>
+                                                    <input v-model="form.discapacidades.discapacidad" value="Sin descapacidad" class="form-check-input" type="radio" name="discapacidad" id="flexRadioDefault114"/>
                                                     <label class="form-check-label" for="flexRadioDefault114"> Sin descapacidad</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="fuma" id="flexRadioDefault115"/>
-                                                    <label class="form-check-label" for="flexRadioDefault115"> Otro: <input type="text" class="form-control"></label>
+                                                    <input class="form-check-input" type="radio" name="discapacidad" id="flexRadioDefault115"/>
+                                                    <label class="form-check-label" for="flexRadioDefault115"> Otro: <input v-model="form.discapacidades.discapacidad" type="text" class="form-control" id="discapacidad_otros"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Tiene alguna prótesis?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault116"/>
+                                                    <input v-model="form.discapacidades.protesis" value="Si" class="form-check-input" type="radio" name="protesis" id="flexRadioDefault116"/>
                                                     <label class="form-check-label" for="flexRadioDefault116"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault117"/>
+                                                    <input @click="form.discapacidades.funcion_protesis = null" v-model="form.discapacidades.protesis" value="No" class="form-check-input" type="radio" name="protesis" id="flexRadioDefault117"/>
                                                     <label class="form-check-label" for="flexRadioDefault117"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea class="form-control" name="bebidas" id="textArea4" style="height: 100px;" placeholder="Mencione la función de la prótesis"></textarea>
-                                                    <label for="textArea1" class="mx-2"><i class="bi bi-heart-pulse"></i> Mencione la función de la prótesis</label>
+                                                    <textarea v-model="form.discapacidades.funcion_protesis" :disabled="form.discapacidades.protesis === 'No'" class="form-control" name="funcion_protesis" id="textArea4" style="height: 100px;" placeholder="Mencione la función de la prótesis"></textarea>
+                                                    <label for="textArea1" :class="form.discapacidades.protesis === 'No' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-heart-pulse"></i> Mencione la función de la prótesis</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Claudica al caminar?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault118"/>
+                                                    <input v-model="form.discapacidades.claudica" value="Si" class="form-check-input" type="radio" name="claudica" id="flexRadioDefault118"/>
                                                     <label class="form-check-label" for="flexRadioDefault118"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault119"/>
+                                                    <input v-model="form.discapacidades.claudica" value="No" class="form-check-input" type="radio" name="claudica" id="flexRadioDefault119"/>
                                                     <label class="form-check-label" for="flexRadioDefault119"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-users"></i> Discapacidad Visual que padezca</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault6"/>
-                                                    <label class="form-check-label" for="flexCheckDefault6"> Ninguna</label>
+                                                    <input @click="validaDiscapacidadVisual($event.target.value)" :disabled="form.discapacidades.discapacidad_visual.length > 0 && !form.discapacidades.discapacidad_visual.includes('Ninguna')" value="Ninguna" class="form-check-input" type="checkbox" name="discapacidad_visual" id="flexCheckDefault6"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.length > 0 && !form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault6"> Ninguna</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault7"/>
-                                                    <label class="form-check-label" for="flexCheckDefault7"> Miopia</label>
+                                                    <input @click="validaDiscapacidadVisual($event.target.value)" value="Miopia" class="form-check-input" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault7"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault7"> Miopia</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault8"/>
-                                                    <label class="form-check-label" for="flexCheckDefault8"> Hipermetropía</label>
+                                                    <input @click="validaDiscapacidadVisual($event.target.value)" value="Hipermetropía" class="form-check-input" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault8"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault8"> Hipermetropía</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault9"/>
-                                                    <label class="form-check-label" for="flexCheckDefault9"> Astigmatismo</label>
+                                                    <input @click="validaDiscapacidadVisual($event.target.value)" value="Astigmatismo" class="form-check-input" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault9"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault9"> Astigmatismo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault10"/>
-                                                    <label class="form-check-label" for="flexCheckDefault10"> Dislexia</label>
+                                                    <input @click="validaDiscapacidadVisual($event.target.value)" value="Dislexia" class="form-check-input" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault10"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault10"> Dislexia</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="con_quien_vive" id="flexCheckDefault11"/>
-                                                    <label class="form-check-label" for="flexCheckDefault11"> Otro: <input type="text" class="form-control"></label>
+                                                    <input class="form-check-input" :checked="discapacidad_visual_otros !== null && discapacidad_visual_otros !== ''" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault11"/>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault11"> Otro: <input @click="validaDiscapacidadVisualOtros($event.target.value)" v-model="discapacidad_visual_otros" @focusout="$event.target.value !== '' ? validaDiscapacidadVisual($event.target.value) : null" type="text" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" class="form-control" id="discapacidad_visual_otros"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Utiliza lentes o pupilentes para ver?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault120"/>
+                                                    <input v-model="form.discapacidades.lentes_pupilentes" value="Si" class="form-check-input" type="radio" name="lentes" id="flexRadioDefault120"/>
                                                     <label class="form-check-label" for="flexRadioDefault120"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault121"/>
+                                                    <input v-model="form.discapacidades.lentes_pupilentes" value="No" class="form-check-input" type="radio" name="lentes" id="flexRadioDefault121"/>
                                                     <label class="form-check-label" for="flexRadioDefault121"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Le hace falta alguna pieza dental?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault122"/>
+                                                    <input v-model="form.discapacidades.falta_pieza_dental" value="Si" class="form-check-input" type="radio" name="pieza_dental" id="flexRadioDefault122"/>
                                                     <label class="form-check-label" for="flexRadioDefault122"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault123"/>
+                                                    <input v-model="form.discapacidades.falta_pieza_dental" value="No" class="form-check-input" type="radio" name="pieza_dental" id="flexRadioDefault123"/>
                                                     <label class="form-check-label" for="flexRadioDefault123"> No</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Tiene empastes?</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault124"/>
+                                                    <input v-model="form.discapacidades.empastes" value="Si" class="form-check-input" type="radio" name="empastes" id="flexRadioDefault124"/>
                                                     <label class="form-check-label" for="flexRadioDefault124"> Si</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault125"/>
+                                                    <input v-model="form.discapacidades.empastes" value="No" class="form-check-input" type="radio" name="empastes" id="flexRadioDefault125"/>
                                                     <label class="form-check-label" for="flexRadioDefault125"> No</label>
                                                 </div>
                                             </div>
@@ -1402,9 +1462,9 @@ const validaPersonasVivienda = (persona) =>{
                                             <div class="form-floating col-md-12 mb-4">
                                                 <h5 style="text-align: justify !important;">Ha completado de forma satisfactoria todos los datos del formulario. Haga click en el botón Finalizar para guardar sus datos. Si desea modificar algún dato hágalo antes de finalizar.</h5>
                                             </div>
-                                            <div class="form-floating col-md-12 mb-4">
-                                                <button class="btn btn-primary ripple w-100"><i class="fa fa-save"></i> Finalizar</button>
-                                            </div>
+                                            <form @submit.prevent="submit" class="form-floating col-md-12 mb-4">
+                                                <button :disabled="form.processing" type="submit" :class="form.processing ? 'btn-secondary' : 'btn-primary'" class="btn ripple w-100"><i class="fa fa-save"></i> Finalizar</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="row align-items-center justify-content-center px-3">

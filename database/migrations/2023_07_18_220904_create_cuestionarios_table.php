@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('cuestionarios', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
             $table->json('data');
             $table->timestamps();
         });

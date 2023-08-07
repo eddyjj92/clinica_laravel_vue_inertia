@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cuestionario;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class CuestionarioController extends Controller
@@ -30,7 +31,11 @@ class CuestionarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $cuestionario = new Cuestionario();
+        $cuestionario->data = json_encode($input);
+        $cuestionario->save();
+        return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');
     }
 
     /**
