@@ -39,11 +39,10 @@ onMounted(()=>{
                             <Link class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
                         </nav>
                     </div>
-                    <a class="nav-link ripple" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-clipboard-question"></i></div>
+                    <Link class="nav-link ripple" href="/cuestionarios">
+                        <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
                         Cuestionarios
-                    </a>
-
+                    </Link>
                     <Link class="nav-link ripple" href="/logout">
                         <div class="sb-nav-link-icon"><i class="fas fa-close"></i></div>
                         Cerrar Sesión

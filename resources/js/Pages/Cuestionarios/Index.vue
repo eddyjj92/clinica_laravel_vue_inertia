@@ -1,12 +1,14 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {router, Link} from "@inertiajs/vue3";
+import {router, Link, usePage} from "@inertiajs/vue3";
 import {toggleNavbar} from '@/Helpers';
 import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
 
+const page = usePage();
+
 defineProps({
-    usuarios: Object
+    cuestionarios: Object
 })
 
 let dtConfig = {
@@ -14,26 +16,17 @@ let dtConfig = {
     language: {
         url: `api/datatables/es`
     },
-    dom: 'lBfrtip',
+    dom: 'lfrtip',
     select: true,
     lengthMenu: [
         [10, 25, 50, 100, -1],
         ['10 Filas', '25 Filas', '50 Filas', '100 Filas', 'Todo']
     ],
-    buttons: [
-        {
-            text:      '<i class="bi-person-add"> Registrar Usuario</i>',
-            action: function ( e, dt, node, config ) {
-                router.get('/usuario/registrar');
-            },
-            className: `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white`,
-        },
-    ],
 }
 
 onMounted(()=>{
     toggleNavbar()
-    $('#usersTable').DataTable(dtConfig);
+    $('#cuestionariosTable').DataTable(dtConfig);
 })
 
 let idProcessing = ref(null);
@@ -47,15 +40,21 @@ const options = {
         })
         idProcessing.value = null;
     },
-    onSuccess: () =>{
+    onSuccess: data =>{
+        Swal.fire({
+            icon: 'success',
+            title: 'Cuestionario Eliminado',
+            text: data.props.flash.message
+        })
         idProcessing.value = null;
+        router.get('/cuestionarios');
     },
 }
 
-const deleteUser = (id) =>{
+const deleteCuestionario = (id) =>{
     Swal.fire({
-        title: 'Eliminar Usuario',
-        text: "¿Está seguro q desea eliminar este usuario?",
+        title: 'Eliminar Cuestionario',
+        text: "¿Está seguro q desea eliminar este cuestionario?",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -65,7 +64,7 @@ const deleteUser = (id) =>{
     }).then((result) => {
         if (result.isConfirmed) {
             idProcessing.value = id;
-            router.delete(`/usuario/eliminar/${id}`, options)
+            router.delete(`/cuestionarios/${id}`, options)
         }
     })
 }
@@ -79,7 +78,7 @@ const deleteUser = (id) =>{
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4"><i class="fa fa-user"></i> Usuarios</h1>
+                    <h1 class="mt-4"><i class="fa fa-clipboard-check"></i> Cuestionarios</h1>
                     <div class="card mb-4">
                         <div class="card-header">
                             <ol class="breadcrumb m-0">
@@ -88,45 +87,43 @@ const deleteUser = (id) =>{
                             </ol>
                         </div>
                         <div class="card-body table-responsive">
-                            <table class="table table-hover table-striped table-responsive w-100" id="usersTable">
+                            <table class="table table-hover table-striped table-responsive w-100" id="cuestionariosTable">
                                 <thead>
                                 <tr>
                                     <th hidden>Id</th>
-                                    <th>Usuario</th>
-                                    <th>Entidad</th>
-                                    <th>Fecha Registro</th>
+                                    <th>Paciente</th>
+                                    <th>Empresa</th>
+                                    <th>Fecha</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="usr in usuarios" :key="usr.id">
-                                    <td hidden>{{ usr.id }}</td>
+                                <tr v-for="cuest in cuestionarios" :key="cuest.id">
+                                    <td hidden>{{ cuest.id }}</td>
                                     <td style="width: 35%">
                                         <div class="row justify-content-center align-items-center w-100">
                                             <!--                                                <div class="col-lg-4 col-md-5">
                                                                                                 <img class="rounded rounded-3 w-100 h-100" :src="`img/profile/${usr.imagen}`">
                                                                                             </div>-->
                                             <div class="col-lg-8 col-md-7">
-                                                <div class="text-base fw-bold">{{ usr.nombre }}</div>
-                                                <div class="font-normal">{{ usr.email }}</div>
-                                                <div class="font-normal">{{ usr.cargo }}</div>
+                                                <div class="text-base fw-bold">{{ cuest.data.datos_generales.nombre }}</div>
+                                                <div class="font-normal">{{ cuest.data.info_contacto.correo }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="">
-                                            <div class="text-base fw-bold">{{ usr.empresa }}</div>
+                                            <div class="text-base fw-bold">{{ cuest.data.datos_generales.empresa }}</div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="">
-                                            <div class="text-base fw-bold">{{ usr.created_at }}</div>
+                                            <div class="text-base fw-bold">{{ cuest.created_at }}</div>
                                         </div>
                                     </td>
-                                    <td width="180px">
-                                        <RouterLink :to="`/usuario/perfil/${usr.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${usr.nombre}`"><i class="bi bi-eye-fill fs-6"></i></RouterLink>
-                                        <RouterLink :to="`/usuario/editar/${usr.id}`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${usr.nombre}`"><i class="bi bi-pencil-square fs-6"></i></RouterLink>
-                                        <button @click="deleteUser(usr.id)" class="btn btn-danger m-1 rounded-3" :id="usr.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${usr.nombre}`"> <i :hidden="idProcessing !== null && idProcessing === usr.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === usr.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                    <td width="120px">
+                                        <RouterLink :to="`/usuario/${cuest.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${cuest.id}`"><i class="bi bi-pencil-square fs-6"></i></RouterLink>
+                                        <button @click="deleteCuestionario(cuest.id)" class="btn btn-danger m-1 rounded-3" :id="cuest.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${cuest.id}`"> <i :hidden="idProcessing !== null && idProcessing === cuest.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === cuest.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -248,22 +248,6 @@ onMounted(()=>{
 
 })
 
-/*let idProcessing = ref(null);
-const options = {
-    preserveScroll: true,
-    onError: errors => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Validación',
-            text: errors.validacion
-        })
-        idProcessing.value = null;
-    },
-    onSuccess: () =>{
-        idProcessing.value = null;
-    },
-}*/
-
 const validationMessage = (msg) => {
     Swal.fire({
         icon: 'warning',

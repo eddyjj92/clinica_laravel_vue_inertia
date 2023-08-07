@@ -15,7 +15,7 @@ class CuestionarioController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Cuestionarios/Index', ['cuestionarios' => Cuestionario::all()]);
     }
 
     /**
@@ -67,6 +67,7 @@ class CuestionarioController extends Controller
      */
     public function destroy(Cuestionario $cuestionario)
     {
-        //
+        $cuestionario->delete();
+        return redirect()->route('cuestionarios.index')->with('message', 'El cuestionario ha sido eliminado de forma satisfactoria');
     }
 }

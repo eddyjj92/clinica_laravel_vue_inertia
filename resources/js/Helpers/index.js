@@ -1,4 +1,7 @@
 export function toggleNavbar() {
+    // tooltipList
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
@@ -39,7 +42,7 @@ export function ripple(){
                     ripple.removeChild(divRippleEffect);
                 }, 1000);
         });
-    });         
+    });
 }
 
 

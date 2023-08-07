@@ -10,9 +10,9 @@ class Cuestionario extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'email',
-        'data'
+
+    protected $casts = [
+        'data' => 'json'
     ];
 
     protected function serializeDate(DateTimeInterface $date): string
