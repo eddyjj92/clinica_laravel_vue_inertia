@@ -83,7 +83,7 @@ const deleteCuestionario = (id) =>{
                         <div class="card-header">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item fw-bold"><Link class="text-decoration-none" href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</Link></li>
-                                <li class="breadcrumb-item active fw-bold"><i class="fa fa-users"></i> Usuarios</li>
+                                <li class="breadcrumb-item active fw-bold"><i class="fa fa-clipboard-check"></i> Cuestionarios</li>
                             </ol>
                         </div>
                         <div class="card-body table-responsive">
@@ -122,8 +122,8 @@ const deleteCuestionario = (id) =>{
                                         </div>
                                     </td>
                                     <td width="120px">
-                                        <RouterLink :to="`/usuario/${cuest.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${cuest.id}`"><i class="bi bi-pencil-square fs-6"></i></RouterLink>
-                                        <button @click="deleteCuestionario(cuest.id)" class="btn btn-danger m-1 rounded-3" :id="cuest.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${cuest.id}`"> <i :hidden="idProcessing !== null && idProcessing === cuest.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === cuest.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                        <Link :href="`/cuestionarios/${cuest.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Cuestionario ${cuest.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                        <button @click="deleteCuestionario(cuest.id)" class="btn btn-danger m-1 rounded-3" :id="cuest.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Cuestionario ${cuest.id}`"> <i :hidden="idProcessing !== null && idProcessing === cuest.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === cuest.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>

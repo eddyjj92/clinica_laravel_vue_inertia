@@ -1,4 +1,7 @@
 export function toggleNavbar() {
+    const tipList = document.querySelectorAll('.tooltip');
+    [...tipList].map(tip => tip.remove());
+
     // tooltipList
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

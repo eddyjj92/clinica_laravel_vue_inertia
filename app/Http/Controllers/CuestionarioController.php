@@ -51,7 +51,10 @@ class CuestionarioController extends Controller
      */
     public function edit(Cuestionario $cuestionario)
     {
-        //
+        return Inertia::render('Cuestionarios/Editar', [
+            'cuestionario' => $cuestionario,
+            'empresas' => Empresa::all()
+        ]);
     }
 
     /**
