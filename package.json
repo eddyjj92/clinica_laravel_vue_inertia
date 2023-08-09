@@ -12,11 +12,13 @@
         "vue": "^3.3.4"
     },
     "dependencies": {
+        "@element-plus/icons-vue": "^2.1.0",
         "@inertiajs/vue3": "^1.0.9",
         "@popperjs/core": "^2.11.8",
         "@vitejs/plugin-vue": "^4.2.3",
         "bootstrap": "^5.3.0",
         "bs-stepper": "^1.7.0",
+        "element-plus": "^2.3.9",
         "vue-router": "^4.2.4"
     }
 }

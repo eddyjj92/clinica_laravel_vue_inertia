@@ -540,7 +540,7 @@ const submit = () =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.peso" type="text" class="form-control" id="floatingInput1" placeholder="Peso (Kgs)">
+                                                <el-input v-model="form.signos_vitales.peso" type="text" id="floatingInput1" placeholder="Peso (Kgs)">
                                                 <label for="floatingInput1" class="mx-2"><i class="fas fa-weight"></i> Peso (Kgs)</label>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
@@ -767,7 +767,7 @@ const submit = () =>{
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
                                                     <input v-model="form.oficio_profesion.ultimo_trabajo" type="text" class="form-control shadow-3-strong" id="floatingInput20" placeholder="Último trabajo">
-                                                    <label for="floatingInput20" class="mx-2"><i class="fa fa-hammer"></i> Último trabajo</label>
+                                                    <label for="floatingInput20" class="mx-2"><i class="fa fa-hammer"></i> Último lugar donde trabajó</label>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
                                                     <input v-model="form.oficio_profesion.hasta_cuando" type="date" class="form-control shadow-3-strong" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?">

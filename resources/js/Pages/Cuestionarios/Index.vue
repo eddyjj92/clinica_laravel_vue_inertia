@@ -122,7 +122,7 @@ const deleteCuestionario = (id) =>{
                                         </div>
                                     </td>
                                     <td width="120px">
-                                        <Link :href="`/cuestionarios/${cuest.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Cuestionario ${cuest.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                        <Link :href="`/cuestionarios/${cuest.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Revisión Cuestionario ${cuest.id}`"><i class="fa fa-user-doctor fs-6 text-white"></i></Link>
                                         <button @click="deleteCuestionario(cuest.id)" class="btn btn-danger m-1 rounded-3" :id="cuest.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Cuestionario ${cuest.id}`"> <i :hidden="idProcessing !== null && idProcessing === cuest.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === cuest.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>

@@ -33,7 +33,7 @@ class CuestionarioController extends Controller
     {
         $input = $request->all();
         $cuestionario = new Cuestionario();
-        $cuestionario->data = json_encode($input);
+        $cuestionario->data = $input;
         $cuestionario->save();
         return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');
     }
@@ -62,7 +62,9 @@ class CuestionarioController extends Controller
      */
     public function update(Request $request, Cuestionario $cuestionario)
     {
-        //
+        $cuestionario->data = $request->all();
+        $cuestionario->save();
+        return response()->json(['message' => 'Cambios Guardados']);
     }
 
     /**
