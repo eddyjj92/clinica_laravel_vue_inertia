@@ -43,5 +43,6 @@ a{
 
 .extra-large {
     --el-component-size-large: 50px;
+    width: 100% !important;
 }
 

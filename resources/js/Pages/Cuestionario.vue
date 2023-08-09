@@ -597,7 +597,7 @@ const submit = () =>{
                                                 <el-date-picker v-model="form.datos_generales.nacimiento" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" type="date" id="floatingInput12" placeholder="Fecha de Nacimiento"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <el-input v-model="form.datos_generales.edad" size="large" class="extra-large" type="text" id="floatingInput13" placeholder="Edad"/>
+                                                <el-input-number v-model="form.datos_generales.edad" :min="18" :max="80" size="large" class="extra-large" type="number" id="floatingInput13" placeholder="Edad"/>
                                             </div>
                                             <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="bi bi-gender-ambiguous"></i> Sexo</label>
@@ -630,16 +630,13 @@ const submit = () =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-floating col-md-6 mb-4">
-                                                <input v-model="form.info_contacto.telefono" type="text" class="form-control" id="floatingInput14" placeholder="Teléfono">
-                                                <label for="floatingInput14" class="mx-2"><i class="fa fa-phone"></i> Teléfono</label>
+                                                <el-input v-model="form.info_contacto.telefono" type="number" size="large" class="extra-large" id="floatingInput14" placeholder="Teléfono"/>
                                             </div>
                                             <div class="form-floating col-md-6 mb-4">
-                                                <input v-model="form.info_contacto.correo" type="email" class="form-control" id="floatingInput15" placeholder="Correo Electrónico">
-                                                <label for="floatingInput15" class="mx-2"><i class="fas fa-at"></i> Correo Electrónico</label>
+                                                <el-input v-model="form.info_contacto.correo" type="email" size="large" class="extra-large" id="floatingInput15" placeholder="Correo Electrónico"/>
                                             </div>
                                             <div class="form-floating col-md-12 mb-4">
-                                                <input v-model="form.info_contacto.direccion" type="text" class="form-control" id="floatingInput16" placeholder="Dirección">
-                                                <label for="floatingInput16" class="mx-2"><i class="fa fa-directions"></i> Dirección</label>
+                                                <el-input v-model="form.info_contacto.direccion" type="text" size="large" class="extra-large" id="floatingInput16" placeholder="Dirección"/>
                                             </div>
                                         </div>
                                     </div>
@@ -1437,7 +1434,7 @@ const submit = () =>{
                                         </div>
                                     </div>
                                     <div class="row align-items-center justify-content-center px-3">
-                                        <el-button  :disabled="step === 1" type="primary" plain id="btnPrev" :class="step === 1 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-left"></i></el-button>
+                                        <el-button  :disabled="step === 1" type="primary" plain id="btnPrev" :class="step === 1 ? 'btn-secondary' : 'btn-primary'" class="col-2 ripple"><i class="fa fa-arrow-left"></i></el-button>
                                         <div class="col-8"><div class="progress">
                                             <div
                                                 class="progress-bar progress-bar-striped progress-bar-animated fw-bold"
@@ -1448,7 +1445,7 @@ const submit = () =>{
                                                 :style="`width: ${(step-1)/14 * 100}%;`"
                                             >{{ ((step-1)/14 * 100).toFixed(0)}}%</div>
                                         </div></div>
-                                        <el-button :disabled="step === 15" type="primary" plain id="btnNext" :class="step === 15 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-right"></i></el-button>
+                                        <el-button :disabled="step === 15" type="primary" plain id="btnNext" :class="step === 15 ? 'btn-secondary' : 'btn-primary'" class="col-2 ripple"><i class="fa fa-arrow-right"></i></el-button>
                                     </div>
                                 </div>
                             </div>
