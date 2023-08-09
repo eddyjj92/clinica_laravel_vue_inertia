@@ -540,28 +540,22 @@ const submit = () =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-floating col-md-4 mb-4">
-                                                <el-input v-model="form.signos_vitales.peso" type="text" id="floatingInput1" placeholder="Peso (Kgs)">
-                                                <label for="floatingInput1" class="mx-2"><i class="fas fa-weight"></i> Peso (Kgs)</label>
+                                                <el-input v-model="form.signos_vitales.peso" size="large" class="extra-large" type="text" id="floatingInput1" placeholder="Peso (Kgs)"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.estatura" type="text" class="form-control" id="floatingInput2" placeholder="Estatura (Mts)">
-                                                <label for="floatingInput2" class="mx-2"><i class="fas fa-person"></i> Estatura (Mts)</label>
+                                                <el-input v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.p_sistolica" type="text" class="form-control" id="floatingInput3" placeholder="Presión Sistólica">
-                                                <label for="floatingInput3" class="mx-2"><i class="bi bi-clock-fill"></i> Presión Sistólica</label>
+                                                <el-input v-model="form.signos_vitales.p_sistolica" size="large" class="extra-large" type="text" id="floatingInput3" placeholder="Presión Sistólica"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.p_diastolica" type="text" class="form-control" id="floatingInput4" placeholder="Presión Diastólica">
-                                                <label for="floatingInput4" class="mx-2"><i class="bi bi-clock"></i> Presión Diastólica</label>
+                                                <el-input v-model="form.signos_vitales.p_diastolica" size="large" class="extra-large" type="text" id="floatingInput4" placeholder="Presión Diastólica"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.pulso" type="text" class="form-control" id="floatingInput5" placeholder="Pulso">
-                                                <label for="floatingInput5" class="mx-2"><i class="bi bi-heart-pulse"></i> Pulso</label>
+                                                <el-input v-model="form.signos_vitales.pulso" type="text" size="large" class="extra-large" id="floatingInput5" placeholder="Pulso"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.signos_vitales.temperatura" type="text" class="form-control" id="floatingInput6" placeholder="Temperatura">
-                                                <label for="floatingInput6" class="mx-2"><i class="fa fa-temperature-2"></i> Temperatura</label>
+                                                <el-input v-model="form.signos_vitales.temperatura" size="large" class="extra-large" type="text" id="floatingInput6" placeholder="Temperatura"/>
                                             </div>
                                         </div>
                                     </div>
@@ -572,20 +566,16 @@ const submit = () =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.medidas.cuello" type="text" class="form-control shadow-3-strong" id="floatingInput7" placeholder="Cuello (Cm)">
-                                                <label for="floatingInput7" class="mx-2"><i class="fa fa-ruler-vertical"></i> Cuello (Cm)</label>
+                                                <el-input v-model="form.medidas.cuello" size="large" class="extra-large" type="text" id="floatingInput7" placeholder="Cuello (Cm)"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.medidas.pecho" type="text" class="form-control shadow-3-strong" id="floatingInput8" placeholder="Pecho (Cm)">
-                                                <label for="floatingInput8" class="mx-2"><i class="fa fa-ruler-vertical"></i> Pecho (Cm)</label>
+                                                <el-input v-model="form.medidas.pecho" size="large" class="extra-large" type="text" id="floatingInput8" placeholder="Pecho (Cm)"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.medidas.cintura" type="text" class="form-control shadow-3-strong" id="floatingInput9" placeholder="Cintura (Cm)">
-                                                <label for="floatingInput9" class="mx-2"><i class="fa fa-ruler-horizontal"></i> Cintura (Cm)</label>
+                                                <el-input v-model="form.medidas.cintura" size="large" class="extra-large" type="text" id="floatingInput9" placeholder="Cintura (Cm)"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.medidas.caderas" type="text" class="form-control shadow-3-strong" id="floatingInput10" placeholder="Cadera (Cm)">
-                                                <label for="floatingInput10" class="mx-2"><i class="fa fa-ruler-horizontal"></i> Caderas (Cm)</label>
+                                                <el-input v-model="form.medidas.caderas" size="large" class="extra-large" type="text" id="floatingInput10" placeholder="Cadera (Cm)"/>
                                             </div>
                                         </div>
                                     </div>
@@ -596,33 +586,28 @@ const submit = () =>{
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-floating col-md-6 mb-4">
-                                                <select v-model="form.datos_generales.empresa" class="form-select shadow-3-strong" id="floatingSelect1">
-                                                    <option :value="null">Seleccionar Empresa</option>
-                                                    <option v-for="empresa in empresas" :value="empresa.id">{{empresa.nombre}}</option>
-                                                </select>
-                                                <label for="floatingSelect1" class="mx-2"><i class="fas fa-building"></i> Sucursal para la que aplica</label>
+                                                <el-select v-model="form.datos_generales.empresa" size="large" placeholder="Seleccionar Empresa" class="w-100 extra-large" id="floatingSelect1">
+                                                    <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
+                                                </el-select>
                                             </div>
                                             <div class="form-floating col-md-6 mb-4">
-                                                <input v-model="form.datos_generales.nombre" type="text" class="form-control shadow-3-strong" id="floatingInput11" placeholder="Nombre Completo">
-                                                <label for="floatingInput11" class="mx-2"><i class="fa fa-user-alt"></i> Nombre Completo</label>
+                                                <el-input v-model="form.datos_generales.nombre" size="large" class="extra-large" type="text" id="floatingInput11" placeholder="Nombre Completo"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.datos_generales.nacimiento" type="date" class="form-control shadow-3-strong" id="floatingInput12" placeholder="Fecha de Nacimiento">
-                                                <label for="floatingInput12" class="mx-2"><i class="fa fa-calendar-days"></i> Fecha de Nacimiento</label>
+                                                <el-date-picker v-model="form.datos_generales.nacimiento" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" type="date" id="floatingInput12" placeholder="Fecha de Nacimiento"/>
                                             </div>
                                             <div class="form-floating col-md-3 mb-4">
-                                                <input v-model="form.datos_generales.edad" type="text" class="form-control shadow-3-strong" id="floatingInput13" placeholder="Edad">
-                                                <label for="floatingInput13" class="mx-2"><i class="fa fa-sort-numeric-up"></i> Edad</label>
+                                                <el-input v-model="form.datos_generales.edad" size="large" class="extra-large" type="text" id="floatingInput13" placeholder="Edad"/>
                                             </div>
                                             <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="bi bi-gender-ambiguous"></i> Sexo</label>
                                                 <div class="form-check">
                                                     <input v-model="form.datos_generales.sexo" value="Masculino" class="form-check-input" type="radio" name="sexo" id="flexRadioDefault1"/>
-                                                    <label class="form-check-label" for="flexRadioDefault1"> Masculino</label>
+                                                    <label :class="form.datos_generales.sexo === 'Masculino' ? 'text-primary': ''" class="form-check-label" for="flexRadioDefault1"> Masculino</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input v-model="form.datos_generales.sexo" value="Femenino" class="form-check-input" type="radio" name="sexo" id="flexRadioDefault2"/>
-                                                    <label class="form-check-label" for="flexRadioDefault2"> Femenino</label>
+                                                    <label :class="form.datos_generales.sexo === 'Femenino' ? 'text-primary': ''" class="form-check-label" for="flexRadioDefault2"> Femenino</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-4">
@@ -633,7 +618,7 @@ const submit = () =>{
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="ciudad" id="flexRadioDefault4" :checked="form.datos_generales.ciudad_origen !== 'H. Matamoros, Tamaulipas' && form.datos_generales.ciudad_origen !== null"/>
-                                                    <label class="form-check-label" for="flexRadioDefault4"> Otra: <input v-model="form.datos_generales.ciudad_origen" id="ciudad_otros" type="text" class="form-control"></label>
+                                                    <label class="form-check-label" for="flexRadioDefault4"> Otra: <el-input v-model="form.datos_generales.ciudad_origen" size="large" id="ciudad_otros" type="text" /></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1452,7 +1437,7 @@ const submit = () =>{
                                         </div>
                                     </div>
                                     <div class="row align-items-center justify-content-center px-3">
-                                        <button :disabled="step === 1" type="submit" id="btnPrev" :class="step === 1 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-left"></i></button>
+                                        <el-button  :disabled="step === 1" type="primary" plain id="btnPrev" :class="step === 1 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-left"></i></el-button>
                                         <div class="col-8"><div class="progress">
                                             <div
                                                 class="progress-bar progress-bar-striped progress-bar-animated fw-bold"
@@ -1463,7 +1448,7 @@ const submit = () =>{
                                                 :style="`width: ${(step-1)/14 * 100}%;`"
                                             >{{ ((step-1)/14 * 100).toFixed(0)}}%</div>
                                         </div></div>
-                                        <button :disabled="step === 15" type="submit" id="btnNext" :class="step === 15 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-right"></i></button>
+                                        <el-button :disabled="step === 15" type="primary" plain id="btnNext" :class="step === 15 ? 'btn-secondary' : 'btn-primary'" class="btn text-capitalize col-2"><i class="fa fa-arrow-right"></i></el-button>
                                     </div>
                                 </div>
                             </div>
@@ -1587,5 +1572,7 @@ const submit = () =>{
 </template>
 
 <style scoped>
-
+:root {
+    --el-component-size-large: 50px;
+}
 </style>

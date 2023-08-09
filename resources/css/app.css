@@ -40,3 +40,8 @@ a{
     from { opacity: 1; transform: scale(0) }
     to { opacity: 0; transform: scale(1) }
 }
+
+.extra-large {
+    --el-component-size-large: 50px;
+}
+
