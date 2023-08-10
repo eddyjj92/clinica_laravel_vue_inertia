@@ -662,8 +662,7 @@ const submit = () =>{
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.estado_civil.desde_cuando" type="date" class="form-control shadow-3-strong" id="floatingInput18" placeholder="Teléfono">
-                                                <label for="floatingInput18" class="mx-2"><i class="fa fa-calendar-days"></i> ¿Desde cuándo?</label>
+                                                <el-date-picker v-model="form.estado_civil.desde_cuando" type="date" size="large" class="extra-large" id="floatingInput18" placeholder="¿Desde Cuándo?"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="bi bi-person-gear"></i> Tiene usted hijos</label>
@@ -677,8 +676,7 @@ const submit = () =>{
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-12 mb-4">
-                                                <input v-model="form.estado_civil.edades_hijos" :disabled="form.estado_civil.hijos === 'Sin hijos'" type="text" class="form-control" id="floatingInput19" placeholder="En caso de tener hijos (Mencione sus edades, separadas por una coma si es más de uno, ejemplo: 20, 25, 28)">
-                                                <label for="floatingInput19" class="mx-2" :class="form.estado_civil.hijos === 'Sin hijos' ? 'text-decoration-line-through': ''"><i class="fa fa-calendar"></i> En caso de tener hijos (Mencione sus edades, separadas por una coma si es más de uno, ejemplo: 20, 25, 28)</label>
+                                                <el-input v-model="form.estado_civil.edades_hijos" :disabled="form.estado_civil.hijos === 'Sin hijos'" type="text" size="large" class="extra-large" id="floatingInput19" placeholder="En caso de tener hijos (Mencione sus edades, separadas por una coma si es más de uno, ejemplo: 20, 25, 28)" :class="form.estado_civil.hijos === 'Sin hijos' ? 'text-decoration-line-through': ''" />
                                             </div>
                                         </div>
                                     </div>
