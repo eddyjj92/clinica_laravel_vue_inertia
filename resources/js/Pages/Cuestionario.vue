@@ -763,7 +763,7 @@ const submit = () =>{
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-smoking"></i> ¿Usted fuma?</label>
                                                 <div class="form-check">
-                                                    <input v-model="form.toxicomanias.fuma" value="positivo" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault19"/>
+                                                    <input v-model="form.toxicomanias.fuma" value="positivo" :checked="form.toxicomanias.cuantos_cigarillos !== null" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault19"/>
                                                     <label class="form-check-label" for="flexRadioDefault19"> POSITIVO</label>
                                                 </div>
                                                 <div class="form-check">
@@ -772,8 +772,7 @@ const submit = () =>{
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-6 mb-4">
-                                                <input v-model="form.toxicomanias.cuantos_cigarillos" :disabled="form.toxicomanias.fuma === 'negativo'" type="text" class="form-control shadow-3-strong" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?">
-                                                <label for="floatingInput21" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="mx-2"><i class="fa fa-question-circle"></i> ¿Cuántos cigarrillos a la semana?</label>
+                                                <el-input-number v-model="form.toxicomanias.cuantos_cigarillos" min="1" :disabled="form.toxicomanias.fuma === 'negativo'" size="large" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?"/>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label class="mx-2"><i class="fa fa-wine-bottle"></i> ¿Consume bebidas alcohólicas?</label>
@@ -818,8 +817,7 @@ const submit = () =>{
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <input v-model="form.vivienda.cantidad_personas"  :readonly="form.vivienda.personas_vivienda.includes('solo')" type="number" class="form-control shadow-3-strong" id="floatingInput23" placeholder="¿Cuántos cigarrillos consume a la semana?">
-                                                <label for="floatingInput23" class="mx-2"><i class="bi bi-123"></i> ¿Cuántas personas viven en su casa?</label>
+                                                <el-input-number min="1" v-model="form.vivienda.cantidad_personas" :disabled="form.vivienda.personas_vivienda.length === 0" :readonly="form.vivienda.personas_vivienda.includes('solo')" size="large" class="extra-large" id="floatingInput23" placeholder="¿Cuántas personas viven en su casa?"/>
                                             </div>
                                             <div class="col-md-3 mb-4">
                                                 <label class="mx-2"><i class="fa fa-house"></i> Mencione el estado actual de casa</label>
@@ -855,8 +853,8 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault29"> Cónyuge</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault30"/>
-                                                    <label class="form-check-label" for="flexRadioDefault30"> Otro: <input v-model="form.vivienda.propietario_vivienda" type="text" class="form-control" id="propietario_vivienda"></label>
+                                                    <input :checked="form.vivienda.propietario_vivienda !== null && form.vivienda.propietario_vivienda !== 'Propia' && form.vivienda.propietario_vivienda !== 'Padres' && form.vivienda.propietario_vivienda !== 'Cónyuge'"  class="form-check-input" type="radio" name="propietario_domicilio" id="flexRadioDefault30"/>
+                                                    <label class="form-check-label" for="flexRadioDefault30"> Otro: <el-input v-model="form.vivienda.propietario_vivienda" type="text" size="large" id="propietario_vivienda"/></label>
                                                 </div>
                                             </div>
                                             <div class="row justify-content-center align-items-center col-md-8">
@@ -969,7 +967,7 @@ const submit = () =>{
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" :checked="form.vivienda.material_vivienda !== null && form.vivienda.material_vivienda !== 'Concreto' && form.vivienda.material_vivienda !== 'Madera'" type="radio" name="material_vivienda" id="flexRadioDefault54"/>
-                                                        <label class="form-check-label" for="flexRadioDefault54"> Otro: <input v-model="form.vivienda.material_vivienda" type="text" class="form-control" id="material_vivienda"></label>
+                                                        <label class="form-check-label" for="flexRadioDefault54"> Otro: <el-input v-model="form.vivienda.material_vivienda" type="text" size="large" id="material_vivienda"/></label>
                                                     </div>
                                             </div>
                                         </div>
@@ -1093,8 +1091,8 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault73"> Clara</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="piel" id="flexRadioDefault74"/>
-                                                    <label class="form-check-label" for="flexRadioDefault74"> Otro: <input v-model="form.senas_particulares.tono_piel" type="text" class="form-control" id="piel_otras"></label>
+                                                    <input :checked="form.senas_particulares.tono_piel != null && form.senas_particulares.tono_piel !== '' && form.senas_particulares.tono_piel !== 'Morena' && form.senas_particulares.tono_piel !== 'Aperlada' && form.senas_particulares.tono_piel !== 'Clara'" class="form-check-input" type="radio" name="piel" id="flexRadioDefault74"/>
+                                                    <label class="form-check-label" for="flexRadioDefault74"> Otro: <el-input v-model="form.senas_particulares.tono_piel" type="text" size="large" id="piel_otras"/></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -1112,12 +1110,12 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault77"> Rubio</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.senas_particulares.color_cabello" value="Pelirojo" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault78"/>
-                                                    <label class="form-check-label" for="flexRadioDefault78"> Pelirojo</label>
+                                                    <input v-model="form.senas_particulares.color_cabello" value="Pelirrojo" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault78"/>
+                                                    <label class="form-check-label" for="flexRadioDefault78"> Pelirrojo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault79"/>
-                                                    <label class="form-check-label" for="flexRadioDefault79"> Otro: <input v-model="form.senas_particulares.color_cabello" type="text" class="form-control" id="color_cabello_otros"></label>
+                                                    <input :checked="form.senas_particulares.color_cabello != null && form.senas_particulares.color_cabello !== '' && form.senas_particulares.color_cabello !== 'Negro' && form.senas_particulares.color_cabello !== 'Café' && form.senas_particulares.color_cabello !== 'Rubio' && form.senas_particulares.color_cabello !== 'Pelirrojo'" class="form-check-input" type="radio" name="color_cabello" id="flexRadioDefault79"/>
+                                                    <label class="form-check-label" for="flexRadioDefault79"> Otro: <el-input v-model="form.senas_particulares.color_cabello" type="text" size="large" id="color_cabello_otros"/></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -1161,7 +1159,7 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault87"> Largo</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
+                                                    <input :checked="form.senas_particulares.longitud_cabello != null && form.senas_particulares.longitud_cabello !== '' && form.senas_particulares.longitud_cabello !== 'Corto' && form.senas_particulares.longitud_cabello !== 'Mediano' && form.senas_particulares.longitud_cabello !== 'Largo'" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
                                                     <label class="form-check-label" for="flexRadioDefault88"> Otro: <input v-model="form.senas_particulares.longitud_cabello" type="text" class="form-control" id="longitud_cabello_otros"></label>
                                                 </div>
                                             </div>
