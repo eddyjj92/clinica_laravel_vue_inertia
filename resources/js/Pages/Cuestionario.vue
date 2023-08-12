@@ -657,8 +657,8 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault6"> Casado</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault7"/>
-                                                    <label class="form-check-label" for="flexRadioDefault7"> Otro: <input v-model="form.estado_civil.estado" type="text" class="form-control" id="estado_civil_otros"></label>
+                                                    <input :checked="form.estado_civil.estado !== null && form.estado_civil.estado !== '' && form.estado_civil.estado !== 'Soltero' && form.estado_civil.estado !== 'Casado'" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault7"/>
+                                                    <label class="form-check-label" for="flexRadioDefault7"> Otro: <el-input v-model="form.estado_civil.estado" type="text" size="large" id="estado_civil_otros"/></label>
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
@@ -671,7 +671,7 @@ const submit = () =>{
                                                     <label class="form-check-label" for="flexRadioDefault8"> Con hijos</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.estado_civil.hijos" value="Sin hijos" class="form-check-input" type="radio" name="hijos" id="flexRadioDefault9"/>
+                                                    <input @click="form.estado_civil.edades_hijos = null" v-model="form.estado_civil.hijos" value="Sin hijos" class="form-check-input" type="radio" name="hijos" id="flexRadioDefault9"/>
                                                     <label class="form-check-label" for="flexRadioDefault9"> Sin hijos</label>
                                                 </div>
                                             </div>
@@ -689,23 +689,23 @@ const submit = () =>{
                                             <div class="col-md-12 mb-4">
                                                 <label class="mx-2"><i class="fa fa-school-circle-exclamation"></i> Último grado de estudios</label>
                                                 <div class="form-check">
-                                                    <input v-model="form.escolaridad.grado_estudios" value="Primaria" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault10"/>
+                                                    <input v-model="form.escolaridad.grado_estudios" value="Primaria" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault10"/>
                                                     <label class="form-check-label" for="flexRadioDefault10"> Primaria</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.escolaridad.grado_estudios" value="Secundaria" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault11"/>
+                                                    <input v-model="form.escolaridad.grado_estudios" value="Secundaria" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault11"/>
                                                     <label class="form-check-label" for="flexRadioDefault11"> Secundaria</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.escolaridad.grado_estudios" value="Preparatoria" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault12"/>
+                                                    <input v-model="form.escolaridad.grado_estudios" value="Preparatoria" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault12"/>
                                                     <label class="form-check-label" for="flexRadioDefault12"> Preparatoria</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.escolaridad.grado_estudios" value="Carrera Técnica" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault13"/>
+                                                    <input v-model="form.escolaridad.grado_estudios" value="Carrera Técnica" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault13"/>
                                                     <label class="form-check-label" for="flexRadioDefault13"> Carrera Técnica</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input v-model="form.escolaridad.grado_estudios" value="Universidad" class="form-check-input" type="radio" name="estado_civil" id="flexRadioDefault14"/>
+                                                    <input v-model="form.escolaridad.grado_estudios" value="Universidad" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault14"/>
                                                     <label class="form-check-label" for="flexRadioDefault14"> Universidad</label>
                                                 </div>
                                             </div>
@@ -717,7 +717,7 @@ const submit = () =>{
                                             <h5 class="text-center"><span>Oficio / Profesión</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="col-md-4 mb-4 border border-2">
+                                            <div class="col-md-4 mb-4 border border-2 rounded">
                                                 <label class="form-check-label fst-italic" for="oficio_profesion"> Lea cuidadosamente la siguiente información</label>
                                                 <img class="w-100" src="/img/oficio_profesion.png" id="oficio_profesion" alt="">
                                             </div>
@@ -731,7 +731,7 @@ const submit = () =>{
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="oficio" id="flexRadioDefault16" :checked="form.oficio_profesion.oficio !== 'Sin oficio' && form.oficio_profesion.oficio !== null"/>
-                                                        <label class="form-check-label" for="flexRadioDefault16"> Otro: <input v-model="form.oficio_profesion.oficio" type="text" class="form-control" id="oficio_otros"></label>
+                                                        <label class="form-check-label" for="flexRadioDefault16"> Otro: <el-input v-model="form.oficio_profesion.oficio" type="text" size="large" id="oficio_otros"/></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-4">
@@ -742,16 +742,14 @@ const submit = () =>{
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="profesion" id="flexRadioDefault18" :checked="form.oficio_profesion.profesion !== 'Sin profesión' && form.oficio_profesion.profesion !== null"/>
-                                                        <label class="form-check-label" for="flexRadioDefault18"> Otro: <input v-model="form.oficio_profesion.profesion" type="text" class="form-control" id="profesion_otros"></label>
+                                                        <label class="form-check-label" for="flexRadioDefault18"> Otro: <el-input v-model="form.oficio_profesion.profesion" type="text" size="large" id="profesion_otros"/></label>
                                                     </div>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
-                                                    <input v-model="form.oficio_profesion.ultimo_trabajo" type="text" class="form-control shadow-3-strong" id="floatingInput20" placeholder="Último trabajo">
-                                                    <label for="floatingInput20" class="mx-2"><i class="fa fa-hammer"></i> Último lugar donde trabajó</label>
+                                                    <el-input v-model="form.oficio_profesion.ultimo_trabajo" type="text" size="large" class="extra-large" id="floatingInput20" placeholder="Último lugar donde trabajó"/>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
-                                                    <input v-model="form.oficio_profesion.hasta_cuando" type="date" class="form-control shadow-3-strong" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?">
-                                                    <label for="floatingInput21" class="mx-2"><i class="fa fa-hammer"></i> ¿Hasta cuando trabajo ahí?</label>
+                                                    <el-date-picker v-model="form.oficio_profesion.hasta_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" type="date" size="large" class="extra-large" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?"/>
                                                 </div>
                                             </div>
                                         </div>
