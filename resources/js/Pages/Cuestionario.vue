@@ -1540,7 +1540,7 @@ const redirigeLogin = () => {
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer row align-items-center justify-content-center" style="padding: -5px !important;">
+                            <div class="modal-footer row align-items-center justify-content-center">
                                 <div class="m-2">
                                     <input v-model="aceptar_politica" :checked="aceptar_politica === true" type="checkbox" class="form-check-input shadow-3-strong" id="aceptar_politica">
                                     <label for="aceptar_politica" class="form-check-label fst-italic"> &nbsp Acepto la política de privacidad</label>

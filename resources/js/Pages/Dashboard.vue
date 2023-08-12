@@ -4,23 +4,28 @@ import {router} from "@inertiajs/vue3";
 import {toggleNavbar} from '../Helpers/index';
 import Navbar from "../Layouts/Navbar.vue";
 import Sidenav from "../Layouts/Sidenav.vue";
-
+import Buscador from "@/Components/Buscador.vue";
 
 let auth = ref(JSON.parse(localStorage.getItem('auth')));
-
+let search = ref(null);
 onMounted(()=>{
     toggleNavbar()
 })
+
+const resultSearch = (result) => {
+    search.value = result;
+}
 </script>
 
 <template>
     <body class="sb-nav-fixed">
-        <Navbar/>
+        <Navbar :search="search" @search="result => resultSearch(result)"/>
         <div id="layoutSidenav" class="vh-100">
             <Sidenav />
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
+                    <Buscador :hidden="search === null || search === ''" />
+                    <div class="container-fluid px-4" :hidden="search !== null && search !== ''">
                         <h1 class="mt-4"><i class="fa fa-dashboard"></i> Dashboard</h1>
                         <div class="row">
                             <div class="col-xl-3 col-md-6 rounded">

@@ -3,6 +3,8 @@ import {onMounted} from 'vue';
 import {Link, usePage} from '@inertiajs/vue3'
 import { ripple } from '../Helpers';
 
+const emit = defineEmits(['search'])
+
 const page = usePage()
 
 onMounted(()=>{
@@ -23,7 +25,7 @@ onMounted(()=>{
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input :disabled="$page.props.auth.user === null" :class="$page.props.auth.user === null ? 'text-decoration-line-through' : ''" class="form-control form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
+                <input @keyup="$emit('search', $event.target.value)" :disabled="$page.props.auth.user === null" :class="$page.props.auth.user === null ? 'text-decoration-line-through' : ''" class="form-control form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
                 <button :disabled="$page.props.auth.user === null" :class="$page.props.auth.user === null ? 'btn-secondary' : 'btn-primary ripple'" class="btn" id="btnNavbarSearch" type="button"><i :class="$page.props.auth.user !== null ? 'fa-search' : 'fa-cancel'" class="fas"></i></button>
             </div>
         </form>
