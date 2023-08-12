@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuscadorController;
 use App\Http\Controllers\CuestionarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpresaController;
@@ -42,6 +43,8 @@ Route::middleware('auth')->group( function () {
     });
 
     Route::resource('empresas', EmpresaController::class);
+
+    Route::get('/search', [BuscadorController::class], 'buscador')->name('login');
 
 });
 
