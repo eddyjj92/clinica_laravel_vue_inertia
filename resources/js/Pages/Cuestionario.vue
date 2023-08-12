@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import {router, Link, usePage, useForm} from "@inertiajs/vue3";
 import {toggleNavbar} from '@/Helpers';
 import Navbar from "@/Layouts/Navbar.vue";
@@ -135,7 +135,7 @@ onMounted(()=>{
     })
 
     myModalEl.addEventListener('hidden.bs.modal', (e) => {
-        JSON.parse(localStorage.getItem('aceptar_politica')) === true ? myModal.hide(): myModal.show()
+        JSON.parse(localStorage.getItem('aceptar_politica')) === true || aceptar_politica.value === 'cancel' ? myModal.hide(): myModal.show()
     })
 
     const show_politica_privacidad = document.querySelector('#show_politica_privacidad');
@@ -246,6 +246,10 @@ onMounted(()=>{
         discapacidad_visual_otros.value = null;
     })
 
+})
+
+onUnmounted(()=>{
+    modal_politica.value.hide()
 })
 
 const validationMessage = (msg) => {
@@ -409,6 +413,12 @@ const options = {
 
 const submit = () =>{
     form.post(`/cuestionarios`, options)
+}
+
+const redirigeLogin = () => {
+    aceptar_politica.value = 'cancel';
+    modal_politica.value.hide();
+    router.get('/login');
 }
 </script>
 
@@ -1160,7 +1170,7 @@ const submit = () =>{
                                                 </div>
                                                 <div class="form-check">
                                                     <input :checked="form.senas_particulares.longitud_cabello != null && form.senas_particulares.longitud_cabello !== '' && form.senas_particulares.longitud_cabello !== 'Corto' && form.senas_particulares.longitud_cabello !== 'Mediano' && form.senas_particulares.longitud_cabello !== 'Largo'" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
-                                                    <label class="form-check-label" for="flexRadioDefault88"> Otro: <input v-model="form.senas_particulares.longitud_cabello" type="text" class="form-control" id="longitud_cabello_otros"></label>
+                                                    <label class="form-check-label" for="flexRadioDefault88"> Otro: <el-input v-model="form.senas_particulares.longitud_cabello" type="text" size="large" id="longitud_cabello_otros"/></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -1266,8 +1276,7 @@ const submit = () =>{
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea v-model="form.senas_particulares.lunar_descripcion" :disabled="form.senas_particulares.lunar === 'Sin lunares visibles'" class="form-control"  name="lunar_descripcion" id="textArea1" style="height: 100px;" placeholder="(Lunar) Mencione su ubicación, tamaño y forma"></textarea>
-                                                    <label for="textArea1" :class="form.senas_particulares.lunar === 'Sin lunares visibles' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-exclamation-circle"></i> (Lunar) Mencione su ubicación, tamaño y forma</label>
+                                                    <el-input v-model="form.senas_particulares.lunar_descripcion" :disabled="form.senas_particulares.lunar === 'Sin lunares visibles'" :class="form.senas_particulares.lunar === 'Sin lunares visibles' ? 'text-decoration-line-through': ''"  type="textarea" :rows="4" name="lunar_descripcion" id="textArea1" style="height: 100px;" placeholder="(Lunar) Mencione su ubicación, tamaño y forma"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
@@ -1283,8 +1292,7 @@ const submit = () =>{
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea v-model="form.senas_particulares.tatuaje_descripcion" :disabled="form.senas_particulares.tatuaje === 'Sin tatuajes'" class="form-control" name="tatuaje_descripcion" id="textArea2" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
-                                                    <label for="textArea2" :class="form.senas_particulares.tatuaje === 'Sin tatuajes' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-person-badge-fill"></i> (Tatuaje) Describa la ubicación, tamaño y figura del tatuaje</label>
+                                                    <el-input v-model="form.senas_particulares.tatuaje_descripcion" :disabled="form.senas_particulares.tatuaje === 'Sin tatuajes'" :class="form.senas_particulares.tatuaje === 'Sin tatuajes' ? 'text-decoration-line-through': ''" type="textarea" :rows="4" name="tatuaje_descripcion" id="textArea2" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
@@ -1300,8 +1308,7 @@ const submit = () =>{
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" class="form-control" name="cicatriz_descripcion" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"></textarea>
-                                                    <label for="textArea3" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-check-circle-fill"></i> (Cicatriz) Describa su forma, ubicación y tamaño</label>
+                                                    <el-input v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" type="textarea" :rows="4" name="cicatriz_descripcion" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1320,7 +1327,7 @@ const submit = () =>{
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="discapacidad" id="flexRadioDefault115"/>
-                                                    <label class="form-check-label" for="flexRadioDefault115"> Otro: <input v-model="form.discapacidades.discapacidad" type="text" class="form-control" id="discapacidad_otros"></label>
+                                                    <label class="form-check-label" for="flexRadioDefault115"> Otro: <el-input v-model="form.discapacidades.discapacidad" type="text" size="large" id="discapacidad_otros"/></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
@@ -1336,8 +1343,7 @@ const submit = () =>{
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <textarea v-model="form.discapacidades.funcion_protesis" :disabled="form.discapacidades.protesis === 'No'" class="form-control" name="funcion_protesis" id="textArea4" style="height: 100px;" placeholder="Mencione la función de la prótesis"></textarea>
-                                                    <label for="textArea1" :class="form.discapacidades.protesis === 'No' ? 'text-decoration-line-through': ''" class="mx-2"><i class="bi bi-heart-pulse"></i> Mencione la función de la prótesis</label>
+                                                    <el-input v-model="form.discapacidades.funcion_protesis" :disabled="form.discapacidades.protesis === 'No'" type="textarea" :rows="4" :class="form.discapacidades.protesis === 'No' ? 'text-decoration-line-through': ''" name="funcion_protesis" id="textArea4" style="height: 100px;" placeholder="Mencione la función de la prótesis"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
@@ -1375,7 +1381,7 @@ const submit = () =>{
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" :checked="discapacidad_visual_otros !== null && discapacidad_visual_otros !== ''" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" type="checkbox" name="discapacidad_visual" id="flexCheckDefault11"/>
-                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault11"> Otro: <input @click="validaDiscapacidadVisualOtros($event.target.value)" v-model="discapacidad_visual_otros" @focusout="$event.target.value !== '' ? validaDiscapacidadVisual($event.target.value) : null" type="text" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" class="form-control" id="discapacidad_visual_otros"></label>
+                                                    <label class="form-check-label" :class="form.discapacidades.discapacidad_visual.includes('Ninguna') ? 'text-decoration-line-through': ''" for="flexCheckDefault11"> Otro: <el-input @click="validaDiscapacidadVisualOtros($event.target.value)" v-model="discapacidad_visual_otros" @focusout="$event.target.value !== '' ? validaDiscapacidadVisual($event.target.value) : null" type="text" :disabled="form.discapacidades.discapacidad_visual.includes('Ninguna')" size="large" id="discapacidad_visual_otros"/></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
@@ -1534,13 +1540,18 @@ const submit = () =>{
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer row align-content-center justify-content-center">
-                                <div class="m-1">
-                                    <input v-model="aceptar_politica" :checked="aceptar_politica" type="checkbox" class="form-check-input shadow-3-strong" id="aceptar_politica">
+                            <div class="modal-footer row align-items-center justify-content-center" style="padding: -5px !important;">
+                                <div class="m-2">
+                                    <input v-model="aceptar_politica" :checked="aceptar_politica === true" type="checkbox" class="form-check-input shadow-3-strong" id="aceptar_politica">
                                     <label for="aceptar_politica" class="form-check-label fst-italic"> &nbsp Acepto la política de privacidad</label>
                                 </div>
-                                <div class="m-3">
-                                    <button :disabled="!aceptar_politica" class="btn btn-primary btn-lg form-control text-capitalize ripple" id="btn_aceptar"><i class="fa fa-check"></i> Aceptar</button>
+                                <div class="my-2 w-100 row align-items-center justify-content-center">
+                                    <div class="col-6">
+                                        <button :disabled="!aceptar_politica" class="btn btn-primary btn-lg form-control text-capitalize ripple" id="btn_aceptar"><i class="fa fa-check"></i> Aceptar</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button @click="redirigeLogin" class="btn btn-danger btn-lg form-control text-capitalize ripple" id="btn_cancelar"><i class="fa fa-cancel"></i> Cancelar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
