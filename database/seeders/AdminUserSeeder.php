@@ -23,6 +23,7 @@ class AdminUserSeeder extends Seeder
             'email' => 'eddyjj92@gmail.com',
             'empresa' => 'Laboratorio Clínico y Patológico',
             'cargo' => 'Desarrollador',
+            'avatar' => 'user.png',
             'password' => bcrypt('Ej8547/*-'),
         ]);
     }

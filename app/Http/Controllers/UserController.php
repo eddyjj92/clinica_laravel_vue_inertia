@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Usuarios/RegistrarUsuario', ['empresas' => Empresa::all()]);
+        return Inertia::render('Usuarios/Registrar', ['empresas' => Empresa::all()]);
     }
 
     /**
@@ -51,6 +51,17 @@ class UserController extends Controller
         $user->empresa = $input['empresa'];
         $user->cargo = $input['cargo'];
         $user->password = bcrypt($input['password']);
+        if($request->file('avatar')){
+            try {
+                $file = $filename = time().".".$request->avatar->extension();
+                $request->avatar->move(public_path("img/profile"), $filename);
+                $user->avatar = $file;
+            }catch (\Exception $e){
+                return back()->withErrors(['validacion' => $e->getMessage()]);
+            }
+        }else{
+            $user->avatar = 'user.png';
+        }
         $user->save();
         return redirect()->route('listar_usuarios')->with('message', 'Usuario Registrado con Éxito');
     }

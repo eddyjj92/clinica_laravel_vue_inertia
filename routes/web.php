@@ -44,7 +44,7 @@ Route::middleware('auth')->group( function () {
 
     Route::resource('empresas', EmpresaController::class);
 
-    Route::get('/search', [BuscadorController::class], 'buscador')->name('login');
+    Route::get('/buscador/{key}', [BuscadorController::class, 'buscador'] )->name('buscador');
 
 });
 

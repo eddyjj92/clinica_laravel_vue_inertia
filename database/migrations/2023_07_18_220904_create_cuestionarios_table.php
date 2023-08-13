@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cuestionarios', function (Blueprint $table) {
             $table->id();
+            $table->string('paciente');
             $table->json('data');
             $table->timestamps();
         });

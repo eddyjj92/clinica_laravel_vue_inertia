@@ -33,6 +33,7 @@ class CuestionarioController extends Controller
     {
         $input = $request->all();
         $cuestionario = new Cuestionario();
+        $cuestionario->paciente = $input['datos_generales']['nombre'];
         $cuestionario->data = $input;
         $cuestionario->save();
         return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');

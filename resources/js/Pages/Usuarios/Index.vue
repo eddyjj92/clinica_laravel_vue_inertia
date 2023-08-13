@@ -49,6 +49,7 @@ const options = {
     },
     onSuccess: () =>{
         idProcessing.value = null;
+        router.get('/usuarios');
     },
 }
 
@@ -93,7 +94,7 @@ const deleteUser = (id) =>{
                                 <tr>
                                     <th hidden>Id</th>
                                     <th>Usuario</th>
-                                    <th>Entidad</th>
+                                    <th>Empresa</th>
                                     <th>Fecha Registro</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -103,9 +104,9 @@ const deleteUser = (id) =>{
                                     <td hidden>{{ usr.id }}</td>
                                     <td style="width: 35%">
                                         <div class="row justify-content-center align-items-center w-100">
-                                            <!--                                                <div class="col-lg-4 col-md-5">
-                                                                                                <img class="rounded rounded-3 w-100 h-100" :src="`img/profile/${usr.imagen}`">
-                                                                                            </div>-->
+                                            <div class="col-lg-4 col-md-5">
+                                                <img class="rounded rounded-3 w-100 h-100" :src="`img/profile/${usr.avatar}`">
+                                            </div>
                                             <div class="col-lg-8 col-md-7">
                                                 <div class="text-base fw-bold">{{ usr.nombre }}</div>
                                                 <div class="font-normal">{{ usr.email }}</div>
