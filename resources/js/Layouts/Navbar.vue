@@ -34,8 +34,8 @@ onMounted(()=>{
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item ripple" href="#!"><i class="fas fa-user-cog"></i> Perfil</a></li>
-                    <li><hr class="dropdown-divider" /></li>
+                    <li><Link v-if="$page.props.auth.user" class="dropdown-item ripple" :href="`/usuario/perfil/${$page.props.auth.user.id}`"><i class="fas fa-user-cog"></i> Perfil</Link></li>
+                    <li><hr v-if="$page.props.auth.user" class="dropdown-divider"/></li>
                     <li><Link class="dropdown-item ripple" href="/logout"><i class="fa fa-close"></i> Cerrar Sesión</Link></li>
                 </ul>
             </li>

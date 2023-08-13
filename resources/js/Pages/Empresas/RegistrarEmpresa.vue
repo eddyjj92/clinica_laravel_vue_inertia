@@ -78,9 +78,7 @@ const submit = () =>{
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Laboratorio Clínico y Patológico 2023</div>
                             <div>
-                                <a href="#">Política de Privacidad</a>
-                                &middot;
-                                <a href="#">Términos &amp; Condiciones</a>
+                                <a id="show_politica_privacidad" href="#"><i class="bi bi-shield-fill-exclamation"></i> Política de Privacidad</a>
                             </div>
                         </div>
                     </div>

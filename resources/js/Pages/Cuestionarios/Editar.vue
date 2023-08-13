@@ -152,7 +152,7 @@ const save = async() => {
                                         <th>Empresa</th>
                                         <td>
                                             <el-select suffix-icon="OfficeBuilding" @change="save" v-model="form.datos_generales.empresa" class="w-100" size="large">
-                                                <el-option v-for="empresa in empresas" :value="empresa.id">{{empresa.nombre}}</el-option>
+                                                <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
                                             </el-select>
                                         </td>
                                     </tr>
@@ -605,9 +605,7 @@ const save = async() => {
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Laboratorio Clínico y Patológico 2023</div>
                         <div>
-                            <a href="#">Política de Privacidad</a>
-                            &middot;
-                            <a href="#">Términos &amp; Condiciones</a>
+                            <a id="show_politica_privacidad" href="#"><i class="bi bi-shield-fill-exclamation"></i> Política de Privacidad</a>
                         </div>
                     </div>
                 </div>

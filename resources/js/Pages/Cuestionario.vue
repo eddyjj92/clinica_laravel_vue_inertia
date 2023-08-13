@@ -672,7 +672,7 @@ const redirigeLogin = () => {
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <el-date-picker v-model="form.estado_civil.desde_cuando" type="date" size="large" class="extra-large" id="floatingInput18" placeholder="¿Desde Cuándo?"/>
+                                                <el-date-picker v-model="form.estado_civil.desde_cuando" type="date" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" id="floatingInput18" placeholder="¿Desde Cuándo?"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <label class="mx-2"><i class="bi bi-person-gear"></i> Tiene usted hijos</label>

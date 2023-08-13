@@ -6,17 +6,16 @@ import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
 import { genFileId } from 'element-plus'
 
-defineProps({
+const props = defineProps({
+    usuario: Object,
     empresas: Object
 })
 
 let form = useForm({
-    correo: null,
-    nombre: null,
-    empresa:null,
-    cargo: null,
-    password: null,
-    confirmar_password: null,
+    correo: props.usuario.email,
+    nombre: props.usuario.nombre,
+    empresa: props.usuario.empresa,
+    cargo: props.usuario.cargo,
     avatar: null
 });
 const upload = ref();
@@ -46,7 +45,7 @@ const options = {
 }
 
 const submit = () =>{
-    form.post(`/usuario/registrar`, options)
+    form.post(`/usuario/actualizar/${props.usuario.id}`, options)
 }
 
 const handleChange = async (uploadFile) => {
@@ -91,7 +90,7 @@ const handleExceed = (files) => {
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item fw-bold"><Link href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</Link></li>
                                     <li class="breadcrumb-item active fw-bold"><Link href="/usuarios"> <i class="fa fa-users"></i> Usuarios </Link></li>
-                                    <li class="breadcrumb-item active fw-bold"><i class="fa fa-user-plus"></i>Registrar Usuario</li>
+                                    <li class="breadcrumb-item active fw-bold"><i class="fa fa-user-edit"></i>Editar Usuario</li>
                                 </ol>
                             </div>
                             <div class="card-body">
@@ -124,10 +123,10 @@ const handleExceed = (files) => {
                                             </el-dialog>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.correo" type="email" size="large" class="extra-large" id="floatingInput1" placeholder="Correo Electrónico"/>
+                                            <el-input v-model="form.correo" type="email" size="large" class="extra-large" id="floatingInput1" placeholder="Correo Electrónico"><template #prepend>Correo</template></el-input>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"/>
+                                            <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"><template #prepend>Nombre</template></el-input>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
                                             <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
@@ -135,17 +134,11 @@ const handleExceed = (files) => {
                                             </el-select>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.cargo" type="text" size="large" class="extra-large" id="floatingInput4" placeholder="Cargo Empresa"/>
-                                        </div>
-                                        <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.password" type="password" size="large" class="extra-large" id="floatingInput5" placeholder="Contraseña" show-password/>
-                                        </div>
-                                        <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.confirmar_password" type="password" size="large" class="extra-large" id="floatingInput6" placeholder="Confirmar Contraseña" show-password/>
+                                            <el-input v-model="form.cargo" type="text" size="large" class="extra-large" id="floatingInput4" placeholder="Cargo Empresa"><template #prepend>Cargo</template></el-input>
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button :disabled="form.processing" type="submit" class="btn btn-primary btn-lg shadow-3-strong text-capitalize"><i class="fa fa-save"></i> Guardar</button>
+                                        <button :disabled="form.processing" type="submit" class="btn btn-primary btn-lg shadow-3-strong text-capitalize"><i class="fa fa-save"></i> Actualizar</button>
                                     </div>
                                 </form>
                             </div>

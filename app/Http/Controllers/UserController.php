@@ -71,7 +71,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-       return $user ? response()->json(['success' => true, 'user' => $user]) : response()->json(['success' => false, 'message' => 'Este usuario no existe'], 404);
+        return Inertia::render('Usuarios/Perfil', ['usuario' => $user]);
     }
 
     /**
@@ -79,7 +79,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return $user ? response()->json(['success' => true, 'user' => $user]) : response()->json(['success' => false, 'message' => 'Este usuario no existe'], 404);
+        return Inertia::render('Usuarios/Editar', [
+            'empresas' => Empresa::all(),
+            'usuario' => $user
+        ]);
     }
 
     /**
@@ -88,24 +91,30 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $input = $request->all();
-        $validator = Validator::make($input['body'], [
+        $validator = Validator::make($input, [
             'correo' => 'required|email',
             'nombre' => 'required',
             'empresa' => 'required',
             'cargo' => 'required',
-            'password' => 'required',
-            'verificar_password' => 'required',
         ]);
         if($validator->fails()){
             return response()->json(['success' => false, 'message' => json_decode($validator->errors())], 400);
         }
-        $user->correo = $input['body']['correo'];
-        $user->nombre = $input['body']['nombre'];
-        $user->entidad = $input['body']['entidad'];
-        $user->cargo = $input['body']['cargo'];
-        $user->password = bcrypt($input['body']['correo']);
+        $user->email = $input['correo'];
+        $user->nombre = $input['nombre'];
+        $user->empresa = $input['empresa'];
+        $user->cargo = $input['cargo'];
+        if($request->file('avatar')){
+            try {
+                $file = $filename = time().".".$request->avatar->extension();
+                $request->avatar->move(public_path("img/profile"), $filename);
+                $user->avatar = $file;
+            }catch (\Exception $e){
+                return back()->withErrors(['validacion' => $e->getMessage()]);
+            }
+        }
         $user->save();
-        return response()->json(['success' => true, 'message' => 'Usuario registrado con éxito']);
+        return redirect()->route('listar_usuarios')->with('message', 'Usuario Actualizado con Éxito');
     }
 
     /**

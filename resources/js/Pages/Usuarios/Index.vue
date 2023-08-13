@@ -4,10 +4,21 @@ import {router, Link} from "@inertiajs/vue3";
 import {toggleNavbar} from '@/Helpers';
 import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
+import Buscador from "@/Components/Buscador.vue";
 
 defineProps({
     usuarios: Object
 })
+
+let search = ref(null);
+let result = ref({
+    data: {
+        usuarios: [],
+        empresas: [],
+        cuestionarios: [],
+    }
+})
+let buscando = ref(false);
 
 let dtConfig = {
     "order": [[ 0, 'asc' ]],
@@ -70,16 +81,30 @@ const deleteUser = (id) =>{
         }
     })
 }
+
+const buscar = async(key) => {
+    search.value = key;
+    buscando.value = true;
+    if(key !== null && key !== ''){
+        await axios.get(`/buscador/${key}`).then(response => {
+            result.value.data.usuarios = response.data.usuarios;
+            result.value.data.empresas = response.data.empresas;
+            result.value.data.cuestionarios = response.data.cuestionarios;
+            buscando.value = false;
+        })
+    }
+}
 </script>
 
 <template>
     <body class="sb-nav-fixed">
-    <Navbar />
+    <Navbar :search="search" @search="result => buscar(result)"/>
     <div id="layoutSidenav" class="vh-100">
         <Sidenav />
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
+                <Buscador :buscando="buscando" :result="result" :hidden="search === null || search === ''" />
+                <div class="container-fluid px-4" :hidden="search !== null && search !== ''">
                     <h1 class="mt-4"><i class="fa fa-user"></i> Usuarios</h1>
                     <div class="card mb-4">
                         <div class="card-header">
@@ -125,8 +150,8 @@ const deleteUser = (id) =>{
                                         </div>
                                     </td>
                                     <td width="180px">
-                                        <RouterLink :to="`/usuario/perfil/${usr.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${usr.nombre}`"><i class="bi bi-eye-fill fs-6"></i></RouterLink>
-                                        <RouterLink :to="`/usuario/editar/${usr.id}`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${usr.nombre}`"><i class="bi bi-pencil-square fs-6"></i></RouterLink>
+                                        <Link :href="`/usuario/perfil/${usr.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${usr.nombre}`"><i class="bi bi-eye-fill fs-6"></i></Link>
+                                        <Link :href="`/usuario/editar/${usr.id}`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${usr.nombre}`"><i class="bi bi-pencil-square fs-6"></i></Link>
                                         <button @click="deleteUser(usr.id)" class="btn btn-danger m-1 rounded-3" :id="usr.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${usr.nombre}`"> <i :hidden="idProcessing !== null && idProcessing === usr.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === usr.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
@@ -141,9 +166,7 @@ const deleteUser = (id) =>{
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Laboratorio Clínico y Patológico 2023</div>
                         <div>
-                            <a href="#">Política de Privacidad</a>
-                            &middot;
-                            <a href="#">Términos &amp; Condiciones</a>
+                            <a id="show_politica_privacidad" href="#"><i class="bi bi-shield-fill-exclamation"></i> Política de Privacidad</a>
                         </div>
                     </div>
                 </div>

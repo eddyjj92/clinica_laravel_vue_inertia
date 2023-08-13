@@ -79,7 +79,7 @@ onMounted(()=>{
                                             <td><img style="width: 50px" :src="`img/profile/${user.avatar}`" alt=""></td>
                                             <td>{{user.nombre}}</td>
                                             <td>{{user.created_at}}</td>
-                                            <td class="w-10"><button class="btn btn-success"><i class="fa fa-eye"></i></button></td>
+                                            <td class="w-10"><Link :href="`/usuario/perfil/${user.id}`" class="btn btn-success"><i class="fa fa-eye"></i></Link></td>
                                         </tr>
                                         <tr v-if="props.result.data.usuarios.length === 0">
                                             <td colspan="5" class="text-center text-danger">No hay resultados para este modelo de datos</td>
