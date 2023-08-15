@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
         return $date->format('d/m/Y');
     }
+
+    public function permisos(){
+        return $this->belongsToMany(Permiso::class, 'permiso_user');
+    }
 }

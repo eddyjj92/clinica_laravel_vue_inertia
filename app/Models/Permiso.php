@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Permiso extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    protected $casts = [
+        'permiso'
+    ];
+
+    public function users(){
+        return $this->belongsToMany(User::class, 'permiso_user');
+    }
 }

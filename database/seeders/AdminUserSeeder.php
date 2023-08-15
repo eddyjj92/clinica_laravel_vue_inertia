@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permiso;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class AdminUserSeeder extends Seeder
 {
@@ -26,5 +25,6 @@ class AdminUserSeeder extends Seeder
             'avatar' => 'user.png',
             'password' => bcrypt('Ej8547/*-'),
         ]);
+        $user->permisos()->sync(Permiso::all());
     }
 }
