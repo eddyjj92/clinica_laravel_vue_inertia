@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Permiso;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Usuarios/Registrar', ['empresas' => Empresa::all()]);
+        return Inertia::render('Usuarios/Registrar', [
+            'empresas' => Empresa::all(),
+            'permisos' => Permiso::all()
+        ]);
     }
 
     /**
