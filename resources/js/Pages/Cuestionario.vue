@@ -122,7 +122,8 @@ let stepper = ref(null);
 const upload = ref();
 let dialogImageUrl = ref('');
 let dialogVisible = ref(false);
-let prevImageHeight = ref(0);
+let prevImageHeight = ref(210);
+let fullScreen = ref(document.fullscreenElement);
 
 onMounted(()=>{
     document.addEventListener('DOMContentLoaded', ()=>{
@@ -476,7 +477,7 @@ const handleRemove = () => {
 
 <template>
     <body class="sb-nav-fixed">
-    <Navbar />
+    <Navbar :screen="fullScreen" />
     <div id="layoutSidenav" class="vh-100">
         <Sidenav />
         <div id="layoutSidenav_content">
@@ -605,7 +606,11 @@ const handleRemove = () => {
                                                 <el-input v-model="form.signos_vitales.peso" size="large" class="extra-large" type="text" id="floatingInput1" placeholder="Peso (Kgs)"/>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <el-input v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)"/>
+                                                <el-select v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)">
+                                                    <el-option value="Estatura baja">Estatura baja (Femenino: menos de 1.53 m) - (Masculino: de menos de 1.65 m)</el-option>
+                                                    <el-option value="Estatura media">Estatura media (Femenino: 1.53 m a 1.63 m) - (Masculino: 1.65 m - 1.75 m)</el-option>
+                                                    <el-option value="Estatura alta">Estatura alta (Femenino: más de 1.63 m) - (Masculino: más de 1.75 m)</el-option>
+                                                </el-select>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
                                                 <el-input v-model="form.signos_vitales.p_sistolica" size="large" class="extra-large" type="text" id="floatingInput3" placeholder="Presión Sistólica"/>
@@ -955,7 +960,7 @@ const handleRemove = () => {
                                                     <label><i class="bi bi-123"></i> Indique el número de lo siguiente</label>
                                                 </div>
                                                 <div class="col-md-4 mb-4">
-                                                    <label class="mx-2"><i class="fa fa-house-circle-exclamation"></i> Recamaras</label>
+                                                    <label class="mx-2"><i class="fa fa-house-circle-exclamation"></i> Recamaras (Donde usted duerme)</label>
                                                     <div class="form-check">
                                                         <input v-model="form.vivienda.recamaras" value="1" class="form-check-input" type="radio" name="recamaras" id="flexRadioDefault31"/>
                                                         <label class="form-check-label" for="flexRadioDefault31"> 1</label>
@@ -986,7 +991,7 @@ const handleRemove = () => {
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-4">
-                                                    <label class="mx-2"><i class="fa fa-house-flood-water-circle-arrow-right"></i> Baños</label>
+                                                    <label class="mx-2"><i class="fa fa-house-flood-water-circle-arrow-right"></i> Baños (Lugar de aseo personal)</label>
                                                     <div class="form-check">
                                                         <input v-model="form.vivienda.banos" value="1" class="form-check-input" type="radio" name="baños" id="flexRadioDefault38"/>
                                                         <label class="form-check-label" for="flexRadioDefault38"> 1</label>
@@ -1017,7 +1022,7 @@ const handleRemove = () => {
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-4">
-                                                    <label class="mx-2"><i class="fa fa-restroom"></i> Cuartos</label>
+                                                    <label class="mx-2"><i class="fa fa-restroom"></i> Cuartos (Otras habitaciones de cuatro paredes)</label>
                                                     <div class="form-check">
                                                         <input v-model="form.vivienda.cuartos" value="1" class="form-check-input" type="radio" name="cuartos" id="flexRadioDefault45"/>
                                                         <label class="form-check-label" for="flexRadioDefault45"> 1</label>
@@ -1238,22 +1243,46 @@ const handleRemove = () => {
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label class="mx-2"><i class="fa fa-ruler"></i> Longitud de cabello</label>
-                                                <div class="form-check">
-                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Corto" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault85"/>
-                                                    <label class="form-check-label" for="flexRadioDefault85"> Corto</label>
+                                                <label class="mx-2"><i class="fa fa-ruler"></i> Longitud de cabello (Sexo {{form.datos_generales.sexo}})</label>
+                                                <div v-if="form.datos_generales.sexo === 'Femenino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Muy corto" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault85"/>
+                                                    <label class="form-check-label" for="flexRadioDefault85">Muy corto (Pelo no rebasa la oreja)</label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Mediano" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault86"/>
-                                                    <label class="form-check-label" for="flexRadioDefault86"> Mediano</label>
+                                                <div v-if="form.datos_generales.sexo === 'Femenino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Corto" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault86"/>
+                                                    <label class="form-check-label" for="flexRadioDefault86"> Corto (Pelo llega a la mandíbula)</label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault87"/>
-                                                    <label class="form-check-label" for="flexRadioDefault87"> Largo</label>
+                                                <div v-if="form.datos_generales.sexo === 'Femenino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Mediano" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault87"/>
+                                                    <label class="form-check-label" for="flexRadioDefault87"> Mediano (Pelo llega a los hombros)</label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input :checked="form.senas_particulares.longitud_cabello != null && form.senas_particulares.longitud_cabello !== '' && form.senas_particulares.longitud_cabello !== 'Corto' && form.senas_particulares.longitud_cabello !== 'Mediano' && form.senas_particulares.longitud_cabello !== 'Largo'" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
-                                                    <label class="form-check-label" for="flexRadioDefault88"> Otro: <el-input v-model="form.senas_particulares.longitud_cabello" type="text" size="large" id="longitud_cabello_otros"/></label>
+                                                <div v-if="form.datos_generales.sexo === 'Femenino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88"> Largo (Pelo llega al pecho)</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Femenino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Muy largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.1"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.1">Muy largo (Pelo llega al estómago</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Masculino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Rapado" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.2"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.2">Rapado (No tiene pelo)</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Masculino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Corto" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.3"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.3">Corto (Pelo mide menos de una pulgada de longitud)</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Masculino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Mediano" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.4"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.4">Mediano (Si el pelo supera una pulgada de longitud)</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Masculino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.5"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.5">Largo (Si el pelo supera la oreja)</label>
+                                                </div>
+                                                <div v-if="form.datos_generales.sexo === 'Masculino'" class="form-check">
+                                                    <input v-model="form.senas_particulares.longitud_cabello" value="Muy largo" class="form-check-input" type="radio" name="longitud_cabello" id="flexRadioDefault88.6"/>
+                                                    <label class="form-check-label" for="flexRadioDefault88.6">Muy largo (Si el pelo llega a los hombros)</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">

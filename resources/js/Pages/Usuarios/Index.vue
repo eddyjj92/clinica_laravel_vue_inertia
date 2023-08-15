@@ -130,7 +130,7 @@ const buscar = async(key) => {
                                     <td style="width: 35%">
                                         <div class="row justify-content-center align-items-center w-100">
                                             <div class="col-lg-4 col-md-5">
-                                                <img class="rounded rounded-3 w-100 h-100" :src="`/img/profile/${usr.avatar}`">
+                                                <img class="rounded rounded-3 border border-2 border-primary w-100 h-100" :src="`/img/profile/${usr.avatar}`">
                                             </div>
                                             <div class="col-lg-8 col-md-7">
                                                 <div class="text-base fw-bold">{{ usr.nombre }}</div>

@@ -16,6 +16,8 @@ let result = ref({
     }
 })
 let buscando = ref(false);
+let fullScreen = ref(document.fullscreenElement);
+
 onMounted(()=>{
     toggleNavbar()
 })
@@ -37,7 +39,7 @@ const buscar = async(key) => {
 
 <template>
     <body class="sb-nav-fixed">
-        <Navbar :search="search" @search="result => buscar(result)"/>
+        <Navbar :screen="fullScreen" :search="search" @search="result => buscar(result)"/>
         <div id="layoutSidenav" class="vh-100">
             <Sidenav />
             <div id="layoutSidenav_content">

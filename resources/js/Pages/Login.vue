@@ -18,6 +18,7 @@ let form = useForm({
 });
 let databases = ref([]);
 let modal = ref(null);
+let fullScreen = ref(false);
 
 onMounted(()=>{
     const options = {
@@ -52,6 +53,7 @@ const options = {
         })
         autenticando.value = false;
         modal.value.show();
+        toggleFullScreen();
     },
     onSuccess: () =>{
         autenticando.value = false;
@@ -59,21 +61,28 @@ const options = {
 }
 let autenticando = ref(false);
 const submit = () =>{
+    toggleFullScreen();
     autenticando.value = true;
     form.post(`/login`, options)
 }
 
 let cuest = ref(false);
 const cuestionario = () => {
+    toggleFullScreen();
     cuest.value = true;
     $('.btn-close').click()
     router.get('/cuestionarios/create');
 }
 
+function toggleFullScreen() {
+    document.documentElement.requestFullscreen();
+    fullScreen.value = true;
+}
+
 </script>
 
 <template>
-    <Layout />
+    <Layout :screen="fullScreen" />
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">

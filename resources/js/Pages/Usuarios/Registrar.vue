@@ -22,6 +22,7 @@ let form = useForm({
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
+let prevImageHeight = ref(0);
 
 onMounted(()=>{
     toggleNavbar()
@@ -35,6 +36,7 @@ const options = {
             title: 'Validación',
             text: errors.validacion
         })
+        await router.get('/usuario/registrar')
     },
     onSuccess: async page2 =>{
         await Swal.fire({
@@ -45,8 +47,12 @@ const options = {
     }
 }
 
-const submit = () =>{
-    form.post(`/usuario/registrar`, options)
+const submit = async () =>{
+    if(form.avatar !== null){
+        const base64 = await fetch(form.avatar);
+        form.avatar = await base64.blob();
+    }
+    await form.post(`/usuario/registrar`, options)
 }
 
 const handleChange = async (uploadFile) => {
@@ -59,7 +65,14 @@ const handleChange = async (uploadFile) => {
             console.log(percentCompleted)
         },
     }).then((response) => {
-        form.avatar = new Blob([response.data])
+        const blob = new Blob([response.data])
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            form.avatar = event.target.result;
+        }
+        reader.readAsDataURL(blob);
+        prevImageHeight.value = 310;
+        toggleFullScreen();
     });
 }
 
@@ -73,6 +86,20 @@ const handleExceed = (files) => {
     const file = files[0];
     file.uid = genFileId()
     upload.value.handleStart(file)
+}
+
+const handleRemove = () => {
+    prevImageHeight.value = 210;
+}
+
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
 }
 
 </script>
@@ -96,8 +123,8 @@ const handleExceed = (files) => {
                             </div>
                             <div class="card-body">
                                 <form @submit.prevent="submit">
-                                    <div class="row align-items-center justify-content-center">
-                                        <div class="form-floating col-md-12 mb-4">
+                                    <div class="row align-items-center justify-content-center mb-4">
+                                        <div class="form-floating" :class="form.avatar === null ? 'col-md-12' : 'col-md-8'">
                                             <el-upload
                                                 ref="upload"
                                                 class="upload-demo"
@@ -108,6 +135,7 @@ const handleExceed = (files) => {
                                                 :on-change="handleChange"
                                                 :on-preview="handlePictureCardPreview"
                                                 :on-exceed="handleExceed"
+                                                :on-remove="handleRemove"
                                             >
                                                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                                                 <div class="el-upload__text">
@@ -120,8 +148,11 @@ const handleExceed = (files) => {
                                                 </template>
                                             </el-upload>
                                             <el-dialog v-model="dialogVisible">
-                                                <img class="w-100" :src="dialogImageUrl" alt="Preview Image" />
+                                                <p class="text-center fw-bold"><i class="fa fa-eye"></i> Vista Previa</p><img class="w-100" :src="dialogImageUrl" alt="Preview Image" />
                                             </el-dialog>
+                                        </div>
+                                        <div v-if="form.avatar !== null" class="form-floating col-md-4 mb-4">
+                                            <img class="w-100 rounded border mt-3 border-2 border-primary" :style="`height: ${prevImageHeight}px`" :src="form.avatar" alt="">
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
                                             <el-input v-model="form.correo" type="email" size="large" class="extra-large" id="floatingInput1" placeholder="Correo Electrónico"/>

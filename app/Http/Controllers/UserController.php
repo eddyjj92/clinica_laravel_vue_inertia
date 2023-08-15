@@ -53,7 +53,7 @@ class UserController extends Controller
         $user->password = bcrypt($input['password']);
         if($request->file('avatar')){
             try {
-                $file = $filename = time().".".$request->avatar->extension();
+                $file = $filename = $input['nombre'].".".$request->avatar->extension();
                 $request->avatar->move(public_path("img/profile"), $filename);
                 $user->avatar = $file;
             }catch (\Exception $e){
@@ -98,19 +98,19 @@ class UserController extends Controller
             'cargo' => 'required',
         ]);
         if($validator->fails()){
-            return response()->json(['success' => false, 'message' => json_decode($validator->errors())], 400);
+            return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
         }
         $user->email = $input['correo'];
         $user->nombre = $input['nombre'];
         $user->empresa = $input['empresa'];
         $user->cargo = $input['cargo'];
-        if($request->file($input['avatar'])){
+        if($request->file('avatar')){
             try {
                 try{
                     $user->avatar != 'user.png' ? unlink(public_path('img/profile/').$user->avatar) : null;
                 }catch (\Exception $e){
                 }
-                $file = $filename = time().".".$request->avatar->extension();
+                $file = $filename = $input['nombre'].".".$request->avatar->extension();
                 $request->avatar->move(public_path("img/profile"), $filename);
                 $user->avatar = $file;
             }catch (\Exception $e){

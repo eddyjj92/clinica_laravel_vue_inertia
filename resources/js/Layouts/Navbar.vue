@@ -1,15 +1,34 @@
 <script setup>
-import {onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import {Link, usePage} from '@inertiajs/vue3'
 import { ripple } from '../Helpers';
 
 const emit = defineEmits(['search'])
 
+const props = defineProps({
+    screen: Boolean
+})
+
 const page = usePage()
+let fullScreen = ref(props.screen);
 
 onMounted(()=>{
     ripple()
+
+    document.addEventListener('fullscreenchange', ()=>{
+        fullScreen.value = document.fullscreenElement;
+    })
 })
+
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+}
 
 </script>
 
@@ -35,6 +54,8 @@ onMounted(()=>{
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><Link v-if="$page.props.auth.user" class="dropdown-item ripple" :href="`/usuario/perfil/${$page.props.auth.user.id}`"><i class="fas fa-user-cog"></i> Perfil</Link></li>
+                    <li><hr v-if="$page.props.auth.user" class="dropdown-divider"/></li>
+                    <li><a class="dropdown-item ripple" href="#" @click="toggleFullScreen"><i class="fa fa-desktop"></i>  {{fullScreen ? 'Salir Pantalla Completa' : 'Pantalla Completa'}} </a></li>
                     <li><hr v-if="$page.props.auth.user" class="dropdown-divider"/></li>
                     <li><Link class="dropdown-item ripple" href="/logout"><i class="fa fa-close"></i> Cerrar Sesión</Link></li>
                 </ul>
