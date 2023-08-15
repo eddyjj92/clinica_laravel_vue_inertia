@@ -66,7 +66,7 @@ onMounted(()=>{
                                         <tr>
                                             <th>1</th>
                                             <th>Avatar</th>
-                                            <td><img style="width: 100px" :src="`/img/profile/${props.usuario.avatar}`" alt=""></td>
+                                            <td><img class="rounded border border-2 border-primary" style="width: 100px" :src="`/img/profile/${props.usuario.avatar}`" alt=""></td>
                                         </tr>
                                         <tr>
                                             <th>2</th>

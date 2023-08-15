@@ -76,7 +76,7 @@ onMounted(()=>{
                                     <tbody>
                                         <tr v-for="user in props.result.data.usuarios">
                                             <td>{{user.id}}</td>
-                                            <td><img style="width: 50px" :src="`img/profile/${user.avatar}`" alt=""></td>
+                                            <td><img class="rounded border border-2 border-primary" style="width: 50px" :src="`/img/profile/${user.avatar}`" alt=""></td>
                                             <td>{{user.nombre}}</td>
                                             <td>{{user.created_at}}</td>
                                             <td class="w-10"><Link :href="`/usuario/perfil/${user.id}`" class="btn btn-success"><i class="fa fa-eye"></i></Link></td>
@@ -123,6 +123,7 @@ onMounted(()=>{
                                     <thead>
                                     <tr class="bg-success">
                                         <th class="w-5">Id</th>
+                                        <th>Avatar</th>
                                         <th class="w-35">Paciente</th>
                                         <th>Fecha Registro</th>
                                         <th class="w-10">Acciones</th>
@@ -131,12 +132,13 @@ onMounted(()=>{
                                     <tbody>
                                     <tr v-for="cuestionario in props.result.data.cuestionarios">
                                         <td>{{cuestionario.id}}</td>
+                                        <td><img class="rounded border border-2 border-primary" style="width: 50px" :src="`/img/pacientes/${cuestionario.data.datos_generales.avatar}`" alt=""></td>
                                         <td>{{cuestionario.paciente}}</td>
                                         <td>{{cuestionario.created_at}}</td>
                                         <td><button class="btn btn-success"><i class="fa fa-eye"></i></button></td>
                                     </tr>
                                     <tr v-if="props.result.data.cuestionarios.length === 0">
-                                        <td colspan="4" class="text-center text-danger">No hay resultados para este modelo de datos</td>
+                                        <td colspan="5" class="text-center text-danger">No hay resultados para este modelo de datos</td>
                                     </tr>
                                     </tbody>
                                 </table>

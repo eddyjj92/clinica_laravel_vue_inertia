@@ -34,6 +34,18 @@ class CuestionarioController extends Controller
         $input = $request->all();
         $cuestionario = new Cuestionario();
         $cuestionario->paciente = $input['datos_generales']['nombre'];
+        if($request->file('avatar')){
+            try {
+                $file = $filename = $input['datos_generales']['nombre'].".".$request->avatar->extension();
+                $request->avatar->move(public_path("img/pacientes"), $filename);
+                $input['datos_generales']['avatar'] = $file;
+            }catch (\Exception $e){
+                return back()->withErrors(['validacion' => $e->getMessage()]);
+            }
+        }else{
+            $input['datos_generales']['avatar'] = 'user.png';
+        }
+
         $cuestionario->data = $input;
         $cuestionario->save();
         return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');

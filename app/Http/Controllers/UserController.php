@@ -104,8 +104,12 @@ class UserController extends Controller
         $user->nombre = $input['nombre'];
         $user->empresa = $input['empresa'];
         $user->cargo = $input['cargo'];
-        if($request->file('avatar')){
+        if($request->file($input['avatar'])){
             try {
+                try{
+                    $user->avatar != 'user.png' ? unlink(public_path('img/profile/').$user->avatar) : null;
+                }catch (\Exception $e){
+                }
                 $file = $filename = time().".".$request->avatar->extension();
                 $request->avatar->move(public_path("img/profile"), $filename);
                 $user->avatar = $file;
@@ -125,6 +129,10 @@ class UserController extends Controller
         if(!$user) return back()->withErrors(['validacion' => 'Este usuario no existe']);
         if($user->id == Auth::user()->id) return back()->withErrors(['validacion' => 'No puede eliminar su propio usuario']);
         $user->delete();
+        try{
+            $user->avatar != 'user.png' ? unlink(public_path('img/profile/').$user->avatar) : null;
+        }catch (\Exception $e){
+        }
         return redirect()->route('listar_usuarios')->with('message', 'Usuario Eliminado con Éxito');
     }
 }

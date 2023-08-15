@@ -102,9 +102,9 @@ const deleteCuestionario = (id) =>{
                                     <td hidden>{{ cuest.id }}</td>
                                     <td style="width: 35%">
                                         <div class="row justify-content-center align-items-center w-100">
-                                            <!--                                                <div class="col-lg-4 col-md-5">
-                                                                                                <img class="rounded rounded-3 w-100 h-100" :src="`img/profile/${usr.imagen}`">
-                                                                                            </div>-->
+                                            <div class="col-lg-4 col-md-5">
+                                                <img class="rounded rounded-3 border border-1 border-primary w-100 h-100" :src="`/img/pacientes/${cuest.data.datos_generales.avatar}`">
+                                            </div>
                                             <div class="col-lg-8 col-md-7">
                                                 <div class="text-base fw-bold">{{ cuest.data.datos_generales.nombre }}</div>
                                                 <div class="font-normal">{{ cuest.data.info_contacto.correo }}</div>

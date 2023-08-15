@@ -6,6 +6,7 @@ import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
 import Stepper from 'bs-stepper'
 import 'bs-stepper/dist/css/bs-stepper.min.css'
+import {genFileId} from "element-plus";
 
 const page = usePage()
 
@@ -33,6 +34,7 @@ let form = useForm({
     datos_generales: {
         empresa: formGuardado.value !== null ? formGuardado.value.datos_generales.empresa : null,
         nombre: formGuardado.value !== null ? formGuardado.value.datos_generales.nombre : null,
+        avatar: formGuardado.value !== null ? formGuardado.value.datos_generales.avatar : null,
         nacimiento: formGuardado.value !== null ? formGuardado.value.datos_generales.nacimiento : null,
         edad: formGuardado.value !== null ? formGuardado.value.datos_generales.edad : null,
         sexo: formGuardado.value !== null ? formGuardado.value.datos_generales.sexo : null,
@@ -108,7 +110,8 @@ let form = useForm({
         lentes_pupilentes: formGuardado.value !== null ? formGuardado.value.discapacidades.lentes_pupilentes : null,
         falta_pieza_dental: formGuardado.value !== null ? formGuardado.value.discapacidades.falta_pieza_dental : null,
         empastes: formGuardado.value !== null ? formGuardado.value.discapacidades.empastes : null,
-    }
+    },
+    avatar: null,
 })
 let discapacidad_visual_otros = ref(null);
 let aceptar_politica = ref(JSON.parse(localStorage.getItem('aceptar_politica')) === true ? true: false);
@@ -116,7 +119,17 @@ let modal_politica = ref(null);
 let step = ref(1);
 let stepper = ref(null);
 
+const upload = ref();
+let dialogImageUrl = ref('');
+let dialogVisible = ref(false);
+let prevImageHeight = ref(0);
+
 onMounted(()=>{
+    document.addEventListener('DOMContentLoaded', ()=>{
+        let rect = document.getElementById('avatar').getBoundingClientRect();
+        prevImageHeight.value = rect.height;
+    })
+
     const options = {
         backdrop: 'static'
     }
@@ -282,6 +295,7 @@ const validarEtapa = (etapa) =>{
     if(etapa === 4){
         if(form.datos_generales.empresa === null || form.datos_generales.empresa === '') return validationMessage('La empresa es un campo requerido')
         if(form.datos_generales.nombre === null || form.datos_generales.nombre === '') return validationMessage('El nombre es un campo requerido');
+        if(form.datos_generales.avatar === null || form.datos_generales.avatar === '') return validationMessage('La imágen de perfil es un campo requerido');
         if(form.datos_generales.nacimiento === null || form.datos_generales.nacimiento === '') return validationMessage('La fecha de nacimiento es un campo requerido');
         if(form.datos_generales.edad === null || form.datos_generales.edad === '') return validationMessage('La edad es un campo requerido');
         if(form.datos_generales.sexo === null || form.datos_generales.sexo === '') return validationMessage('El sexo es un campo requerido');
@@ -411,14 +425,52 @@ const options = {
     }
 }
 
-const submit = () =>{
-    form.post(`/cuestionarios`, options)
+const submit = async() =>{
+    const base64 = await fetch(form.datos_generales.avatar);
+    form.avatar = await base64.blob();
+    await form.post(`/cuestionarios`, options)
 }
 
 const redirigeLogin = () => {
     aceptar_politica.value = 'cancel';
     modal_politica.value.hide();
     router.get('/login');
+}
+
+const handleChange = async (uploadFile) => {
+    await axios({
+        url: uploadFile.url,
+        method: "GET",
+        responseType: "blob", // importante
+        onDownloadProgress: (progressEvent) => {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) /  progressEvent.total);
+            console.log(percentCompleted)
+        },
+    }).then((response) => {
+        const blob = new Blob([response.data])
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            form.datos_generales.avatar = event.target.result;
+        }
+        reader.readAsDataURL(blob);
+        prevImageHeight.value = 310;
+    });
+}
+
+const handlePictureCardPreview = (uploadFile) => {
+    dialogImageUrl.value = uploadFile.url;
+    dialogVisible.value = true;
+}
+
+const handleExceed = (files) => {
+    upload.value.clearFiles()
+    const file = files[0];
+    file.uid = genFileId()
+    upload.value.handleStart(file)
+}
+
+const handleRemove = () => {
+    prevImageHeight.value = 210;
 }
 </script>
 
@@ -595,6 +647,37 @@ const redirigeLogin = () => {
                                             <h5 class="text-center"><span>Datos generales.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
+                                            <div  class="form-floating b-4" :class="form.datos_generales.avatar === null ? 'col-md-12' : 'col-md-8'">
+                                                <el-upload
+                                                    id="avatar"
+                                                    ref="upload"
+                                                    class="upload-demo"
+                                                    drag
+                                                    :limit="1"
+                                                    :auto-upload="false"
+                                                    list-type="picture"
+                                                    :on-change="handleChange"
+                                                    :on-preview="handlePictureCardPreview"
+                                                    :on-exceed="handleExceed"
+                                                    :on-remove="handleRemove"
+                                                >
+                                                    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                                                    <div class="el-upload__text">
+                                                        Arrastre una imágen de perfil aquí <em>o haga click para subir</em>
+                                                    </div>
+                                                    <template #tip>
+                                                        <div class="el-upload__tip">
+                                                            jpg/png ficheros con un tamaño máximo de 5 Mb
+                                                        </div>
+                                                    </template>
+                                                </el-upload>
+                                                <el-dialog v-model="dialogVisible">
+                                                    <p class="text-center fw-bold"> Vista Previa</p><img class="w-100" :src="dialogImageUrl" alt="Preview Image" />
+                                                </el-dialog>
+                                            </div>
+                                            <div v-if="form.datos_generales.avatar !== null" class="form-floating col-md-4 mb-4">
+                                                <img class="w-100 rounded mt-3 border border-2 border-primary" :style="`height: ${prevImageHeight}px`" :src="form.datos_generales.avatar" alt="">
+                                            </div>
                                             <div class="form-floating col-md-6 mb-4">
                                                 <el-select v-model="form.datos_generales.empresa" size="large" placeholder="Seleccionar Empresa" class="w-100 extra-large" id="floatingSelect1">
                                                     <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
