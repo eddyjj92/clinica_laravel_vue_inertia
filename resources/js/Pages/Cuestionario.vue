@@ -44,6 +44,8 @@ let form = useForm({
         telefono: formGuardado.value !== null ? formGuardado.value.info_contacto.telefono : null,
         correo: formGuardado.value !== null ? formGuardado.value.info_contacto.correo : null,
         direccion: formGuardado.value !== null ? formGuardado.value.info_contacto.direccion : null,
+        desde_cuando: formGuardado.value !== null ? formGuardado.value.info_contacto.desde_cuando : null,
+        lugar_crianza: formGuardado.value !== null ? formGuardado.value.info_contacto.lugar_crianza : null,
     },
     estado_civil: {
         estado: formGuardado.value !== null ? formGuardado.value.estado_civil.estado : null,
@@ -110,6 +112,9 @@ let form = useForm({
         lentes_pupilentes: formGuardado.value !== null ? formGuardado.value.discapacidades.lentes_pupilentes : null,
         falta_pieza_dental: formGuardado.value !== null ? formGuardado.value.discapacidades.falta_pieza_dental : null,
         empastes: formGuardado.value !== null ? formGuardado.value.discapacidades.empastes : null,
+        patologias: formGuardado.value !== null ? formGuardado.value.discapacidades.patologias : [],
+        patologias_familia: formGuardado.value !== null ? formGuardado.value.discapacidades.patologias : [],
+
     },
     avatar: null,
 })
@@ -124,6 +129,26 @@ let dialogImageUrl = ref('');
 let dialogVisible = ref(false);
 let prevImageHeight = ref(210);
 let fullScreen = ref(document.fullscreenElement);
+
+const opciones = [
+    {value: 'Hipertensión',label: 'Hipertensión',},
+    {value: 'Diabetes',label: 'Diabetes',},
+    {value: 'Triglicéridos elevados',label: 'Triglicéridos elevados',},
+    {value: 'Colesterol alto',label: 'Colesterol alto',},
+    {value: 'Ácido úrico elevado',label: 'Ácido úrico elevado',},
+    {value: 'Gota',label: 'Gota',},
+    {value: 'Lesiones en la columna vertebral',label: 'Lesiones en la columna vertebral',},
+    {value: 'Cirugías previas',label: 'Cirugías previas',},
+    {value: 'Mareos recurrentes',label: 'Mareos recurrentes',},
+    {value: 'Anemia crónica',label: 'Anemia crónica',},
+    {value: 'Alergias',label: 'Alergias',},
+    {value: 'Gastritis',label: 'Gastritis',},
+    {value: 'Cáncer',label: 'Cáncer (especificar tipo si es conocido)',},
+    {value: 'Artritis',label: 'Artritis',},
+    {value: 'Problemas cardíacos',label: 'Problemas cardíacos',},
+    {value: 'Trastornos respiratorios',label: 'Trastornos respiratorios',},
+    {value: 'Enfermedades hereditarias',label: 'Enfermedades hereditarias',},
+]
 
 onMounted(()=>{
     document.addEventListener('DOMContentLoaded', ()=>{
@@ -238,13 +263,6 @@ onMounted(()=>{
         form.senas_particulares.color_cabello = null;
     })
 
-    const flexRadioDefault88 = document.querySelector('#flexRadioDefault88');
-    flexRadioDefault88.addEventListener('click', () => {
-        const longitud_cabello_otros = document.querySelector('#longitud_cabello_otros');
-        longitud_cabello_otros.focus();
-        form.senas_particulares.longitud_cabello = null;
-    })
-
     const flexRadioDefault115 = document.querySelector('#flexRadioDefault115');
     flexRadioDefault115.addEventListener('click', () => {
         const discapacidad_otros = document.querySelector('#discapacidad_otros');
@@ -307,6 +325,8 @@ const validarEtapa = (etapa) =>{
         if(form.info_contacto.telefono === null || form.info_contacto.telefono === '') return validationMessage('El teléfono es un campo requerido')
         if(form.info_contacto.correo === null || form.info_contacto.correo === '') return validationMessage('El correo es un campo requerido');
         if(form.info_contacto.direccion === null || form.info_contacto.direccion === '') return validationMessage('La dirección es un campo requerido');
+        if(form.info_contacto.desde_cuando === null || form.info_contacto.desde_cuando === '') return validationMessage('La fecha desde cuando reside en su dirección actual es un campo requerido');
+        if(form.info_contacto.lugar_crianza === null || form.info_contacto.lugar_crianza === '') return validationMessage('El lugar de crianza es un campo requerido');
         return true
     }
     if(etapa === 6){
@@ -733,8 +753,14 @@ const handleRemove = () => {
                                             <div class="form-floating col-md-6 mb-4">
                                                 <el-input v-model="form.info_contacto.correo" type="email" size="large" class="extra-large" id="floatingInput15" placeholder="Correo Electrónico"/>
                                             </div>
-                                            <div class="form-floating col-md-12 mb-4">
+                                            <div class="form-floating col-md-4 mb-4">
                                                 <el-input v-model="form.info_contacto.direccion" type="text" size="large" class="extra-large" id="floatingInput16" placeholder="Dirección"/>
+                                            </div>
+                                            <div class="form-floating col-md-4 mb-4">
+                                                <el-date-picker v-model="form.info_contacto.desde_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" id="floatingInput16.1" placeholder="Desde Cuando"/>
+                                            </div>
+                                            <div class="form-floating col-md-4 mb-4">
+                                                <el-input v-model="form.info_contacto.lugar_crianza" type="text" size="large" class="extra-large" id="floatingInput16.2" placeholder="Lugar de Crianza"/>
                                             </div>
                                         </div>
                                     </div>
@@ -1428,7 +1454,7 @@ const handleRemove = () => {
                                     <!--Etapa 14-->
                                     <div id="information-part14" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
                                         <div class="form-floating col-md-12 my-4">
-                                            <h5 class="text-center"><span>Discapacidad</span></h5>
+                                            <h5 class="text-center"><span>Antecedentes Personales Patológicos</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-md-3 mb-4">
@@ -1518,7 +1544,7 @@ const handleRemove = () => {
                                                     <label class="form-check-label" for="flexRadioDefault123"> No</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 mb-3">
+                                            <div class="col-md-2 mb-3">
                                                 <label class="mx-2"><i class="bi bi-person-slash"></i> ¿Tiene empastes?</label>
                                                 <div class="form-check">
                                                     <input v-model="form.discapacidades.empastes" value="Si" class="form-check-input" type="radio" name="empastes" id="flexRadioDefault124"/>
@@ -1528,6 +1554,68 @@ const handleRemove = () => {
                                                     <input v-model="form.discapacidades.empastes" value="No" class="form-check-input" type="radio" name="empastes" id="flexRadioDefault125"/>
                                                     <label class="form-check-label" for="flexRadioDefault125"> No</label>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-5 mb-3">
+                                                <el-popover
+
+                                                    placement="top-start"
+                                                    title="Ayuda"
+                                                    :width="300"
+                                                    trigger="hover"
+                                                    content="Puede seleccionar varias opciones en este componente, si desea agregar una opcion que no está en la lista, escriba su nueva opción y seleccionela..."
+                                                >
+                                                    <template #reference>
+                                                        <el-select
+                                                            size="large"
+                                                            class="extra-large"
+                                                            v-model="form.discapacidades.patologias"
+                                                            multiple
+                                                            filterable
+                                                            allow-create
+                                                            default-first-option
+                                                            :reserve-keyword="false"
+                                                            placeholder="Patologías que ha padecido"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in opciones"
+                                                                :key="item.value"
+                                                                :label="item.label"
+                                                                :value="item.value"
+                                                            />
+                                                        </el-select>
+                                                    </template>
+                                                </el-popover>
+                                            </div>
+                                            <div class="col-md-5 mb-3">
+                                                <el-popover
+
+                                                    placement="top-start"
+                                                    title="Ayuda"
+                                                    :width="300"
+                                                    trigger="hover"
+                                                    content="Puede seleccionar varias opciones en este componente, si desea agregar una opcion que no está en la lista, escriba su nueva opción y seleccionela..."
+                                                >
+                                                    <template #reference>
+                                                        <el-select
+                                                            size="large"
+                                                            class="extra-large"
+                                                            v-model="form.discapacidades.patologias_familia"
+                                                            multiple
+                                                            filterable
+                                                            allow-create
+                                                            default-first-option
+                                                            :reserve-keyword="false"
+                                                            placeholder="Patologías padecidas por familiares"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in opciones"
+                                                                :key="item.value"
+                                                                :label="item.label"
+                                                                :value="item.value"
+                                                            />
+                                                        </el-select>
+                                                    </template>
+                                                </el-popover>
                                             </div>
                                         </div>
                                     </div>
@@ -1689,4 +1777,5 @@ const handleRemove = () => {
 :root {
     --el-component-size-large: 50px;
 }
+
 </style>
