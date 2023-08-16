@@ -17,8 +17,8 @@ class PermisoSeeder extends Seeder
         /*Comando para Correr el Seeder*/
         /*php artisan db:seed --class=PermisoSeeder*/
         $permisos = [
-            'crear-usuario','editar-usuario','ver-usuario','eliminar-usuario',
-            'crear-empresa','editar-empresa','ver-empresa','eliminar-empresa',
+            'registrar-usuario','editar-usuario','ver-usuario','eliminar-usuario',
+            'registrar-empresa','editar-empresa','ver-empresa','eliminar-empresa',
             'editar-cuestionario','ver-cuestionario','eliminar-cuestionario',
             'buscar-usuario', 'buscar-empresa', 'buscar-cuestionario'
         ];

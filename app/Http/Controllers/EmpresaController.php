@@ -50,7 +50,9 @@ class EmpresaController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        //
+        return Inertia::render('Empresas/Editar', [
+            'empresa' => $empresa
+        ]);
     }
 
     /**
@@ -58,7 +60,9 @@ class EmpresaController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        //
+        return Inertia::render('Empresas/Editar', [
+            'empresa' => $empresa
+        ]);
     }
 
     /**
@@ -66,7 +70,16 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, Empresa $empresa)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'nombre' => 'required',
+        ]);
+        if($validator->fails()){
+            return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
+        }
+        $empresa->nombre = $input['nombre'];
+        $empresa->save();
+        return redirect()->route('empresas.index')->with('message', 'Empresa Actualizada con Éxito');
     }
 
     /**

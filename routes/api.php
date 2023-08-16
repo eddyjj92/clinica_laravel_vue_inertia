@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\UserController;
@@ -29,10 +28,6 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::resource('usuarios', UserController::class);
-
-    Route::controller(EstadoController::class)->group(function () {
-        Route::get('/estado5910', 'estado5910')->name('estado5910');
-    });
 });
 
 Route::get('datatables/es', function () {

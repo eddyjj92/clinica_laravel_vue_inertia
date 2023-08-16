@@ -25,7 +25,7 @@ onMounted(()=>{
                     <div class="collapse" id="collapseUsuarios" aria-labelledby="headingOne" data-bs-parent="#collapseUsuarios">
                         <nav class="sb-sidenav-menu-nested nav">
                             <Link class="nav-link ripple" href="/usuarios"><i class="fas fa-users"></i>&nbsp Ver Usuarios</Link>
-                            <Link class="nav-link ripple" href="/usuario/registrar"><i class="fas fa-user-plus"></i>&nbsp Registrar Usuario</Link>
+                            <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 1).length > 0" class="nav-link ripple" href="/usuario/registrar"><i class="fas fa-user-plus"></i>&nbsp Registrar Usuario</Link>
                         </nav>
                     </div>
                     <a v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 7).length > 0" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores">
@@ -36,7 +36,7 @@ onMounted(()=>{
                     <div class="collapse" id="collapseServidores" aria-labelledby="headingTwo" data-bs-parent="#collapseServidores">
                         <nav class="sb-sidenav-menu-nested nav">
                             <Link class="nav-link ripple" href="/empresas"><i class="fas fa-building-columns"></i>&nbsp Ver Empresas</Link>
-                            <Link class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
+                            <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 5).length > 0" class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
                         </nav>
                     </div>
                     <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 10).length > 0" class="nav-link ripple" href="/cuestionarios">

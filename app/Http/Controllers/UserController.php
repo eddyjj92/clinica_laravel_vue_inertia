@@ -79,7 +79,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if(!Auth::user()->permisos->find(3)) return back()->withErrors(['validacion' => 'No tiene permisos para ver los datos de otros usuarios']);
+        if(!Auth::user()->permisos->find(3) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para ver los datos de otros usuarios']);
         return Inertia::render('Usuarios/Perfil', ['usuario' => $user]);
     }
 
@@ -88,7 +88,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(!Auth::user()->permisos->find(2)) return back()->withErrors(['validacion' => 'No tiene permisos para editar usuarios']);
+        if(!Auth::user()->permisos->find(2) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para editar usuarios']);
         $user->permisos->all();
         return Inertia::render('Usuarios/Editar', [
             'empresas' => Empresa::all(),
@@ -102,8 +102,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if(!Auth::user()->permisos->find(2)) return back()->withErrors(['validacion' => 'No tiene permisos para actualizar usuarios']);
-
+        if(!Auth::user()->permisos->find(2) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para actualizar usuarios']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'correo' => 'required|email',
@@ -133,7 +132,7 @@ class UserController extends Controller
         }
         $user->save();
         $user->permisos()->sync($input['permisos']);
-        return redirect()->route('listar_usuarios')->with('message', 'Usuario Actualizado con Éxito');
+        return redirect()->route(Auth::user()->permisos->find(3) ? 'listar_usuarios' : 'dashboard')->with('message', 'Usuario Actualizado con Éxito');
     }
 
     /**

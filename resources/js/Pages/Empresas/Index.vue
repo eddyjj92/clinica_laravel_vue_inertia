@@ -1,9 +1,11 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {router, Link} from "@inertiajs/vue3";
+import {router, Link, usePage} from "@inertiajs/vue3";
 import {toggleNavbar} from '@/Helpers';
 import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
+
+const page = usePage();
 
 defineProps({
     empresas: Object
@@ -26,7 +28,7 @@ let dtConfig = {
             action: function ( e, dt, node, config ) {
                 router.get('/empresas/create');
             },
-            className: `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white`,
+            className: page.props.auth.user.permisos.filter(value => value.id === 5).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
         },
     ],
 }
@@ -105,7 +107,7 @@ const deleteEmpresa = (id) =>{
                                     <td>{{ empresa.created_at }}</td>
                                     <td width="180px">
                                         <RouterLink :to="`/usuario/perfil/${empresa.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Ver Empresa ${empresa.nombre}`"><i class="bi bi-eye-fill fs-6"></i></RouterLink>
-                                        <RouterLink :to="`/usuario/editar/${empresa.id}`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Empresa ${empresa.nombre}`"><i class="bi bi-pencil-square fs-6"></i></RouterLink>
+                                        <Link :href="`/empresas/${empresa.id}/edit`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Empresa ${empresa.nombre}`"><i class="bi bi-pencil-square fs-6"></i></Link>
                                         <button @click="deleteEmpresa(empresa.id)" class="btn btn-danger m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Empresa ${empresa.nombre}`"> <i :hidden="idProcessing !== null && idProcessing === empresa.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === empresa.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
