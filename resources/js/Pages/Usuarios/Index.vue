@@ -1,10 +1,12 @@
 <script setup>
 import {onMounted, ref} from "vue";
-import {router, Link} from "@inertiajs/vue3";
+import {router, Link, usePage} from "@inertiajs/vue3";
 import {toggleNavbar} from '@/Helpers';
 import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
 import Buscador from "@/Components/Buscador.vue";
+
+const page = usePage();
 
 defineProps({
     usuarios: Object
@@ -33,11 +35,11 @@ let dtConfig = {
     ],
     buttons: [
         {
-            text:      '<i class="bi-person-add"> Registrar Usuario</i>',
+            text: '<i class="bi-person-add"> Registrar Usuario</i>',
             action: function ( e, dt, node, config ) {
                 router.get('/usuario/registrar');
             },
-            className: `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white`,
+            className: page.props.auth.user.permisos.filter(value => value.id === 1).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
         },
     ],
 }
@@ -151,8 +153,8 @@ const buscar = async(key) => {
                                     </td>
                                     <td width="180px">
                                         <Link :href="`/usuario/perfil/${usr.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${usr.nombre}`"><i class="bi bi-eye-fill fs-6"></i></Link>
-                                        <Link :href="`/usuario/editar/${usr.id}`" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${usr.nombre}`"><i class="bi bi-pencil-square fs-6"></i></Link>
-                                        <button @click="deleteUser(usr.id)" class="btn btn-danger m-1 rounded-3" :id="usr.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${usr.nombre}`"> <i :hidden="idProcessing !== null && idProcessing === usr.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === usr.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                        <Link :class="$page.props.auth.user.permisos.filter(value => value.id === 2).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${usr.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${usr.nombre}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                        <button :disabled="!$page.props.auth.user.permisos.filter(value => value.id === 4).length > 0" @click="deleteUser(usr.id)" class="btn btn-danger m-1 rounded-3" :id="usr.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${usr.nombre}`"> <i :hidden="idProcessing !== null && idProcessing === usr.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === usr.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>

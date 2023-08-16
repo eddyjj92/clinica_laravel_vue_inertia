@@ -8,7 +8,8 @@ import { genFileId } from 'element-plus'
 
 const props = defineProps({
     usuario: Object,
-    empresas: Object
+    empresas: Object,
+    permisos: Object
 })
 
 let form = useForm({
@@ -16,16 +17,19 @@ let form = useForm({
     nombre: props.usuario.nombre,
     empresa: props.usuario.empresa,
     cargo: props.usuario.cargo,
-    avatar: null
+    avatar: null,
+    permisos: []
 });
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 let prevImageHeight = ref(210);
 let avatarTemp = ref(`/img/profile/${props.usuario.avatar}`);
+let permAll = ref(false);
 
 onMounted(()=>{
-    toggleNavbar()
+    filterPerm();
+    toggleNavbar();
 })
 
 const options = {
@@ -98,6 +102,25 @@ function toggleFullScreen() {
     }
 }
 
+const validaPermiso = (permiso) => {
+    if(permiso === 0 && form.permisos.length === 0){
+        props.permisos.forEach(permiso => {
+            form.permisos.push(permiso.id)
+        })
+    }else if(permiso === 0 && form.permisos.length !== 0){
+        form.permisos = [];
+        permAll.value = false;
+    }else{
+        form.permisos.includes(permiso) ? form.permisos = form.permisos.filter(perm => perm !== permiso) : form.permisos.push(permiso);
+    }
+}
+
+const filterPerm = () => {
+    props.usuario.permisos.forEach(perm => {
+        form.permisos.push(perm.id)
+    })
+}
+
 </script>
 
 <template>
@@ -163,6 +186,17 @@ function toggleFullScreen() {
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
                                             <el-input v-model="form.cargo" type="text" size="large" class="extra-large" id="floatingInput4" placeholder="Cargo Empresa"><template #prepend>Cargo</template></el-input>
+                                        </div>
+                                        <div class="col-md-12 mb-4 row justify-content-start align-items-start">
+                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos</h3>
+                                            <div class="col-md-3 form-check">
+                                                <input v-model="permAll" :checked="form.permisos.length === props.permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
+                                                <label class="form-check-label" :for="`permiso0`">Todos</label>
+                                            </div>
+                                            <div v-for="permiso in permisos" class="col-md-3 form-check">
+                                                <input @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
+                                                <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.permiso}}</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2">

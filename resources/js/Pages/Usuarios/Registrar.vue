@@ -118,7 +118,6 @@ const validaPermiso = (permiso) => {
     }else{
         form.permisos.includes(permiso) ? form.permisos = form.permisos.filter(perm => perm !== permiso) : form.permisos.push(permiso);
     }
-
 }
 
 </script>

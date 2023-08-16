@@ -13,11 +13,11 @@ onMounted(()=>{
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <Link class="nav-link ripple" href="/dashboard" style="margin-top: 20px">
+                    <Link v-if="$page.props.auth.user !== null" class="nav-link ripple" href="/dashboard" style="margin-top: 20px">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </Link>
-                    <a class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
+                    <a v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 3).length > 0" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
                         <div class="sb-nav-link-icon"><i class="fas fa-user-circle"></i></div>
                         Usuarios
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -28,7 +28,7 @@ onMounted(()=>{
                             <Link class="nav-link ripple" href="/usuario/registrar"><i class="fas fa-user-plus"></i>&nbsp Registrar Usuario</Link>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores">
+                    <a v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 7).length > 0" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores">
                         <div class="sb-nav-link-icon"><i class="fas fa-building-columns"></i></div>
                         Empresas
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -39,7 +39,7 @@ onMounted(()=>{
                             <Link class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
                         </nav>
                     </div>
-                    <Link class="nav-link ripple" href="/cuestionarios">
+                    <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 10).length > 0" class="nav-link ripple" href="/cuestionarios">
                         <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
                         Cuestionarios
                     </Link>
