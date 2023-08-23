@@ -55,6 +55,7 @@ let form = useForm({
     },
     escolaridad: {
         grado_estudios: formGuardado.value !== null ? formGuardado.value.escolaridad.grado_estudios : null,
+        carrera: formGuardado.value !== null ? formGuardado.value.escolaridad.carrera : null,
     },
     oficio_profesion: {
         oficio: formGuardado.value !== null ? formGuardado.value.oficio_profesion.oficio : null,
@@ -618,57 +619,67 @@ const handleRemove = () => {
                                     </div>
                                     <!--Etapa 2-->
                                     <div id="information-part2" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                        <div class="form-floating col-md-12 my-4">
+                                        <div class="col-md-12 my-4">
                                             <h5 class="text-center"><span>Signos Vitales <span class="fst-italic">(Pregunte esta información en recepción)</span>.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class=" col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.peso !== null && form.signos_vitales.peso !== ''">Peso (Kgs)</span>
                                                 <el-input v-model="form.signos_vitales.peso" size="large" class="extra-large" type="text" id="floatingInput1" placeholder="Peso (Kgs)"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.estatura !== null && form.signos_vitales.estatura !== ''">Estatura (Mts)</span>
                                                 <el-select v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)">
                                                     <el-option value="Estatura baja">Estatura baja (Femenino: menos de 1.53 m) - (Masculino: de menos de 1.65 m)</el-option>
                                                     <el-option value="Estatura media">Estatura media (Femenino: 1.53 m a 1.63 m) - (Masculino: 1.65 m - 1.75 m)</el-option>
                                                     <el-option value="Estatura alta">Estatura alta (Femenino: más de 1.63 m) - (Masculino: más de 1.75 m)</el-option>
                                                 </el-select>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.p_sistolica !== null && form.signos_vitales.p_sistolica !== ''">Presión Sistólica</span>
                                                 <el-input v-model="form.signos_vitales.p_sistolica" size="large" class="extra-large" type="text" id="floatingInput3" placeholder="Presión Sistólica"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.p_diastolica !== null && form.signos_vitales.p_diastolica !== ''">Presión Diastólica</span>
                                                 <el-input v-model="form.signos_vitales.p_diastolica" size="large" class="extra-large" type="text" id="floatingInput4" placeholder="Presión Diastólica"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.pulso !== null && form.signos_vitales.pulso !== ''">Pulso</span>
                                                 <el-input v-model="form.signos_vitales.pulso" type="text" size="large" class="extra-large" id="floatingInput5" placeholder="Pulso"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.signos_vitales.temperatura !== null && form.signos_vitales.temperatura !== ''">Temperatura</span>
                                                 <el-input v-model="form.signos_vitales.temperatura" size="large" class="extra-large" type="text" id="floatingInput6" placeholder="Temperatura"/>
                                             </div>
                                         </div>
                                     </div>
                                     <!--Etapa 3-->
                                     <div id="information-part3" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                        <div class="form-floating col-md-12 my-4">
+                                        <div class="col-md-12 my-4">
                                             <h5 class="text-center"><span>Medidas <span class="fst-italic">(Pregunte esta información en recepción)</span>.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.medidas.cuello !== null && form.medidas.cuello !== ''">Cuello (Cm)</span>
                                                 <el-input v-model="form.medidas.cuello" size="large" class="extra-large" type="text" id="floatingInput7" placeholder="Cuello (Cm)"/>
                                             </div>
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.medidas.pecho !== null && form.medidas.pecho !== ''">Pecho (Cm)</span>
                                                 <el-input v-model="form.medidas.pecho" size="large" class="extra-large" type="text" id="floatingInput8" placeholder="Pecho (Cm)"/>
                                             </div>
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.medidas.cintura !== null && form.medidas.cintura !== ''">Cintura (Cm)</span>
                                                 <el-input v-model="form.medidas.cintura" size="large" class="extra-large" type="text" id="floatingInput9" placeholder="Cintura (Cm)"/>
                                             </div>
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.medidas.caderas !== null && form.medidas.caderas !== ''">Cadera (Cm)</span>
                                                 <el-input v-model="form.medidas.caderas" size="large" class="extra-large" type="text" id="floatingInput10" placeholder="Cadera (Cm)"/>
                                             </div>
                                         </div>
                                     </div>
                                     <!--Etapa 4-->
                                     <div id="information-part4" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                        <div class="form-floating col-md-12 my-4">
+                                        <div class="col-md-12 my-4">
                                             <h5 class="text-center"><span>Datos generales.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
@@ -700,21 +711,25 @@ const handleRemove = () => {
                                                     <p class="text-center fw-bold"> Vista Previa</p><img class="w-100" :src="dialogImageUrl" alt="Preview Image" />
                                                 </el-dialog>
                                             </div>
-                                            <div v-if="form.datos_generales.avatar !== null" class="form-floating col-md-4 mb-4">
+                                            <div v-if="form.datos_generales.avatar !== null" class="col-md-4 mb-4">
                                                 <img class="w-100 rounded mt-3 border border-2 border-primary" :style="`height: ${prevImageHeight}px`" :src="form.datos_generales.avatar" alt="">
                                             </div>
-                                            <div class="form-floating col-md-6 mb-4">
+                                            <div class="col-md-6 mb-4">
+                                                <span v-if="form.datos_generales.empresa !== null && form.datos_generales.empresa !== ''">Seleccionar Empresa</span>
                                                 <el-select v-model="form.datos_generales.empresa" size="large" placeholder="Seleccionar Empresa" class="w-100 extra-large" id="floatingSelect1">
                                                     <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
                                                 </el-select>
                                             </div>
-                                            <div class="form-floating col-md-6 mb-4">
+                                            <div class="col-md-6 mb-4">
+                                                <span v-if="form.datos_generales.nombre !== null && form.datos_generales.nombre !== ''">Nombre Completo</span>
                                                 <el-input v-model="form.datos_generales.nombre" size="large" class="extra-large" type="text" id="floatingInput11" placeholder="Nombre Completo"/>
                                             </div>
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.datos_generales.nacimiento !== null && form.datos_generales.nacimiento !== ''">Fecha de Nacimiento</span>
                                                 <el-date-picker v-model="form.datos_generales.nacimiento" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" type="date" id="floatingInput12" placeholder="Fecha de Nacimiento"/>
                                             </div>
-                                            <div class="form-floating col-md-3 mb-4">
+                                            <div class="col-md-3 mb-4">
+                                                <span v-if="form.datos_generales.edad !== null && form.datos_generales.edad !== ''">Edad</span>
                                                 <el-input-number v-model="form.datos_generales.edad" :min="18" :max="80" size="large" class="extra-large" type="number" id="floatingInput13" placeholder="Edad"/>
                                             </div>
                                             <div class="col-md-2 mb-4">
@@ -743,30 +758,35 @@ const handleRemove = () => {
                                     </div>
                                     <!--Etapa 5-->
                                     <div id="information-part5" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                        <div class="form-floating col-md-12 my-4">
+                                        <div class=" col-md-12 my-4">
                                             <h5 class="text-center"><span>Información de Contacto.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="form-floating col-md-6 mb-4">
+                                            <div class="col-md-6 mb-4">
+                                                <span v-if="form.info_contacto.telefono !== null && form.info_contacto.telefono !== ''">Teléfono</span>
                                                 <el-input v-model="form.info_contacto.telefono" type="number" size="large" class="extra-large" id="floatingInput14" placeholder="Teléfono"/>
                                             </div>
-                                            <div class="form-floating col-md-6 mb-4">
+                                            <div class="col-md-6 mb-4">
+                                                <span v-if="form.info_contacto.correo !== null && form.info_contacto.correo !== ''">Correo Electrónico</span>
                                                 <el-input v-model="form.info_contacto.correo" type="email" size="large" class="extra-large" id="floatingInput15" placeholder="Correo Electrónico"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.info_contacto.direccion !== null && form.info_contacto.direccion !== ''">Dirección</span>
                                                 <el-input v-model="form.info_contacto.direccion" type="text" size="large" class="extra-large" id="floatingInput16" placeholder="Dirección"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
-                                                <el-date-picker v-model="form.info_contacto.desde_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" id="floatingInput16.1" placeholder="Desde Cuando"/>
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.info_contacto.desde_cuando !== null && form.info_contacto.desde_cuando !== ''">¿Desde Cuándo?</span>
+                                                <el-date-picker v-model="form.info_contacto.desde_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" id="floatingInput16.1" placeholder="¿Desde Cuándo?"/>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.info_contacto.lugar_crianza !== null && form.info_contacto.lugar_crianza !== ''">Lugar de Crianza</span>
                                                 <el-input v-model="form.info_contacto.lugar_crianza" type="text" size="large" class="extra-large" id="floatingInput16.2" placeholder="Lugar de Crianza"/>
                                             </div>
                                         </div>
                                     </div>
                                     <!--Etapa 6-->
                                     <div id="information-part6" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
-                                        <div class="form-floating col-md-12 my-4">
+                                        <div class="col-md-12 my-4">
                                             <h5 class="text-center"><span>Estado Civil.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
@@ -785,7 +805,8 @@ const handleRemove = () => {
                                                     <label class="form-check-label" for="flexRadioDefault7"> Otro: <el-input v-model="form.estado_civil.estado" type="text" size="large" id="estado_civil_otros"/></label>
                                                 </div>
                                             </div>
-                                            <div class="form-floating col-md-4 mb-4">
+                                            <div class="col-md-4 mb-4">
+                                                <span v-if="form.estado_civil.desde_cuando !== null && form.estado_civil.desde_cuando !== ''">¿Desde Cuándo?</span>
                                                 <el-date-picker v-model="form.estado_civil.desde_cuando" type="date" format="DD/MM/YYYY" value-format="DD/MM/YYYY" size="large" class="extra-large" id="floatingInput18" placeholder="¿Desde Cuándo?"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
@@ -799,7 +820,8 @@ const handleRemove = () => {
                                                     <label class="form-check-label" for="flexRadioDefault9"> Sin hijos</label>
                                                 </div>
                                             </div>
-                                            <div class="form-floating col-md-12 mb-4">
+                                            <div class="col-md-12 mb-4">
+                                                <span v-if="form.estado_civil.edades_hijos !== null && form.estado_civil.edades_hijos !== ''">En caso de tener hijos (Mencione sus edades, separadas por una coma si es más de uno, ejemplo: 20, 25, 28)</span>
                                                 <el-input v-model="form.estado_civil.edades_hijos" :disabled="form.estado_civil.hijos === 'Sin hijos'" type="text" size="large" class="extra-large" id="floatingInput19" placeholder="En caso de tener hijos (Mencione sus edades, separadas por una coma si es más de uno, ejemplo: 20, 25, 28)" :class="form.estado_civil.hijos === 'Sin hijos' ? 'text-decoration-line-through': ''" />
                                             </div>
                                         </div>
@@ -810,7 +832,7 @@ const handleRemove = () => {
                                             <h5 class="text-center"><span>Escolaridad.</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="col-md-12 mb-4">
+                                            <div class="col-md-6 mb-4">
                                                 <label class="mx-2"><i class="fa fa-school-circle-exclamation"></i> Último grado de estudios</label>
                                                 <div class="form-check">
                                                     <input v-model="form.escolaridad.grado_estudios" value="Primaria" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault10"/>
@@ -832,6 +854,10 @@ const handleRemove = () => {
                                                     <input v-model="form.escolaridad.grado_estudios" value="Universidad" class="form-check-input" type="radio" name="grado_estudios" id="flexRadioDefault14"/>
                                                     <label class="form-check-label" for="flexRadioDefault14"> Universidad</label>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <span v-if="form.escolaridad.carrera !== null && form.escolaridad.carrera !== ''">Carrera Cursada</span>
+                                                <el-input :disabled="form.escolaridad.grado_estudios !== 'Universidad' && form.escolaridad.grado_estudios !== 'Carrera Técnica'" v-model="form.escolaridad.carrera" type="text" size="large" class="extra-large" id="floatingInput200" placeholder="Carrera Cursada"/>
                                             </div>
                                         </div>
                                     </div>
@@ -870,10 +896,12 @@ const handleRemove = () => {
                                                     </div>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
+                                                    <span v-if="form.oficio_profesion.ultimo_trabajo !== null && form.oficio_profesion.ultimo_trabajo !== ''">Último lugar donde trabajó</span>
                                                     <el-input v-model="form.oficio_profesion.ultimo_trabajo" type="text" size="large" class="extra-large" id="floatingInput20" placeholder="Último lugar donde trabajó"/>
                                                 </div>
                                                 <div class="form-floating col-md-6 mb-4">
-                                                    <el-date-picker v-model="form.oficio_profesion.hasta_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" type="date" size="large" class="extra-large" id="floatingInput21" placeholder="¿Hasta cuando trabajo ahí?"/>
+                                                    <span v-if="form.oficio_profesion.hasta_cuando !== null && form.oficio_profesion.hasta_cuando !== ''">¿Hasta cuándo trabajo ahí?</span>
+                                                    <el-date-picker v-model="form.oficio_profesion.hasta_cuando" format="DD/MM/YYYY" value-format="DD/MM/YYYY" type="date" size="large" class="extra-large" id="floatingInput21" placeholder="¿Hasta cuándo trabajo ahí?"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -884,7 +912,7 @@ const handleRemove = () => {
                                             <h5 class="text-center"><span>TOXICOMANÍAS</span></h5>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
-                                            <div class="col-md-3 mb-4">
+                                            <div class="col-md-2 mb-4">
                                                 <label class="mx-2"><i class="fa fa-smoking"></i> ¿Usted fuma?</label>
                                                 <div class="form-check">
                                                     <input v-model="form.toxicomanias.fuma" value="positivo" :checked="form.toxicomanias.cuantos_cigarillos !== null" class="form-check-input" type="radio" name="fuma" id="flexRadioDefault19"/>
@@ -895,11 +923,12 @@ const handleRemove = () => {
                                                     <label class="form-check-label" for="flexRadioDefault20"> NEGATIVO</label>
                                                 </div>
                                             </div>
-                                            <div class="form-floating col-md-6 mb-4">
-                                                <el-input-number v-model="form.toxicomanias.cuantos_cigarillos" min="1" :disabled="form.toxicomanias.fuma === 'negativo'" size="large" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?"/>
+                                            <div class="form-floating col-md-4 mb-4">
+                                                <span v-if="form.toxicomanias.cuantos_cigarillos !== null && form.toxicomanias.cuantos_cigarillos !== ''">¿Cuántos cigarrillos consume a la semana?</span>
+                                                <el-input v-model="form.toxicomanias.cuantos_cigarillos" min="1" :disabled="form.toxicomanias.fuma === 'negativo'" type="text" size="large" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Cuántos cigarrillos consume a la semana?"/>
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="mx-2"><i class="fa fa-wine-bottle"></i> ¿Consume bebidas alcohólicas?</label>
+                                            <div class="col-md-2 mb-3">
+                                                <label class="mx-2"><i class="fa fa-wine-bottle"></i> ¿Bebidas alcohólicas?</label>
                                                 <div class="form-check">
                                                     <input v-model="form.toxicomanias.bebe" value="positivo" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault21"/>
                                                     <label class="form-check-label" for="flexRadioDefault21"> POSITIVO</label>
@@ -908,6 +937,10 @@ const handleRemove = () => {
                                                     <input v-model="form.toxicomanias.bebe" value="negativo" class="form-check-input" type="radio" name="bebidas" id="flexRadioDefault22"/>
                                                     <label class="form-check-label" for="flexRadioDefault22"> NEGATIVO</label>
                                                 </div>
+                                            </div>
+                                            <div class="form-floating col-md-4 mb-4">
+                                                <span v-if="form.toxicomanias.cuantos_cigarillos !== null && form.toxicomanias.cuantos_cigarillos !== ''">¿Cuánta bebida consume a la semana?</span>
+                                                <el-input v-model="form.toxicomanias.cuantos_cigarillos" min="1" :disabled="form.toxicomanias.fuma === 'negativo'" type="text" size="large" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Cuánta bebida consume a la semana?"/>
                                             </div>
                                         </div>
                                     </div>
@@ -941,6 +974,7 @@ const handleRemove = () => {
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
+                                                <span v-if="form.vivienda.cantidad_personas !== null && form.vivienda.cantidad_personas !== ''">¿Cuántas personas viven en su casa?</span>
                                                 <el-input-number min="1" v-model="form.vivienda.cantidad_personas" :disabled="form.vivienda.personas_vivienda.length === 0" :readonly="form.vivienda.personas_vivienda.includes('solo')" size="large" class="extra-large" id="floatingInput23" placeholder="¿Cuántas personas viven en su casa?"/>
                                             </div>
                                             <div class="col-md-3 mb-4">
@@ -1414,7 +1448,8 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <el-input v-model="form.senas_particulares.lunar_descripcion" :disabled="form.senas_particulares.lunar === 'Sin lunares visibles'" :class="form.senas_particulares.lunar === 'Sin lunares visibles' ? 'text-decoration-line-through': ''"  type="textarea" :rows="4" name="lunar_descripcion" id="textArea1" style="height: 100px;" placeholder="(Lunar) Mencione su ubicación, tamaño y forma"/>
+                                                    <span v-if="form.senas_particulares.lunar_descripcion !== null && form.senas_particulares.lunar_descripcion !== ''">(Lunares) Mencione su ubicación, tamaño y forma</span>
+                                                    <el-input v-model="form.senas_particulares.lunar_descripcion" :disabled="form.senas_particulares.lunar === 'Sin lunares visibles'" :class="form.senas_particulares.lunar === 'Sin lunares visibles' ? 'text-decoration-line-through': ''"  type="textarea" :rows="4" name="lunar_descripcion" id="textArea1" style="height: 100px;" placeholder="(Lunares) Mencione su ubicación, tamaño y forma"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-3">
@@ -1430,6 +1465,7 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
+                                                    <span v-if="form.senas_particulares.tatuaje_descripcion !== null && form.senas_particulares.tatuaje_descripcion !== ''">(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje</span>
                                                     <el-input v-model="form.senas_particulares.tatuaje_descripcion" :disabled="form.senas_particulares.tatuaje === 'Sin tatuajes'" :class="form.senas_particulares.tatuaje === 'Sin tatuajes' ? 'text-decoration-line-through': ''" type="textarea" :rows="4" name="tatuaje_descripcion" id="textArea2" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"/>
                                                 </div>
                                             </div>
@@ -1446,7 +1482,8 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <div class="form-floating mb-4">
-                                                    <el-input v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" type="textarea" :rows="4" name="cicatriz_descripcion" id="textArea3" style="height: 100px;" placeholder="(Tatuaje) Describa la ubicación, tamaño y figura del tatuaje"/>
+                                                    <span v-if="form.senas_particulares.cicatriz_descripcion !== null && form.senas_particulares.cicatriz_descripcion !== ''">(Cicatrices) Describa la ubicación, tamaño y forma de la cicatriz</span>
+                                                    <el-input v-model="form.senas_particulares.cicatriz_descripcion" :disabled="form.senas_particulares.cicatriz === 'Sin cicatrices'" :class="form.senas_particulares.cicatriz === 'Sin cicatrices' ? 'text-decoration-line-through': ''" type="textarea" :rows="4" name="cicatriz_descripcion" id="textArea3" style="height: 100px;" placeholder="(Cicatrices) Describa la ubicación, tamaño y forma de la cicatriz"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1481,6 +1518,7 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-floating mb-4">
+                                                    <span v-if="form.discapacidades.funcion_protesis !== null && form.discapacidades.funcion_protesis !== ''">Mencione la función de la prótesis</span>
                                                     <el-input v-model="form.discapacidades.funcion_protesis" :disabled="form.discapacidades.protesis === 'No'" type="textarea" :rows="4" :class="form.discapacidades.protesis === 'No' ? 'text-decoration-line-through': ''" name="funcion_protesis" id="textArea4" style="height: 100px;" placeholder="Mencione la función de la prótesis"/>
                                                 </div>
                                             </div>
@@ -1557,13 +1595,13 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-5 mb-3">
                                                 <el-popover
-
                                                     placement="top-start"
                                                     title="Ayuda"
                                                     :width="300"
                                                     trigger="hover"
                                                     content="Puede seleccionar varias opciones en este componente, si desea agregar una opcion que no está en la lista, escriba su nueva opción y seleccionela..."
                                                 >
+
                                                     <template #reference>
                                                         <el-select
                                                             size="large"
@@ -1658,85 +1696,65 @@ const handleRemove = () => {
                     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Políticas de privacidad</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa fa-info-circle"></i> Aviso de Privacidad para Encuesta de Certificado Médico </h1>
                                 <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form>
                                     <div class="form-floating mb-3">
-                                       <p>
-                                           1. INFORMACIÓN AL USUARIO <br>
-                                           El Centro de Investigación Económica y Presupuestaria, A. C., como Responsable del Tratamiento, le informa que trataremos su datos tal y como reflejamos en la presente Política de Privacidad.
+                                       <p style="text-align: justify">
 
-                                           En esta Política de Privacidad describimos cómo recogemos sus datos personales y por qué los recogemos, qué hacemos con ellos, con quién los compartimos, cómo los protegemos y sus opciones en cuanto al tratamiento de sus datos personales.
+                                           En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su Reglamento, "Laboratorio Clínico y Patológico" (en adelante, "nosotros" o "el Laboratorio") con domicilio en Av Francisco Villa #90 Col. Treviño Zapata C.P. 87450, H, Matamoros, Tamaulipas, es responsable de recabar sus datos personales, del uso que se le dé a los mismos y de su protección.
 
-                                           Esta Política se aplica al tratamiento de sus datos personales recogidos por la empresa para la prestación de sus servicios. Si acepta las medidas de esta Política, acepta que tratemos sus datos personales como se define en esta Política.
+                                           <br><br><b>I. Finalidades del Tratamiento de Datos Personales</b><br>
 
+                                           Los datos personales que recabamos serán utilizados con el propósito de llevar a cabo la encuesta de certificado médico y evaluar la calidad de nuestros servicios de laboratorio. Dichas finalidades incluyen, pero no se limitan a:
 
-                                           <br> 2. CONTACTO <br>
-                                           Denominación social: Centro de Investigación Económica y Presupuestaria, A. C.
-                                           Nombre comercial: Centro de Investigación Económica y Presupuestaria, A. C.
-                                           Domicilio: Puebla 151 Letra O, Col. Roma Norte, Del. Cuauhtémoc, CDMX, México
-                                           e-mail: info@ciep.mx
+                                           1. Verificación y validación de la información proporcionada.
+                                           2. Evaluación de la satisfacción del cliente.
+                                           3. Mejora continua de nuestros servicios y procesos.
 
 
-                                           <br> 3. PRINCIPIOS CLAVE <br>
-                                           Siempre hemos estado comprometidos con prestar nuestros servicios con el más alto grado de calidad, lo que incluye tratar sus datos con seguridad y transparencia. Nuestros principios son:
+                                           <br><b>II. Datos Personales Recabados</b><br>
 
-                                           Legalidad: Solo recopilaremos sus Datos personales para fines específicos, explícitos y legítimos.
-                                           Minimización de datos: Limitamos la recogida de datos de carácter personal a lo que es estrictamente relevante y necesario para los fines para los que se han recopilado.
-                                           Limitación de la Finalidad: Solo recogeremos sus datos personales para los fines declarados y solo según sus deseos.
-                                           Precisión: Mantendremos sus datos personales exactos y actualizados.
-                                           Seguridad de los Datos: Aplicamos las medidas técnicas y organizativas adecuadas y proporcionales a los riesgos para garantizar que sus datos no sufran daños, tales como divulgación o acceso no autorizado, la destrucción accidental o ilícita o su pérdida accidental o alteración y cualquier otra forma de tratamiento ilícito.
-                                           Acceso y Rectificación: Disponemos de medios para que acceda o rectifique sus datos cuando lo considere oportuno.
-                                           Conservación: Conservamos sus datos personales de manera legal y apropiada y solo mientras es necesario para los fines para los que se han recopilado.
-                                           Las transferencias internacionales: cuando se dé el caso de que sus datos vayan a ser transferidos fuera de México se protegerán adecuadamente.
-                                           Terceros: El acceso y transferencia de datos personales a terceros se llevan a cabo de acuerdo con las leyes y reglamentos aplicables y con las garantías contractuales adecuadas.
-                                           Marketing Directo y cookies: Cumplimos con la legislación aplicable en materia de publicidad y cookies.
+                                           Los datos personales que recabamos para llevar a cabo la encuesta de certificado médico pueden incluir, entre otros:
 
-                                           <br> 4. RECOGIDA Y TRATAMIENTO DE SUS DATOS PERSONALES <br>
-                                           Las tipos de datos que se pueden solicitar y tratar son:
-
-                                           Datos de carácter identificativo.
-                                           También recogemos de forma automática datos sobre su visita a nuestro sitio web  según se describe en la política de cookies.
-
-                                           Siempre que solicitemos sus Datos personales, le informaremos con claridad de qué datos personales recogemos y con qué fin. En general, recogemos y tratamos sus datos personales con el propósito de:
-
-                                           Proporcionar información, servicios, productos, información relevante y novedades en el sector.
-                                           Envío de comunicaciones.
-
-                                           <br> 5. LEGITIMIDAD <br>
-                                           De acuerdo con la normativa de protección de datos aplicable, sus datos personales podrán tratarse siempre que:
-
-                                           Nos ha dado su consentimiento a los efectos del tratamiento. Por supuesto podrá retirar su consentimiento en cualquier momento.
-                                           Por requerimiento legal.
-                                           Por exisitr un interés legítimo que no se vea menoscabado por sus derechos de privacidad, como por ejemplo el envío de información comercial bien por suscripción a nuestra newsletter o por su condición de cliente.
-                                           Por se necesaria para la prestación de alguno de nuestros servicios mediante relación contractual entre usted y nosotros.
-
-                                           <br> 6. COMUNICACIÓN DE DATOS PERSONALES <br>
-                                           Los datos pueden ser comunicados a empresas relacionadas con el Centro de Investigación Económica y Presupuestaria, A. C. para la prestación de los diversos servicios en calidad de Encargados del Tratamiento. La empresa no realizará ninguna cesión, salvo por obligación legal.
+                                           1. Nombre completo.
+                                           2. Edad.
+                                           3. Género.
+                                           4. Información de contacto (teléfono, correo electrónico).
+                                           5. Información de salud relevante para el certificado médico.
 
 
-                                           <br> 7. SUS DERECHOS <br>
-                                           En relación con la recogida y tratamiento de sus datos personales, puede ponerse en contacto con nosotros en cualquier momento para:
+                                           <br><b>III. Medidas de Seguridad</b><br>
 
-                                           Acceder a sus datos personales y a cualquier otra información.
-                                           Rectificar sus datos personales que sean inexactos o estén incompletos.
-                                           Suprimir sus datos personales.
-                                           Limitar el tratamiento de sus datos personales.
-                                           Solicitar la portabilidad de sus datos.
-                                           Oponerse al tratamiento de sus datos personales.
-                                           Si ha otorgado su consentimiento para alguna finalidad concreta, tiene derecho a retirar el consentimiento otorgado en cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada.
-
-                                           Puede ejercer estos derechos enviando comunicación, motivada y acreditada, a info@ciep.mx
-
-                                           También tiene derecho a presentar una reclamación ante la Autoridad de control competente si considera que el tratamiento no se ajusta a la normativa vigente.
+                                           Nos comprometemos a implementar medidas de seguridad administrativas, técnicas y físicas para proteger sus datos personales contra daño, pérdida, alteración, destrucción o el uso, acceso o tratamiento no autorizado.
 
 
-                                           <br> 8. INFORMACIÓN LEGAL <br>
-                                           Los requisitos de esta Política complementan, y no reemplazan, cualquier otro requisito existente bajo la ley de protección de datos aplicable, que será la que prevalezca en cualquier caso.
+                                           <br><b>IV. Transferencia de Datos</b><br>
 
-                                           Esta Política está sujeta a revisiones periódicas y la empresa puede modificarla en cualquier momento. Cuando esto ocurra, le avisaremos de cualquier cambio y le pediremos que vuelva a leer la versión más reciente de nuestra Política y que confirme su aceptación.</p>
+                                           Sus datos personales podrán ser transferidos a terceros únicamente con su consentimiento expreso y únicamente para los fines descritos en el apartado I. En el caso de requerirse una transferencia a terceros, se establecerán los mecanismos necesarios para asegurar la protección de sus datos.
+
+
+                                           <br><b>V. Derechos ARCO</b><br>
+
+                                           Usted tiene derecho a acceder, rectificar, cancelar u oponerse al tratamiento de sus datos personales (Derechos ARCO). Para ejercer dichos derechos, podrá presentar su solicitud por escrito en el domicilio señalado al inicio de este aviso, o a través del correo electrónico contacto@labclinic.mx. Su solicitud deberá contener: nombre y dirección del titular, documentos que acrediten su identidad, descripción clara y precisa de los datos a los que desea acceder, rectificar, cancelar u oponerse, y cualquier otro elemento que facilite la localización de los datos.
+
+                                           <br><b>VI. Cambios al Aviso de Privacidad</b><br>
+
+                                           Nos reservamos el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente aviso, para la atención de novedades legislativas, políticas internas o nuevos requerimientos para la prestación de nuestros servicios.
+
+                                           Al proporcionar sus datos personales y participar en la encuesta de certificado médico, usted reconoce haber leído y entendido el presente Aviso de Privacidad, aceptando los términos y condiciones en él establecidos.
+
+                                           Fecha de última actualización: 21 de Agosto de 2023
+
+                                           Para cualquier duda o aclaración respecto a este aviso, por favor comuníquese con nuestro Departamento de Protección de Datos Personales en la dirección Av Francisco Villa #90 Col. Treviño Zapata C.P. 87450, H, Matamoros, Tamaulipas, o al correo electrónico contacto@labclinic.mx.
+
+                                           <br><br><b>Atentamente,</b><br>
+
+                                           QFB. MARIA GUADALUPE SÁNCHEZ ANDRADE<br>
+                                           Responsable de Protección de Datos
+                                       </p>
                                     </div>
                                 </form>
                             </div>
