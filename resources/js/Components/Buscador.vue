@@ -59,7 +59,7 @@ onMounted(()=>{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="$page.props.auth.user.permisos.filter(value => value.id === 12).length > 0">
+                        <tr>
                             <th>1</th>
                             <th>Usuarios ({{props.result.data.usuarios.length}})</th>
                             <th>
@@ -88,7 +88,7 @@ onMounted(()=>{
                                 </table>
                             </th>
                         </tr>
-                        <tr v-if="$page.props.auth.user.permisos.filter(value => value.id === 13).length > 0">
+                        <tr>
                             <th>2</th>
                             <th>Empresas ({{props.result.data.empresas.length}})</th>
                             <th>
@@ -115,7 +115,7 @@ onMounted(()=>{
                                 </table>
                             </th>
                         </tr>
-                        <tr v-if="$page.props.auth.user.permisos.filter(value => value.id === 14).length > 0">
+                        <tr>
                             <th>3</th>
                             <th>Cuestionarios ({{props.result.data.cuestionarios.length}})</th>
                             <th>

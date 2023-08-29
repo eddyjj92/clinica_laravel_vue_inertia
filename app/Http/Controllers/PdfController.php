@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuestionario;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfController extends Controller
 {
-    public function stream()
+    public function stream(Cuestionario $cuestionario)
     {
-        $data = [
-            'titulo' => 'Styde.net'
-        ];
+        $fecha = new \DateTime();
 
-        return PDF::loadView('pdf', $data)->setPaper('letter')
-            ->stream('archivo.pdf');
+        $data = [
+            'data' => $cuestionario->data,
+            'fecha' => $fecha->format('d/m/Y H:i:s')
+        ];
+        try{
+            $pdf = app('dompdf.wrapper');
+            $pdf->getDomPDF()->set_option("enable_php", true);
+            return PDF::loadView('pdf', $data)->setPaper('letter')
+                ->stream('archivo.pdf');
+        }catch (\Exception $e){
+            return redirect()->route('dashboard');
+        }
+
     }
 }

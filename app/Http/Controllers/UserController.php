@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -18,7 +19,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!Auth::user()->permisos->find(3)) return back()->withErrors(['validacion' => 'No tiene permisos para ver los datos de otros usuarios']);
         return Inertia::render('Usuarios/Index', ['usuarios' => User::all()]);
     }
 
@@ -27,10 +27,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(!Auth::user()->permisos->find(1)) return back()->withErrors(['validacion' => 'No tiene permisos para crear usuarios']);
         return Inertia::render('Usuarios/Registrar', [
             'empresas' => Empresa::all(),
-            'permisos' => Permiso::all()
+            'permisos' => Permission::all()
         ]);
     }
 
@@ -39,7 +38,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::user()->permisos->find(1)) return back()->withErrors(['validacion' => 'No tiene permisos para crear nuevos usuarios']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'correo' => 'required|email',
@@ -79,7 +77,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if(!Auth::user()->permisos->find(3) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para ver los datos de otros usuarios']);
         return Inertia::render('Usuarios/Perfil', ['usuario' => $user]);
     }
 
@@ -88,7 +85,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(!Auth::user()->permisos->find(2) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para editar usuarios']);
         $user->permisos->all();
         return Inertia::render('Usuarios/Editar', [
             'empresas' => Empresa::all(),
@@ -102,7 +98,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if(!Auth::user()->permisos->find(2) && $user->id !== Auth::user()->getAuthIdentifier()) return back()->withErrors(['validacion' => 'No tiene permisos para actualizar usuarios']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'correo' => 'required|email',
@@ -132,7 +127,7 @@ class UserController extends Controller
         }
         $user->save();
         $user->permisos()->sync($input['permisos']);
-        return redirect()->route(Auth::user()->permisos->find(3) ? 'listar_usuarios' : 'dashboard')->with('message', 'Usuario Actualizado con Éxito');
+        return redirect()->route('listar_usuarios')->with('message', 'Usuario Actualizado con Éxito');
     }
 
     /**
@@ -140,8 +135,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(!Auth::user()->permisos->find(4)) return back()->withErrors(['validacion' => 'No tiene permisos para eliminar usuarios']);
-
         if(!$user) return back()->withErrors(['validacion' => 'Este usuario no existe']);
         if($user->id == Auth::user()->id) return back()->withErrors(['validacion' => 'No puede eliminar su propio usuario']);
         $user->delete();

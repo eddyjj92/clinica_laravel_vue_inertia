@@ -105,11 +105,12 @@ function toggleFullScreen() {
                             <input v-model="form.remember" type="checkbox" class="form-check-input shadow-3-strong" id="recordar" placeholder="Subject">
                             <label for="recordar" class="form-check-label fst-italic">Recordar Credenciales</label>
                         </div>
-                        <button :disabled="form.processing" type="submit" class="btn btn-primary btn-lg form-control text-capitalize ripple" data-bs-dismiss="modal"><i class="fa fa-key"></i> Acceder</button>
+                        <button :disabled="form.processing" type="submit" class="btn btn-primary btn-lg form-control text-capitalize ripple" data-bs-dismiss="modal"><i class="fa fa-key"></i> Administración</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="#" @click="cuestionario" style="text-align: center;display: inline-block;width: 100%"><i class="fas fa-clipboard-question"></i> LLenar Cuestionario de Paciente</a>
+                <button @click="cuestionario" class="btn btn-success btn-lg form-control text-capitalize ripple"><i class="fa fa-clipboard"></i> Cuestionario</button>
+
             </div>
             </div>
         </div>

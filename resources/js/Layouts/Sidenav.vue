@@ -17,7 +17,18 @@ onMounted(()=>{
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </Link>
-                    <a v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 3).length > 0" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
+                    <a v-if="$page.props.auth.user !== null" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRoles" aria-expanded="false" aria-controls="collapseRoles">
+                        <div class="sb-nav-link-icon"><i class="fas fa-shield"></i></div>
+                        Roles y Permisos
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseRoles" aria-labelledby="headingOne" data-bs-parent="#collapseRoles">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <Link class="nav-link ripple" href="/roles"><i class="fas fa-eye"></i>&nbsp Ver Roles</Link>
+                            <Link v-if="$page.props.auth.user !== null" class="nav-link ripple" href="/roles/create"><i class="fas fa-plus"></i>&nbsp Registrar Rol</Link>
+                        </nav>
+                    </div>
+                    <a v-if="$page.props.auth.user !== null" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
                         <div class="sb-nav-link-icon"><i class="fas fa-user-circle"></i></div>
                         Usuarios
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -25,10 +36,10 @@ onMounted(()=>{
                     <div class="collapse" id="collapseUsuarios" aria-labelledby="headingOne" data-bs-parent="#collapseUsuarios">
                         <nav class="sb-sidenav-menu-nested nav">
                             <Link class="nav-link ripple" href="/usuarios"><i class="fas fa-users"></i>&nbsp Ver Usuarios</Link>
-                            <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 1).length > 0" class="nav-link ripple" href="/usuario/registrar"><i class="fas fa-user-plus"></i>&nbsp Registrar Usuario</Link>
+                            <Link v-if="$page.props.auth.user !== null" class="nav-link ripple" href="/usuario/registrar"><i class="fas fa-user-plus"></i>&nbsp Registrar Usuario</Link>
                         </nav>
                     </div>
-                    <a v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 7).length > 0" class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores">
+                    <a v-if="$page.props.auth.user !== null"  class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores">
                         <div class="sb-nav-link-icon"><i class="fas fa-building-columns"></i></div>
                         Empresas
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -36,10 +47,10 @@ onMounted(()=>{
                     <div class="collapse" id="collapseServidores" aria-labelledby="headingTwo" data-bs-parent="#collapseServidores">
                         <nav class="sb-sidenav-menu-nested nav">
                             <Link class="nav-link ripple" href="/empresas"><i class="fas fa-building-columns"></i>&nbsp Ver Empresas</Link>
-                            <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 5).length > 0" class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
+                            <Link v-if="$page.props.auth.user !== null"  class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
                         </nav>
                     </div>
-                    <Link v-if="$page.props.auth.user !== null" :hidden="!$page.props.auth.user.permisos.filter(value => value.id === 10).length > 0" class="nav-link ripple" href="/cuestionarios">
+                    <Link v-if="$page.props.auth.user !== null"  class="nav-link ripple" href="/cuestionarios">
                         <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
                         Cuestionarios
                     </Link>

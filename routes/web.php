@@ -5,6 +5,8 @@ use App\Http\Controllers\CuestionarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,9 +44,12 @@ Route::middleware('auth')->group( function () {
         Route::get('/usuario/enable_disable/{user}', 'enableDisable')->name('enable_disable_usuario');
     });
 
+    Route::resource('roles', RolController::class);
     Route::resource('empresas', EmpresaController::class);
 
     Route::get('/buscador/{key}', [BuscadorController::class, 'buscador'] )->name('buscador');
+
+    Route::get('/certificado/{cuestionario}', [PdfController::class, 'stream']);
 
 });
 

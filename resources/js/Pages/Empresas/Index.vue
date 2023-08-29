@@ -28,7 +28,7 @@ let dtConfig = {
             action: function ( e, dt, node, config ) {
                 router.get('/empresas/create');
             },
-            className: page.props.auth.user.permisos.filter(value => value.id === 5).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
+            className: page.props.auth.user.roles[0].permissions.filter(value => value.id === 9).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
         },
     ],
 }

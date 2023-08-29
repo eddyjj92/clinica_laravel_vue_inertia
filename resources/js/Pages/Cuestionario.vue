@@ -67,6 +67,7 @@ let form = useForm({
         fuma: formGuardado.value !== null ? formGuardado.value.toxicomanias.fuma : null,
         cuantos_cigarillos: formGuardado.value !== null ? formGuardado.value.toxicomanias.cuantos_cigarillos : null,
         bebe: formGuardado.value !== null ? formGuardado.value.toxicomanias.bebe : null,
+        cuanta_bebida: formGuardado.value !== null ? formGuardado.value.toxicomanias.cuanta_bebida : null,
     },
     vivienda: {
         personas_vivienda: formGuardado.value !== null ? formGuardado.value.vivienda.personas_vivienda : [],
@@ -115,7 +116,6 @@ let form = useForm({
         empastes: formGuardado.value !== null ? formGuardado.value.discapacidades.empastes : null,
         patologias: formGuardado.value !== null ? formGuardado.value.discapacidades.patologias : [],
         patologias_familia: formGuardado.value !== null ? formGuardado.value.discapacidades.patologias : [],
-
     },
     avatar: null,
 })
@@ -629,11 +629,7 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.estatura !== null && form.signos_vitales.estatura !== ''">Estatura (Mts)</span>
-                                                <el-select v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)">
-                                                    <el-option value="Estatura baja">Estatura baja (Femenino: menos de 1.53 m) - (Masculino: de menos de 1.65 m)</el-option>
-                                                    <el-option value="Estatura media">Estatura media (Femenino: 1.53 m a 1.63 m) - (Masculino: 1.65 m - 1.75 m)</el-option>
-                                                    <el-option value="Estatura alta">Estatura alta (Femenino: más de 1.63 m) - (Masculino: más de 1.75 m)</el-option>
-                                                </el-select>
+                                                <el-input v-model="form.signos_vitales.estatura" size="large" class="extra-large" type="text" id="floatingInput2" placeholder="Estatura (Mts)"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.p_sistolica !== null && form.signos_vitales.p_sistolica !== ''">Presión Sistólica</span>
@@ -939,8 +935,8 @@ const handleRemove = () => {
                                                 </div>
                                             </div>
                                             <div class="form-floating col-md-4 mb-4">
-                                                <span v-if="form.toxicomanias.cuantos_cigarillos !== null && form.toxicomanias.cuantos_cigarillos !== ''">¿Cuánta bebida consume a la semana?</span>
-                                                <el-input v-model="form.toxicomanias.cuantos_cigarillos" min="1" :disabled="form.toxicomanias.fuma === 'negativo'" type="text" size="large" :class="form.toxicomanias.fuma === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Cuánta bebida consume a la semana?"/>
+                                                <span v-if="form.toxicomanias.cuanta_bebida !== null && form.toxicomanias.cuanta_bebida !== ''">¿Qué tipo de bebidas consume y cuantas toma a la semana?</span>
+                                                <el-input v-model="form.toxicomanias.cuanta_bebida" min="1" :disabled="form.toxicomanias.bebe === 'negativo'" type="text" size="large" :class="form.toxicomanias.bebe === 'negativo' ? 'text-decoration-line-through': ''" class="extra-large" id="floatingInput22" placeholder="¿Qué tipo de bebidas consume y cuantas toma a la semana?"/>
                                             </div>
                                         </div>
                                     </div>

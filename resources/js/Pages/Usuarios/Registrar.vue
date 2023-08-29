@@ -194,7 +194,7 @@ const validaPermiso = (permiso) => {
                                             </div>
                                             <div v-for="permiso in permisos" class="col-md-3 form-check">
                                                 <input @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
-                                                <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.permiso}}</label>
+                                                <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>
                                             </div>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">

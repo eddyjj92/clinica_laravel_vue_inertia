@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Permiso;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminUserSeeder extends Seeder
 {
@@ -25,6 +27,9 @@ class AdminUserSeeder extends Seeder
             'avatar' => 'user.png',
             'password' => bcrypt('Ej8547/*-'),
         ]);
-        $user->permisos()->sync(Permiso::all());
+        $role = Role::create(['name' => 'Admin', 'guard_name' => 'web']);
+        $permissions = Permission::pluck('id','id')->all();
+        $role->syncPermissions($permissions);
+        $user->assignRole([$role->id]);
     }
 }

@@ -206,31 +206,31 @@ const save = async() => {
                                         <th>14</th>
                                         <th>13</th>
                                         <th>Estatura</th>
-                                        <td><el-input @change="save" size="large" v-model="form.signos_vitales.estatura" type="text"/></td>
+                                        <td><el-input prefix-icon="TrendCharts" @change="save" size="large" v-model="form.signos_vitales.estatura" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>15</th>
                                         <th>14</th>
                                         <th>Presión Sistólica</th>
-                                        <td><el-input @change="save" size="large" v-model="form.signos_vitales.p_sistolica" type="text"/></td>
+                                        <td><el-input  prefix-icon="Odometer" @change="save" size="large" v-model="form.signos_vitales.p_sistolica" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>16</th>
                                         <th>15</th>
                                         <th>Presión Diastólica</th>
-                                        <td><el-input @change="save" size="large" v-model="form.signos_vitales.p_diastolica" type="text"/></td>
+                                        <td><el-input prefix-icon="Odometer" @change="save" size="large" v-model="form.signos_vitales.p_diastolica" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>17</th>
                                         <th>16</th>
                                         <th>Pulso</th>
-                                        <td><el-input @change="save" size="large" v-model="form.signos_vitales.pulso" type="text"/></td>
+                                        <td><el-input prefix-icon="Watch" @change="save" size="large" v-model="form.signos_vitales.pulso" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>18</th>
                                         <th>17</th>
                                         <th>Temperatura</th>
-                                        <td><el-input @change="save" size="large" v-model="form.signos_vitales.temperatura" type="text"/></td>
+                                        <td><el-input prefix-icon="FirstAidKit" @change="save" size="large" v-model="form.signos_vitales.temperatura" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>19</th>
@@ -242,25 +242,25 @@ const save = async() => {
                                         <th>20</th>
                                         <th>18</th>
                                         <th>Cuello</th>
-                                        <td><el-input @change="save" size="large" v-model="form.medidas.cuello" type="text"/></td>
+                                        <td><el-input prefix-icon="Rank" @change="save" size="large" v-model="form.medidas.cuello" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>21</th>
                                         <th>19</th>
                                         <th>Pecho</th>
-                                        <td><el-input @change="save" size="large" v-model="form.medidas.pecho" type="text"/></td>
+                                        <td><el-input prefix-icon="Rank" @change="save" size="large" v-model="form.medidas.pecho" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>22</th>
                                         <th>20</th>
                                         <th>Cintura</th>
-                                        <td><el-input @change="save" size="large" v-model="form.medidas.cintura" type="text"/></td>
+                                        <td><el-input prefix-icon="Rank" @change="save" size="large" v-model="form.medidas.cintura" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>23</th>
                                         <th>21</th>
                                         <th>Caderas</th>
-                                        <td><el-input @change="save" size="large" v-model="form.medidas.caderas" type="text"/></td>
+                                        <td><el-input prefix-icon="Rank" @change="save" size="large" v-model="form.medidas.caderas" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>24</th>
@@ -272,7 +272,7 @@ const save = async() => {
                                         <th>25</th>
                                         <th>22</th>
                                         <th>Estado Civil</th>
-                                        <td><el-input @change="save" size="large" v-model="form.estado_civil.estado" type="text"/></td>
+                                        <td><el-input prefix-icon="CircleCheck" @change="save" size="large" v-model="form.estado_civil.estado" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>26</th>
@@ -284,13 +284,13 @@ const save = async() => {
                                         <th>27</th>
                                         <th>24</th>
                                         <th>Hijos</th>
-                                        <td><el-input @change="save" size="large" v-model="form.estado_civil.hijos" type="text"/></td>
+                                        <td><el-input prefix-icon="User" @change="save" size="large" v-model="form.estado_civil.hijos" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>28</th>
                                         <th>25</th>
                                         <th>Edades Hijos</th>
-                                        <td><el-input @change="save" :disabled="form.estado_civil.hijos === 'Sin hijos'" size="large" v-model="form.estado_civil.edades_hijos" type="text"/></td>
+                                        <td><el-input prefix-icon="Calendar" @change="save" :disabled="form.estado_civil.hijos === 'Sin hijos'" size="large" v-model="form.estado_civil.edades_hijos" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>29</th>
@@ -302,7 +302,7 @@ const save = async() => {
                                         <th>30</th>
                                         <th>26</th>
                                         <th>Grado de Estudios</th>
-                                        <td><el-input @change="save" size="large" v-model="form.escolaridad.grado_estudios" type="text"/></td>
+                                        <td><el-input prefix-icon="School"  @change="save" size="large" v-model="form.escolaridad.grado_estudios" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>31</th>
@@ -314,19 +314,19 @@ const save = async() => {
                                         <th>32</th>
                                         <th>27</th>
                                         <th>Oficio</th>
-                                        <td><el-input @change="save" size="large" v-model="form.oficio_profesion.oficio" type="text"/></td>
+                                        <td><el-input prefix-icon="Setting" @change="save" size="large" v-model="form.oficio_profesion.oficio" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>32</th>
                                         <th>28</th>
                                         <th>Profesión</th>
-                                        <td><el-input @change="save" size="large" v-model="form.oficio_profesion.profesion" type="text"/></td>
+                                        <td><el-input prefix-icon="Folder" @change="save" size="large" v-model="form.oficio_profesion.profesion" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>33</th>
                                         <th>29</th>
                                         <th>Último Trabajo</th>
-                                        <td><el-input @change="save" size="large" v-model="form.oficio_profesion.ultimo_trabajo" type="text"/></td>
+                                        <td><el-input prefix-icon="OfficeBuilding" @change="save" size="large" v-model="form.oficio_profesion.ultimo_trabajo" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>34</th>
@@ -344,19 +344,19 @@ const save = async() => {
                                         <th>36</th>
                                         <th>31</th>
                                         <th>Fuma</th>
-                                        <td><el-input @change="save" size="large" v-model="form.toxicomanias.fuma" type="text"/></td>
+                                        <td><el-input prefix-icon="Smoking" @change="save" size="large" v-model="form.toxicomanias.fuma" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>37</th>
                                         <th>32</th>
                                         <th>Cuantos Cigarrillos</th>
-                                        <td><el-input @change="save" size="large" v-model="form.toxicomanias.cuantos_cigarillos" type="text"/></td>
+                                        <td><el-input prefix-icon="Smoking" @change="save" size="large" v-model="form.toxicomanias.cuantos_cigarillos" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>38</th>
                                         <th>33</th>
                                         <th>Bebe</th>
-                                        <td><el-input @change="save" size="large" v-model="form.toxicomanias.bebe" type="text"/></td>
+                                        <td><el-input prefix-icon="ColdDrink" @change="save" size="large" v-model="form.toxicomanias.bebe" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>39</th>
@@ -368,49 +368,49 @@ const save = async() => {
                                         <th>40</th>
                                         <th>34</th>
                                         <th>Personas con las q vive</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.personas_vivienda" type="text"/></td>
+                                        <td><el-input prefix-icon="Avatar"  @change="save" size="large" v-model="form.vivienda.personas_vivienda" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>41</th>
                                         <th>35</th>
                                         <th>Cantidad de personas</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.cantidad_personas" type="text"/></td>
+                                        <td><el-input prefix-icon="Avatar" @change="save" size="large" v-model="form.vivienda.cantidad_personas" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>42</th>
                                         <th>36</th>
                                         <th>Estado de la vivienda</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.estado_vivienda" type="text"/></td>
+                                        <td><el-input prefix-icon="HomeFilled"  @change="save" size="large" v-model="form.vivienda.estado_vivienda" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>43</th>
                                         <th>37</th>
                                         <th>Propietario de la vivienda</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.propietario_vivienda" type="text"/></td>
+                                        <td><el-input prefix-icon="HomeFilled" @change="save" size="large" v-model="form.vivienda.propietario_vivienda" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>44</th>
                                         <th>38</th>
                                         <th>Recámaras</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.recamaras" type="text"/></td>
+                                        <td><el-input prefix-icon="Menu"  @change="save" size="large" v-model="form.vivienda.recamaras" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>45</th>
                                         <th>39</th>
                                         <th>Baños</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.banos" type="text"/></td>
+                                        <td><el-input prefix-icon="Shop"  @change="save" size="large" v-model="form.vivienda.banos" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>46</th>
                                         <th>40</th>
                                         <th>Cuartos</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.cuartos" type="text"/></td>
+                                        <td><el-input prefix-icon="Grid" @change="save" size="large" v-model="form.vivienda.cuartos" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>47</th>
                                         <th>41</th>
                                         <th>Material de construcción vivienda</th>
-                                        <td><el-input @change="save" size="large" v-model="form.vivienda.material_vivienda" type="text"/></td>
+                                        <td><el-input prefix-icon="House"  @change="save" size="large" v-model="form.vivienda.material_vivienda" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>48</th>
@@ -422,19 +422,19 @@ const save = async() => {
                                         <th>49</th>
                                         <th>42</th>
                                         <th>Vacuna influenza</th>
-                                        <td><el-input @change="save" size="large" v-model="form.estado_salud.vacuna_influenza" type="text"/></td>
+                                        <td><el-input  prefix-icon="FirstAidKit" @change="save" size="large" v-model="form.estado_salud.vacuna_influenza" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>50</th>
                                         <th>43</th>
                                         <th>Vacuna covid</th>
-                                        <td><el-input @change="save" size="large" v-model="form.estado_salud.vacuna_covid" type="text"/></td>
+                                        <td><el-input prefix-icon="FirstAidKit" @change="save" size="large" v-model="form.estado_salud.vacuna_covid" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <th>51</th>
                                         <th>44</th>
                                         <th>Dias de ejercicio en la semana</th>
-                                        <td><el-input @change="save" size="large" v-model="form.estado_salud.ejercicio_semana" type="text"/></td>
+                                        <td><el-input prefix-icon="Ship" @change="save" size="large" v-model="form.estado_salud.ejercicio_semana" type="text"/></td>
                                     </tr>
                                     <tr class="bg-primary">
                                         <th>52</th>

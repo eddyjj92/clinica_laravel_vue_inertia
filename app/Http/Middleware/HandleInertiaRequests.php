@@ -37,12 +37,11 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
-        $user ? $user->permisos->all() : null;
+        $user ? $user->roles[0]->permissions->all() : null;
 
         return array_merge(parent::share($request), [
             // Synchronously...
             'appName' => config('app.name'),
-
             // Lazily...
             'auth.user' => fn () => $request->user()
                 ? $user
@@ -52,4 +51,5 @@ class HandleInertiaRequests extends Middleware
             ],
         ]);
     }
+
 }
