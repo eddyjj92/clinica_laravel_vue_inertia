@@ -64,23 +64,29 @@ class RolController extends Controller
      */
     public function edit(Role $role)
     {
-        $roles = Role::all();
-        foreach ($roles as $rol){
-            $rol->permissions->all();
-        }
-
+        $role->permissions->all();
         return Inertia::render('Roles/Editar', [
-            'roles' => $roles,
-            'rol' => $role
+            'rol' => $role,
+            'permisos' => Permission::all()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'nombre' => 'required',
+        ]);
+        if($validator->fails()){
+            return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
+        }
+        $role->name = $input['nombre'];
+        $role->syncPermissions($input['permisos']);
+        $role->save();
+        return redirect()->route('roles.index')->with('message', 'Rol de Usuario actualizado con Éxito');
     }
 
     /**

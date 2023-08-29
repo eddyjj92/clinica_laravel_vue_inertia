@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -46,6 +47,7 @@ class UserController extends Controller
             'cargo' => 'required',
             'password' => 'required',
             'confirmar_password' => 'required|same:password',
+            'rol' => 'required'
         ]);
         if($validator->fails()){
             return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
@@ -68,7 +70,7 @@ class UserController extends Controller
             $user->avatar = 'user.png';
         }
         $user->save();
-        $user->permisos()->sync($input['permisos']);
+        $user->assignRole([$input['rol']->id]);
         return redirect()->route('listar_usuarios')->with('message', 'Usuario Registrado con Éxito');
     }
 
@@ -85,11 +87,17 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user->permisos->all();
+        $user->roles[0]->permissions->all();
+        $roles = Role::all();
+        foreach ($roles as $role) {
+            $role->permissions->all();
+        }
+
         return Inertia::render('Usuarios/Editar', [
             'empresas' => Empresa::all(),
-            'permisos' => Permiso::all(),
-            'usuario' => $user
+            'permisos' => Permission::all(),
+            'usuario' => $user,
+            'roles' => $roles
         ]);
     }
 
@@ -104,6 +112,7 @@ class UserController extends Controller
             'nombre' => 'required',
             'empresa' => 'required',
             'cargo' => 'required',
+            'rol' => 'required',
         ]);
         if($validator->fails()){
             return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
@@ -126,7 +135,8 @@ class UserController extends Controller
             }
         }
         $user->save();
-        $user->permisos()->sync($input['permisos']);
+        $user->removeRole($user->roles[0]->id);
+        $user->assignRole([$input['rol']['id']]);
         return redirect()->route('listar_usuarios')->with('message', 'Usuario Actualizado con Éxito');
     }
 

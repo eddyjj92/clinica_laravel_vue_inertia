@@ -9,17 +9,24 @@ import { genFileId } from 'element-plus'
 const props = defineProps({
     usuario: Object,
     empresas: Object,
-    permisos: Object
+    permisos: Object,
+    roles: Object
 })
+
+const emit = defineEmits(['update:modelValue']);
 
 let form = useForm({
     correo: props.usuario.email,
     nombre: props.usuario.nombre,
     empresa: props.usuario.empresa,
     cargo: props.usuario.cargo,
+    rol: props.usuario.roles[0],
     avatar: null,
     permisos: []
 });
+
+let selectedRole = ref(props.usuario.roles[0].id);
+alert(selectedRole.value)
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -116,9 +123,14 @@ const validaPermiso = (permiso) => {
 }
 
 const filterPerm = () => {
-    props.usuario.permisos.forEach(perm => {
+    props.usuario.roles[0].permissions.forEach(perm => {
         form.permisos.push(perm.id)
     })
+}
+
+const setRole = (role) => {
+    form.rol = props.roles.filter(rol => rol.id === role)[0];
+    alert(JSON.stringify(form.rol));
 }
 
 </script>
@@ -179,23 +191,35 @@ const filterPerm = () => {
                                         <div class="form-floating col-md-6 mb-4">
                                             <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"><template #prepend>Nombre</template></el-input>
                                         </div>
-                                        <div class="form-floating col-md-6 mb-4">
+                                        <div class="form-floating col-md-4 mb-4">
                                             <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
                                                 <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
                                             </el-select>
                                         </div>
-                                        <div class="form-floating col-md-6 mb-4">
+                                        <div class="form-floating col-md-4 mb-4">
                                             <el-input v-model="form.cargo" type="text" size="large" class="extra-large" id="floatingInput4" placeholder="Cargo Empresa"><template #prepend>Cargo</template></el-input>
                                         </div>
+                                        <div class="form-floating col-md-4 mb-4">
+                                            <el-select
+                                                v-model="selectedRole"
+                                                size="large"
+                                                class="extra-large"
+                                                id="floatingInput3"
+                                                placeholder="Seleccionar Rol de Usuario"
+                                                @change="setRole(selectedRole)"
+                                            >
+                                                <el-option v-for="rol in props.roles" :key="rol.id" :label="rol.name" :value="rol.id"/>
+                                            </el-select>
+                                        </div>
                                         <div class="col-md-12 mb-4 row justify-content-start align-items-start">
-                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos</h3>
+                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos Rol {{props.usuario.roles[0].name}}(<Link :href="`/roles/${props.usuario.roles[0].id}/edit`"><i class="fa fa-edit"></i> Editar Permisos</Link>)</h3>
                                             <div class="col-md-3 form-check">
-                                                <input v-model="permAll" :checked="form.permisos.length === props.permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
+                                                <input disabled v-model="permAll" :checked="form.permisos.length === props.permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
                                                 <label class="form-check-label" :for="`permiso0`">Todos</label>
                                             </div>
                                             <div v-for="permiso in permisos" class="col-md-3 form-check">
-                                                <input @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
-                                                <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.permiso}}</label>
+                                                <input disabled @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
+                                                <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>
                                             </div>
                                         </div>
                                     </div>

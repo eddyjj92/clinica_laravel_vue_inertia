@@ -8,7 +8,7 @@ import { genFileId } from 'element-plus'
 
 const props = defineProps({
     rol: Object,
-    roles: Object
+    permisos: Object,
 })
 
 let form = useForm({
@@ -79,7 +79,7 @@ const validaPermiso = (permiso) => {
 }
 
 const filterPerm = () => {
-    props.usuario.permisos.forEach(perm => {
+    props.rol.permissions.forEach(perm => {
         form.permisos.push(perm.id)
     })
 }
@@ -105,27 +105,22 @@ const filterPerm = () => {
                             </div>
                             <div class="card-body">
                                 <form @submit.prevent="submit">
-                                    <div class="row align-items-center justify-content-center">
-
-                                        <div class="form-floating col-md-6 mb-4">
-                                            <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"><template #prepend>Rol</template></el-input>
+                                    <div class="row align-items-center justify-content-center mb-4">
+                                        <div class="form-floating col-12 mb-4">
+                                            <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"><template #prepend>Rol de Usuario</template></el-input>
                                         </div>
-                                        <div class="form-floating col-md-6 mb-4">
-                                            <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
-                                                <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
-                                            </el-select>
-                                        </div>
-                                        <div class="col-md-12 mb-4 row justify-content-start align-items-start">
+                                        <div class="col-md-12 mb-4 row justify-content-start align-items-start" id="permisos">
                                             <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos</h3>
                                             <div class="col-md-3 form-check">
                                                 <input v-model="permAll" :checked="form.permisos.length === props.permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
                                                 <label class="form-check-label" :for="`permiso0`">Todos</label>
                                             </div>
-                                            <div v-for="permiso in rol.permissions" class="col-md-3 form-check">
+                                            <div v-for="permiso in permisos" class="col-md-3 form-check">
                                                 <input @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
                                                 <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>
                                             </div>
                                         </div>
+                                        <label for="permisos" class="small"><i class="fa fa-hands-helping"></i> Seleccione los permisos que desea asignar a este rol de usuario</label>
                                     </div>
                                     <div class="d-grid gap-2">
                                         <button :disabled="form.processing" type="submit" class="btn btn-primary btn-lg shadow-3-strong text-capitalize"><i class="fa fa-save"></i> Actualizar</button>
