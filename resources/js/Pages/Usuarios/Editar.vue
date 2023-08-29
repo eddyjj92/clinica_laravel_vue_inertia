@@ -26,7 +26,6 @@ let form = useForm({
 });
 
 let selectedRole = ref(props.usuario.roles[0].id);
-alert(selectedRole.value)
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -123,14 +122,15 @@ const validaPermiso = (permiso) => {
 }
 
 const filterPerm = () => {
-    props.usuario.roles[0].permissions.forEach(perm => {
+    form.rol.permissions.forEach(perm => {
         form.permisos.push(perm.id)
     })
 }
 
 const setRole = (role) => {
     form.rol = props.roles.filter(rol => rol.id === role)[0];
-    alert(JSON.stringify(form.rol));
+    form.permisos = [];
+    filterPerm();
 }
 
 </script>
@@ -212,7 +212,7 @@ const setRole = (role) => {
                                             </el-select>
                                         </div>
                                         <div class="col-md-12 mb-4 row justify-content-start align-items-start">
-                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos Rol {{props.usuario.roles[0].name}}(<Link :href="`/roles/${props.usuario.roles[0].id}/edit`"><i class="fa fa-edit"></i> Editar Permisos</Link>)</h3>
+                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos Rol {{form.rol.name}}<Link :href="`/roles/${form.rol.id}/edit`"><span class="fs-5">(<i class="fa fa-edit"></i> Editar Permisos)</span></Link></h3>
                                             <div class="col-md-3 form-check">
                                                 <input disabled v-model="permAll" :checked="form.permisos.length === props.permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
                                                 <label class="form-check-label" :for="`permiso0`">Todos</label>

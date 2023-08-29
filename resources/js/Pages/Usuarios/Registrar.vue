@@ -10,7 +10,8 @@ const page = usePage();
 
 defineProps({
     empresas: Object,
-    permisos: Object
+    permisos: Object,
+    roles: Object
 })
 
 let form = useForm({
@@ -21,8 +22,11 @@ let form = useForm({
     password: null,
     confirmar_password: null,
     avatar: null,
-    permisos: []
+    permisos: [],
+    rol: page.props.roles[0]
 });
+
+let selectedRole = ref(null);
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -107,17 +111,8 @@ function toggleFullScreen() {
     }
 }
 
-const validaPermiso = (permiso) => {
-    if(permiso === 0 && form.permisos.length === 0){
-        page.props.permisos.forEach(permiso => {
-            form.permisos.push(permiso.id)
-        })
-    }else if(permiso === 0 && form.permisos.length !== 0){
-        form.permisos = [];
-        permAll.value = false;
-    }else{
-        form.permisos.includes(permiso) ? form.permisos = form.permisos.filter(perm => perm !== permiso) : form.permisos.push(permiso);
-    }
+const setRole = (role) => {
+    form.rol = page.props.roles.filter(rol => rol.id === role)[0];
 }
 
 </script>
@@ -178,22 +173,30 @@ const validaPermiso = (permiso) => {
                                         <div class="form-floating col-md-6 mb-4">
                                             <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"/>
                                         </div>
-                                        <div class="form-floating col-md-6 mb-4">
+                                        <div class="form-floating col-md-4 mb-4">
                                             <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
                                                 <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
                                             </el-select>
                                         </div>
-                                        <div class="form-floating col-md-6 mb-4">
+                                        <div class="form-floating col-md-4 mb-4">
                                             <el-input v-model="form.cargo" type="text" size="large" class="extra-large" id="floatingInput4" placeholder="Cargo Empresa"/>
+                                        </div>
+                                        <div class="form-floating col-md-4 mb-4">
+                                            <el-select
+                                                v-model="selectedRole"
+                                                size="large"
+                                                class="extra-large"
+                                                id="floatingInput3"
+                                                placeholder="Seleccionar Rol de Usuario"
+                                                @change="setRole(selectedRole)"
+                                            >
+                                                <el-option v-for="rol in roles" :key="rol.id" :label="rol.name" :value="rol.id"/>
+                                            </el-select>
                                         </div>
                                         <div class="col-md-12 mb-4 row justify-content-start align-items-start">
                                             <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos</h3>
-                                            <div class="col-md-3 form-check">
-                                                <input v-model="permAll" :checked="form.permisos.length === permisos.length && form.permisos.length !== 0" @change="validaPermiso(0)" type="checkbox" class="form-check-input" :id="`permiso0`">
-                                                <label class="form-check-label" :for="`permiso0`">Todos</label>
-                                            </div>
                                             <div v-for="permiso in permisos" class="col-md-3 form-check">
-                                                <input @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
+                                                <input disabled :checked="form.rol.permissions.filter(perm => perm.id === permiso.id).length > 0" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
                                                 <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>
                                             </div>
                                         </div>

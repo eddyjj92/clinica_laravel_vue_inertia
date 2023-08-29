@@ -20,7 +20,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Usuarios/Index', ['usuarios' => User::all()]);
+        $users = User::all();
+        foreach ($users as $user){
+            $user->roles;
+        }
+        return Inertia::render('Usuarios/Index', ['usuarios' => $users ]);
     }
 
     /**
@@ -28,9 +32,14 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = Role::all();
+        foreach ($roles as $role){
+            $role->permissions->all();
+        }
         return Inertia::render('Usuarios/Registrar', [
             'empresas' => Empresa::all(),
-            'permisos' => Permission::all()
+            'permisos' => Permission::all(),
+            'roles' => $roles
         ]);
     }
 

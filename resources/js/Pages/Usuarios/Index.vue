@@ -137,13 +137,14 @@ const buscar = async(key) => {
                                             <div class="col-lg-8 col-md-7">
                                                 <div class="text-base fw-bold">{{ usr.nombre }}</div>
                                                 <div class="font-normal">{{ usr.email }}</div>
-                                                <div class="font-normal">{{ usr.cargo }}</div>
+                                                <div class="font-normal">{{ usr.roles[0].name }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="">
                                             <div class="text-base fw-bold">{{ usr.empresa }}</div>
+                                            <div class="font-normal">{{ usr.cargo }}</div>
                                         </div>
                                     </td>
                                     <td>
