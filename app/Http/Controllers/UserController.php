@@ -23,6 +23,7 @@ class UserController extends Controller
         $users = User::all();
         foreach ($users as $user){
             $user->roles;
+            $user->conectado = ConexionController::verificaConexionUsuario($user);
         }
         return Inertia::render('Usuarios/Index', ['usuarios' => $users ]);
     }
@@ -67,6 +68,7 @@ class UserController extends Controller
         $user->empresa = $input['empresa'];
         $user->cargo = $input['cargo'];
         $user->password = bcrypt($input['password']);
+        $user->conexion = [];
         if($request->file('avatar')){
             try {
                 $file = $filename = $input['nombre'].".".$request->avatar->extension();
@@ -79,7 +81,7 @@ class UserController extends Controller
             $user->avatar = 'user.png';
         }
         $user->save();
-        $user->assignRole([$input['rol']->id]);
+        $user->assignRole([$input['rol']['id']]);
         return redirect()->route('listar_usuarios')->with('message', 'Usuario Registrado con Éxito');
     }
 

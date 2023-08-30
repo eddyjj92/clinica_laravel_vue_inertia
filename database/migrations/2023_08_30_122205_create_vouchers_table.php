@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('empresa');
-            $table->string('cargo');
-            $table->string('avatar');
-            $table->json('conexion');
-            $table->rememberToken();
+            $table->string('voucher');
+            $table->unsignedBigInteger('solicitude_id')->nullable();
+            $table->foreign('solicitude_id')->references('id')->on('solicituds')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('vouchers');
     }
 };

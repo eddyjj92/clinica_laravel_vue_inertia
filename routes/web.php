@@ -7,6 +7,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,7 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 
-Route::middleware('auth')->group( function () {
+Route::middleware(['auth','conexion'])->group( function () {
     Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
     Route::controller(UserController::class)->group(function () {
@@ -46,6 +47,7 @@ Route::middleware('auth')->group( function () {
 
     Route::resource('roles', RolController::class);
     Route::resource('empresas', EmpresaController::class);
+    Route::resource('solicitudes', SolicitudController::class);
 
     Route::get('/buscador/{key}', [BuscadorController::class, 'buscador'] )->name('buscador');
 
@@ -54,3 +56,4 @@ Route::middleware('auth')->group( function () {
 });
 
 Route::resource('cuestionarios', CuestionarioController::class);
+Route::post('/cuestionarios/create', [CuestionarioController::class, 'create']);

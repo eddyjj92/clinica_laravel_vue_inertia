@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cuestionario;
 use App\Models\Empresa;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -21,8 +22,20 @@ class CuestionarioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        if(!session('voucher')){
+            $input = $request->all();
+            $validator = Validator::make($input, [
+                'voucher' => 'required',
+            ]);
+            if($validator->fails()){
+                return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
+            }
+            $voucher = Voucher::where('voucher', $input['voucher'])->first();
+            if(!$voucher) return back()->withErrors(['validacion' => 'El voucher ingresado no es válido']);
+            session(['voucher' => $voucher]);
+        }
         return Inertia::render('Cuestionario', ['empresas' => Empresa::all()]);
     }
 
@@ -48,6 +61,7 @@ class CuestionarioController extends Controller
 
         $cuestionario->data = $input;
         $cuestionario->save();
+        session()->remove('voucher');
         return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');
     }
 

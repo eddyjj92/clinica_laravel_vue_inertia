@@ -12,6 +12,7 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
+        if(session('voucher')) return redirect()->route('cuestionarios.create');
         return Auth::user() ? redirect()->intended('dashboard'): Inertia::render('Login', ['denied' => $request->input('denied') ? : false ]);
     }
 

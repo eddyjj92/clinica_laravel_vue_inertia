@@ -122,6 +122,7 @@ const buscar = async(key) => {
                                     <th hidden>Id</th>
                                     <th>Usuario</th>
                                     <th>Empresa</th>
+                                    <th>Estado Conexión</th>
                                     <th>Fecha Registro</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -145,6 +146,12 @@ const buscar = async(key) => {
                                         <div class="">
                                             <div class="text-base fw-bold">{{ usr.empresa }}</div>
                                             <div class="font-normal">{{ usr.cargo }}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row align-items-center justify-content-center">
+                                            <span :class="`text-base fw-bold col-10 badge ${usr.conectado === 'conectado' ? 'bg-success' : ''} ${usr.conectado === 'desconectado' ? 'bg-danger' : ''} ${usr.conectado === 'sin autenticar' ? 'bg-secondary' : ''}`"><i :class="`fa ${usr.conectado === 'conectado' ? 'fa-network-wired' : ''} ${usr.conectado === 'desconectado' ? 'fa-close' : ''} ${usr.conectado === 'sin autenticar' ? 'fa-user-slash' : ''}`"></i> {{ usr.conectado }}</span>
+                                            <span class="text-base fw-bold col-10">IP: {{ usr.conexion.ip ?? '-----------' }}</span>
                                         </div>
                                     </td>
                                     <td>

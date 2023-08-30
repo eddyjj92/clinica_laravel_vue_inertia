@@ -26,6 +26,7 @@ class AdminUserSeeder extends Seeder
             'cargo' => 'Desarrollador',
             'avatar' => 'user.png',
             'password' => bcrypt('Ej8547/*-'),
+            'conexion' => []
         ]);
         $role = Role::create(['name' => 'Admin', 'guard_name' => 'web']);
         $permissions = Permission::pluck('id','id')->all();

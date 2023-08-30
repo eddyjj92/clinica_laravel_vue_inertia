@@ -23,7 +23,7 @@ let form = useForm({
     confirmar_password: null,
     avatar: null,
     permisos: [],
-    rol: page.props.roles[0]
+    rol: null
 });
 
 let selectedRole = ref(null);
@@ -194,9 +194,9 @@ const setRole = (role) => {
                                             </el-select>
                                         </div>
                                         <div class="col-md-12 mb-4 row justify-content-start align-items-start">
-                                            <h3 class="text-center"><i class="fa fa-user-secret"></i> Permisos</h3>
+                                            <h4 class="text-center"><i class="fa fa-user-secret"></i> Rol {{form.rol !== null ? form.rol.name : 'de Usuario'}} <br><Link v-if="form.rol !== null" class="btn btn-success" :href="`/roles/${form.rol.id}/edit`"><i class="fa fa-edit"></i> Editar Permisos</Link></h4>
                                             <div v-for="permiso in permisos" class="col-md-3 form-check">
-                                                <input disabled :checked="form.rol.permissions.filter(perm => perm.id === permiso.id).length > 0" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
+                                                <input disabled :checked="form.rol !== null ? form.rol.permissions.filter(perm => perm.id === permiso.id).length > 0: false" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
                                                 <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>
                                             </div>
                                         </div>

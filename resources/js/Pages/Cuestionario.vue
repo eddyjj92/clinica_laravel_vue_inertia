@@ -456,7 +456,7 @@ const submit = async() =>{
 const redirigeLogin = () => {
     aceptar_politica.value = 'cancel';
     modal_politica.value.hide();
-    router.get('/login');
+    router.get('/logout');
 }
 
 const handleChange = async (uploadFile) => {

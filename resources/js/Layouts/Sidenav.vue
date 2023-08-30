@@ -50,6 +50,17 @@ onMounted(()=>{
                             <Link v-if="$page.props.auth.user !== null"  class="nav-link ripple" href="/empresas/create"><i class="fas fa-building-circle-check"></i>&nbsp Registrar Empresa</Link>
                         </nav>
                     </div>
+                    <a v-if="$page.props.auth.user !== null"  class="nav-link collapsed ripple" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSolicitudes" aria-expanded="false" aria-controls="collapseSolicitudes">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-medical"></i></div>
+                        Solicitudes
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseSolicitudes" aria-labelledby="headingTwo" data-bs-parent="#collapseSolicitudes">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <Link class="nav-link ripple" href="/solicitudes"><i class="fas fa-file-medical-alt"></i>&nbsp Ver Solicitudes</Link>
+                            <Link v-if="$page.props.auth.user !== null"  class="nav-link ripple" href="/solicitudes/create"><i class="fas fa-circle-plus"></i>&nbsp Registrar Solicitud</Link>
+                        </nav>
+                    </div>
                     <Link v-if="$page.props.auth.user !== null"  class="nav-link ripple" href="/cuestionarios">
                         <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
                         Cuestionarios

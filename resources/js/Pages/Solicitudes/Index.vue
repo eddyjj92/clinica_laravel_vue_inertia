@@ -9,7 +9,7 @@ import Buscador from "@/Components/Buscador.vue";
 const page = usePage();
 
 defineProps({
-    roles: Object
+    solicitudes: Object
 })
 
 let search = ref(null);
@@ -35,18 +35,18 @@ let dtConfig = {
     ],
     buttons: [
         {
-            text: '<i class="bi-shield-plus"> Registrar Rol de Usuario</i>',
+            text: '<i class="bi-person-add"> Registrar Solicitud</i>',
             action: function ( e, dt, node, config ) {
-                router.get('/roles/create');
+                router.get('/solicitudes/create');
             },
-            className: page.props.auth.user.roles[0].permissions.filter(value => value.id === 2).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
+            className: page.props.auth.user.roles[0].permissions.filter(value => value.id === 6).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
         },
     ],
 }
 
 onMounted(()=>{
     toggleNavbar()
-    $('#rolesTable').DataTable(dtConfig);
+    $('#solicitudesTable').DataTable(dtConfig);
 })
 
 let idProcessing = ref(null);
@@ -67,14 +67,14 @@ const options = {
             text: page.props.flash.message
         })
         idProcessing.value = null;
-        router.get('/roles');
+        router.get('/solicitudes');
     },
 }
 
-const deleteRole= (id) =>{
+const deleteUser = (id) =>{
     Swal.fire({
-        title: 'Eliminar Rol de Usuario',
-        text: "¿Está seguro q desea eliminar este Rol de Usuario?",
+        title: 'Eliminar Solicitud',
+        text: "¿Está seguro q desea eliminar esta solicitud?",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -84,7 +84,7 @@ const deleteRole= (id) =>{
     }).then((result) => {
         if (result.isConfirmed) {
             idProcessing.value = id;
-            router.delete(`/roles/${id}`, options)
+            router.delete(`/solicitudes/${id}`, options)
         }
     })
 }
@@ -112,46 +112,55 @@ const buscar = async(key) => {
             <main>
                 <Buscador :buscando="buscando" :result="result" :hidden="search === null || search === ''" />
                 <div class="container-fluid px-4" :hidden="search !== null && search !== ''">
-                    <h1 class="mt-4"><i class="fa fa-shield"></i> Roles y Permisos</h1>
+                    <h1 class="mt-4"><i class="fa fa-clinic-medical"></i> Solicitudes</h1>
                     <div class="card mb-4">
                         <div class="card-header">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item fw-bold"><Link class="text-decoration-none" href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</Link></li>
-                                <li class="breadcrumb-item active fw-bold"><i class="fa fa-users"></i> Roles y Permisos</li>
+                                <li class="breadcrumb-item active fw-bold"><i class="fa fa-book-medical"></i> Solicitudes</li>
                             </ol>
                         </div>
                         <div class="card-body table-responsive">
-                            <table class="table table-hover table-striped table-responsive w-100" id="rolesTable">
+                            <table class="table table-hover table-striped table-responsive w-100" id="solicitudesTable">
                                 <thead>
                                 <tr>
                                     <th hidden>Id</th>
-                                    <th>Rol de Usuario</th>
-                                    <th>Permisos</th>
-                                    <th>Fecha Registro</th>
+                                    <th>Solictante</th>
+                                    <th>Trabajadores</th>
+                                    <th>Fecha Solicitud</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="rol in roles" :key="rol.id">
-                                    <td hidden>{{ rol.id }}</td>
-                                    <td>
-                                        <div class="text-base fw-bold">{{ rol.name }}</div>
+                                <tr v-for="sol in solicitudes" :key="sol.id">
+                                    <td hidden>{{ sol.id }}</td>
+                                    <td style="width: 45%">
+                                        <div class="row justify-content-center align-items-center w-100">
+                                            <div class="col-lg-4 col-md-5">
+                                                <img class="rounded rounded-3 border border-2 border-primary w-100 h-100" :src="`/img/profile/${sol.user.avatar}`">
+                                            </div>
+                                            <div class="col-lg-8 col-md-7">
+                                                <div class="text-base fw-bold">{{ sol.user.nombre }}</div>
+                                                <div class="font-normal">{{ sol.user.email }}</div>
+                                                <div class="text-base fw-bold">{{ sol.user.empresa }}</div>
+                                                <div class="font-normal">{{ sol.user.cargo }}</div>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="row justify-content-between align-items-stretch w-100">
-                                            <span v-for="perm in rol.permissions" :class="`col-md-3 badge ${perm.name.includes('ver') ? 'text-bg-primary' : ''} ${perm.name.includes('registrar') ? 'text-bg-success' : ''} ${perm.name.includes('editar') ? 'text-bg-warning' : ''} ${perm.name.includes('eliminar') ? 'text-bg-danger' : ''} ${perm.name.includes('buscar') ? 'text-bg-info' : ''} my-1 mx-2`">
-                                                <i :class="`fa ${perm.name.includes('ver') ? 'fa-eye' : ''} ${perm.name.includes('registrar') ? 'fa-plus-circle' : ''} ${perm.name.includes('editar') ? 'fa-edit' : ''} ${perm.name.includes('eliminar') ? 'fa-trash' : ''} ${perm.name.includes('buscar') ? 'fa-search' : ''} small`"></i> {{ perm.name }}
-                                            </span>
+                                        <div class="row align-items-center justify-content-center w-100">
+                                            <div class="text-base fw-bold fs-1 col-12 text-center">{{ sol.trabajadores }}</div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="">
-                                            <div class="text-base fw-bold">{{ rol.created_at }}</div>
+                                            <div class="text-base fw-bold">{{ sol.created_at }}</div>
                                         </div>
                                     </td>
-                                    <td width="120px">
-                                        <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/roles/${rol.id}/edit`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Rol de Usuario ${rol.name}`"><i class="bi bi-pencil-square fs-6"></i></Link>
-                                        <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteRole(rol.id)" class="btn btn-danger m-1 rounded-3" :id="rol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Rol de Usuario ${rol.name}`"> <i :hidden="idProcessing !== null && idProcessing === rol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === rol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                    <td width="180px">
+                                        <Link :href="`/usuario/perfil/${sol.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${sol.nombre}`"><i class="bi bi-eye-fill fs-6"></i></Link>
+                                        <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${sol.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${sol.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                        <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteUser(sol.id)" class="btn btn-danger m-1 rounded-3" :id="sol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${sol.id}`"> <i :hidden="idProcessing !== null && idProcessing === sol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === sol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>
