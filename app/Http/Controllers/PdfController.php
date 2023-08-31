@@ -22,6 +22,7 @@ class PdfController extends Controller
             return PDF::loadView('pdf', $data)->setPaper('letter')
                 ->stream('archivo.pdf');
         }catch (\Exception $e){
+            dd($e);
             return redirect()->route('dashboard');
         }
 

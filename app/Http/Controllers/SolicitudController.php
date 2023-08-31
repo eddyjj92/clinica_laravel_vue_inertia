@@ -53,6 +53,7 @@ class SolicitudController extends Controller
         for($i = 0; $i < (int) $sol->trabajadores; $i++){
             $voucher = new Voucher();
             $voucher->voucher = uniqid('lcp');
+            $voucher->estado = 1;
             $voucher->solicitude_id = $sol->id;
             $voucher->save();
         }
@@ -62,9 +63,11 @@ class SolicitudController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Solicitud $solicitud)
+    public function show(Solicitud $solicitude)
     {
-        //
+        $solicitude->user;
+        $solicitude->vouchers;
+        return Inertia::render('Solicitudes/Ver', ['solicitud' => $solicitude]);
     }
 
     /**

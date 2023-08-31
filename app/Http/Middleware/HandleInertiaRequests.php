@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             // Synchronously...
             'appName' => config('app.name'),
+            'appUrl' => config('app.url'),
             // Lazily...
             'auth.user' => fn () => $request->user()
                 ? $user

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
             $table->string('voucher');
+            $table->integer('estado');
             $table->unsignedBigInteger('solicitude_id')->nullable();
             $table->foreign('solicitude_id')->references('id')->on('solicituds')->onDelete('cascade');
             $table->timestamps();

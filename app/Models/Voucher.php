@@ -12,7 +12,8 @@ class Voucher extends Model
     use HasFactory;
 
     protected $fillable = [
-        'voucher'
+        'voucher',
+        'estado'
     ];
 
     protected function serializeDate(DateTimeInterface $date): string

@@ -35,6 +35,8 @@ class CuestionarioController extends Controller
             $voucher = Voucher::where('voucher', $input['voucher'])->first();
             if(!$voucher) return back()->withErrors(['validacion' => 'El voucher ingresado no es válido']);
             session(['voucher' => $voucher]);
+            $voucher->estado = 2;
+            $voucher->save();
         }
         return Inertia::render('Cuestionario', ['empresas' => Empresa::all()]);
     }
@@ -61,6 +63,9 @@ class CuestionarioController extends Controller
 
         $cuestionario->data = $input;
         $cuestionario->save();
+        $voucher = session('voucher');
+        $voucher->estado = 3;
+        $voucher->save();
         session()->remove('voucher');
         return redirect()->route('login')->with('message', 'Los datos del cuestionarios han sido registrados de forma satisfactoria');
     }

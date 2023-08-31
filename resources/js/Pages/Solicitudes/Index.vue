@@ -125,7 +125,7 @@ const buscar = async(key) => {
                                 <thead>
                                 <tr>
                                     <th hidden>Id</th>
-                                    <th>Solictante</th>
+                                    <th>Solicitante</th>
                                     <th>Trabajadores</th>
                                     <th>Fecha Solicitud</th>
                                     <th>Acciones</th>
@@ -158,9 +158,9 @@ const buscar = async(key) => {
                                         </div>
                                     </td>
                                     <td width="180px">
-                                        <Link :href="`/usuario/perfil/${sol.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Perfil Usuario ${sol.nombre}`"><i class="bi bi-eye-fill fs-6"></i></Link>
-                                        <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${sol.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Usuario ${sol.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
-                                        <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteUser(sol.id)" class="btn btn-danger m-1 rounded-3" :id="sol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Usuario ${sol.id}`"> <i :hidden="idProcessing !== null && idProcessing === sol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === sol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                        <Link :href="`/solicitudes/${sol.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Ver Solicitud ${sol.id}`"><i class="bi bi-eye-fill fs-6"></i></Link>
+                                        <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${sol.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Solicitud ${sol.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                        <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteUser(sol.id)" class="btn btn-danger m-1 rounded-3" :id="sol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Solicitud ${sol.id}`"> <i :hidden="idProcessing !== null && idProcessing === sol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === sol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>
