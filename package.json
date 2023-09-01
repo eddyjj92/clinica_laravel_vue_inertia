@@ -20,6 +20,7 @@
         "bs-stepper": "^1.7.0",
         "element-plus": "^2.3.9",
         "qrcode-vue3": "^1.6.8",
-        "vue-router": "^4.2.4"
+        "vue-router": "^4.2.4",
+        "vue-window-size": "^2.0.0"
     }
 }

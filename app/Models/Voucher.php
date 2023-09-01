@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Voucher extends Model
 {
@@ -13,6 +14,7 @@ class Voucher extends Model
 
     protected $fillable = [
         'voucher',
+        'voucher_id',
         'estado'
     ];
 
@@ -24,5 +26,10 @@ class Voucher extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(Solicitud::class,'solicitude_id');
+    }
+
+    public function cuestionario(): HasOne
+    {
+        return $this->hasOne(Cuestionario::class);
     }
 }

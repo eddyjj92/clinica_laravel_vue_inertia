@@ -27,6 +27,7 @@ let form = useForm({
 });
 
 let selectedRole = ref(null);
+let selectedEmpresa= ref(null);
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -115,6 +116,10 @@ const setRole = (role) => {
     form.rol = page.props.roles.filter(rol => rol.id === role)[0];
 }
 
+const setEmpresa = (id) => {
+    form.empresa = id;
+}
+
 </script>
 
 <template>
@@ -174,8 +179,14 @@ const setRole = (role) => {
                                             <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"/>
                                         </div>
                                         <div class="form-floating col-md-4 mb-4">
-                                            <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
-                                                <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
+                                            <el-select
+                                                v-model="selectedEmpresa"
+                                                size="large" class="extra-large"
+                                                id="floatingInput3"
+                                                placeholder="Seleccionar Empresa"
+                                                @change="setEmpresa(selectedEmpresa)"
+                                            >
+                                                <el-option v-for="empresa in empresas" :key="empresa.id" :label="empresa.nombre" :value="empresa.id"/>
                                             </el-select>
                                         </div>
                                         <div class="form-floating col-md-4 mb-4">
@@ -186,7 +197,7 @@ const setRole = (role) => {
                                                 v-model="selectedRole"
                                                 size="large"
                                                 class="extra-large"
-                                                id="floatingInput3"
+                                                id="floatingInput4"
                                                 placeholder="Seleccionar Rol de Usuario"
                                                 @change="setRole(selectedRole)"
                                             >

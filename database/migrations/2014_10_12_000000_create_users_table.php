@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('empresa');
             $table->string('cargo');
             $table->string('avatar');
             $table->json('conexion');
+            $table->unsignedBigInteger('empresa_id')->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

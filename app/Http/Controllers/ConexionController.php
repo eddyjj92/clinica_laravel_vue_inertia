@@ -20,24 +20,6 @@ class ConexionController extends Controller
         $user->save();
     }
 
-    public static function verificaConectados()
-    {
-        $time = 3;
-        $date = time();
-        $limite = $date - $time * 60;
-        $usuariosConectados = 0;
-        $usuarios = User::all();
-        foreach ($usuarios as $usuario) {
-            $conexion = $usuario->conexion;
-            if (isset($conexion['fecha'])) {
-                if ((int)$conexion['fecha'] > $limite) {
-                    $usuariosConectados++;
-                }
-            }
-        }
-        return $usuariosConectados;
-    }
-
     public static function verificaConexionUsuario(User $user)
     {
         $time = 3;

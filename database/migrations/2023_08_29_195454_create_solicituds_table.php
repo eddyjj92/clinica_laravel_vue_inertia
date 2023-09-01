@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('solicituds', function (Blueprint $table) {
             $table->id();
             $table->integer('trabajadores');
-            $table->unsignedBigInteger('usuario_id')->nullable();
-            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('set null');
+            $table->integer('estado');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

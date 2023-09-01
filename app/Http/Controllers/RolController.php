@@ -17,6 +17,7 @@ class RolController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->can('ver-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para ver los roles de usuario']);
         $roles = Role::all();
         foreach ($roles as $role){
             $role->permissions->all();
@@ -29,6 +30,7 @@ class RolController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->can('crear-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para crear roles de usuario']);
         return Inertia::render('Roles/Registrar', ['permisos' => Permission::all()]);
     }
 
@@ -37,6 +39,7 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->can('crear-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para crear roles de usuario']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'nombre' => 'required',
@@ -64,6 +67,7 @@ class RolController extends Controller
      */
     public function edit(Role $role)
     {
+        if(!Auth::user()->can('editar-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para editar los roles de usuario']);
         $role->permissions->all();
         return Inertia::render('Roles/Editar', [
             'rol' => $role,
@@ -76,6 +80,7 @@ class RolController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if(!Auth::user()->can('editar-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para editar los roles de usuario']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'nombre' => 'required',
@@ -94,6 +99,7 @@ class RolController extends Controller
      */
     public function destroy(Role $role)
     {
+        if(!Auth::user()->can('eliminar-rol')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para eliminar los roles de usuario']);
         if($role->id == Auth::user()->roles[0]->id) return back()->withErrors(['validacion' => 'No puede eliminar su propio Rol de Usuario']);
         $role->delete();
         return redirect()->route('roles.index')->with('message', 'Rol de Usuario Eliminado con Éxito');

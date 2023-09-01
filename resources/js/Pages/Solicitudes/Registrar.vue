@@ -98,7 +98,7 @@ const selectUser = (id) => {
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
                                             <span><i class="fa fa-building-circle-arrow-right"></i> Empresa</span>
-                                            <el-input disabled v-model="selectedUser.empresa" type="text" size="large" class="extra-large" id="floatingInput5" placeholder="Empresa"/>
+                                            <el-input disabled v-model="selectedUser.empresa.nombre" type="text" size="large" class="extra-large" id="floatingInput5" placeholder="Empresa"/>
                                         </div>
                                         <div class="form-floating col-md-6 mb-4">
                                             <span><i class="fa fa-user-tag"></i> Cargo</span>

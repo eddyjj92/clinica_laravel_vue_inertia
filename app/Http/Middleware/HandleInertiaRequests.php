@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
         $user ? $user->roles[0]->permissions->all() : null;
+        $user ? $user->empresa : null;
 
         return array_merge(parent::share($request), [
             // Synchronously...

@@ -16,15 +16,18 @@ class PermissionSeeder extends Seeder
         //*php artisan db:seed --class=PermissionSeeder*//
         $permisos = [
             //Operaciones sobre tabla roles
-            'ver-rol','crear-rol','editar-rol','borrar-rol',
+            'ver-rol','crear-rol','editar-rol','eliminar-rol',
             //Operacions sobre tabla usuarios
-            'ver-usuario','crear-usuario','editar-usuario','borrar-usuario',
+            'ver-usuario','crear-usuario','editar-usuario','eliminar-usuario',
             //Operacions sobre tabla empresas
-            'registrar-empresa','editar-empresa','ver-empresa','eliminar-empresa',
+            'ver-empresa','crear-empresa','editar-empresa','eliminar-empresa',
+            //Operacions sobre tabla solicitudes
+            'ver-solicitud','crear-solicitud','editar-solicitud','eliminar-solicitud',
             //Operacions sobre tabla cuestionarios
-            'editar-cuestionario','ver-cuestionario','eliminar-cuestionario',
+            'ver-cuestionario','editar-cuestionario','eliminar-cuestionario',
             //Operacions sobre tabla búsquedas
-            'buscar-usuario', 'buscar-empresa', 'buscar-cuestionario'
+            'buscar-usuario', 'buscar-empresa', 'buscar-cuestionario',
+            'permisos-especiales'
         ];
 
         foreach($permisos as $permiso) {

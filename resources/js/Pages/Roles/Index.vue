@@ -138,10 +138,12 @@ const buscar = async(key) => {
                                         <div class="text-base fw-bold">{{ rol.name }}</div>
                                     </td>
                                     <td>
-                                        <div class="row justify-content-between align-items-stretch w-100">
-                                            <span v-for="perm in rol.permissions" :class="`col-md-3 badge ${perm.name.includes('ver') ? 'text-bg-primary' : ''} ${perm.name.includes('registrar') ? 'text-bg-success' : ''} ${perm.name.includes('editar') ? 'text-bg-warning' : ''} ${perm.name.includes('eliminar') ? 'text-bg-danger' : ''} ${perm.name.includes('buscar') ? 'text-bg-info' : ''} my-1 mx-2`">
-                                                <i :class="`fa ${perm.name.includes('ver') ? 'fa-eye' : ''} ${perm.name.includes('registrar') ? 'fa-plus-circle' : ''} ${perm.name.includes('editar') ? 'fa-edit' : ''} ${perm.name.includes('eliminar') ? 'fa-trash' : ''} ${perm.name.includes('buscar') ? 'fa-search' : ''} small`"></i> {{ perm.name }}
-                                            </span>
+                                        <div class="row justify-content-start align-items-stretch w-100">
+                                            <div v-for="perm in rol.permissions" class="col-md-3 p-0">
+                                                <span class="p-1" style="width: 95%" :class="`badge ${perm.name.includes('ver') ? 'text-bg-primary' : ''} ${perm.name.includes('crear') ? 'text-bg-success' : ''} ${perm.name.includes('editar') ? 'text-bg-warning' : ''} ${perm.name.includes('eliminar') ? 'text-bg-danger' : ''} ${perm.name.includes('buscar') ? 'text-bg-info' : ''} ${perm.name.includes('especiales') ? 'text-bg-dark' : ''} my-1 mx-2`">
+                                                    <i :class="`fa ${perm.name.includes('ver') ? 'fa-eye' : ''} ${perm.name.includes('crear') ? 'fa-plus-circle' : ''} ${perm.name.includes('editar') ? 'fa-edit' : ''} ${perm.name.includes('eliminar') ? 'fa-trash' : ''} ${perm.name.includes('buscar') ? 'fa-search' : ''} ${perm.name.includes('especiales') ? 'fa-desktop' : ''} small`"></i> {{ perm.name }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </td>
                                     <td>
@@ -149,7 +151,7 @@ const buscar = async(key) => {
                                             <div class="text-base fw-bold">{{ rol.created_at }}</div>
                                         </div>
                                     </td>
-                                    <td width="120px">
+                                    <td width="110px">
                                         <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/roles/${rol.id}/edit`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Rol de Usuario ${rol.name}`"><i class="bi bi-pencil-square fs-6"></i></Link>
                                         <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteRole(rol.id)" class="btn btn-danger m-1 rounded-3" :id="rol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Rol de Usuario ${rol.name}`"> <i :hidden="idProcessing !== null && idProcessing === rol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === rol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>

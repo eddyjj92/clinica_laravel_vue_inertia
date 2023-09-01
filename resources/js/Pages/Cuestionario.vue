@@ -633,15 +633,15 @@ const handleRemove = () => {
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.p_sistolica !== null && form.signos_vitales.p_sistolica !== ''">Presión Sistólica</span>
-                                                <el-input v-model="form.signos_vitales.p_sistolica" size="large" class="extra-large" type="text" id="floatingInput3" placeholder="Presión Sistólica"/>
+                                                <el-input-number v-model="form.signos_vitales.p_sistolica" min="0"  size="large" class="extra-large" id="floatingInput3" placeholder="Presión Sistólica"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.p_diastolica !== null && form.signos_vitales.p_diastolica !== ''">Presión Diastólica</span>
-                                                <el-input v-model="form.signos_vitales.p_diastolica" size="large" class="extra-large" type="text" id="floatingInput4" placeholder="Presión Diastólica"/>
+                                                <el-input-number v-model="form.signos_vitales.p_diastolica" min="0"  size="large" class="extra-large" id="floatingInput4" placeholder="Presión Diastólica"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.pulso !== null && form.signos_vitales.pulso !== ''">Pulso</span>
-                                                <el-input v-model="form.signos_vitales.pulso" type="text" size="large" class="extra-large" id="floatingInput5" placeholder="Pulso"/>
+                                                <el-input-number v-model="form.signos_vitales.pulso" min="0" size="large" class="extra-large" id="floatingInput5" placeholder="Pulso"/>
                                             </div>
                                             <div class="col-md-4 mb-4">
                                                 <span v-if="form.signos_vitales.temperatura !== null && form.signos_vitales.temperatura !== ''">Temperatura</span>

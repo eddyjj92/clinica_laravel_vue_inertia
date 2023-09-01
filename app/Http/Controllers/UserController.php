@@ -20,12 +20,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->can('ver-usuario')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para ver los usuario']);
         $users = User::all();
         foreach ($users as $user){
+            $user->empresa;
             $user->roles;
             $user->conectado = ConexionController::verificaConexionUsuario($user);
         }
-        return Inertia::render('Usuarios/Index', ['usuarios' => $users ]);
+        return Inertia::render('Usuarios/Index', ['usuarios' => $users]);
     }
 
     /**
@@ -33,6 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->can('crear-usuario')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos crear usuarios']);
         $roles = Role::all();
         foreach ($roles as $role){
             $role->permissions->all();
@@ -49,6 +52,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->can('crear-usuario')) return redirect('dashboard')->withErrors(['validacion' => 'No tiene permisos para crear usuarios']);
         $input = $request->all();
         $validator = Validator::make($input, [
             'correo' => 'required|email',
@@ -65,7 +69,7 @@ class UserController extends Controller
         $user = new User;
         $user->email = $input['correo'];
         $user->nombre = $input['nombre'];
-        $user->empresa = $input['empresa'];
+        $user->empresa_id = $input['empresa'];
         $user->cargo = $input['cargo'];
         $user->password = bcrypt($input['password']);
         $user->conexion = [];
@@ -98,6 +102,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if(!Auth::user()->can('editar-usuario')) $user = Auth::user();
         $user->roles[0]->permissions->all();
         $roles = Role::all();
         foreach ($roles as $role) {
@@ -130,7 +135,7 @@ class UserController extends Controller
         }
         $user->email = $input['correo'];
         $user->nombre = $input['nombre'];
-        $user->empresa = $input['empresa'];
+        $user->empresa_id = $input['empresa'];
         $user->cargo = $input['cargo'];
         if($request->file('avatar')){
             try {
@@ -148,7 +153,7 @@ class UserController extends Controller
         $user->save();
         $user->removeRole($user->roles[0]->id);
         $user->assignRole([$input['rol']['id']]);
-        return redirect()->route('listar_usuarios')->with('message', 'Usuario Actualizado con Éxito');
+        return redirect()->route(Auth::user()->can('editar-usuario') ? 'listar_usuarios' : 'dashboard')->with('message', 'Usuario Actualizado con Éxito');
     }
 
     /**

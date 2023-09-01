@@ -14,7 +14,8 @@ class Solicitud extends Model
 
     protected $fillable = [
         'usuario_id',
-        'trabajadores'
+        'trabajadores',
+        'estado'
     ];
 
     protected function serializeDate(DateTimeInterface $date): string
@@ -24,7 +25,7 @@ class Solicitud extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class,'usuario_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function vouchers(): HasMany

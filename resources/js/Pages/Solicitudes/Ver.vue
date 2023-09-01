@@ -6,6 +6,9 @@ import Navbar from "@/Layouts/Navbar.vue";
 import Sidenav from "@/Layouts/Sidenav.vue";
 import { genFileId } from 'element-plus'
 import QRCodeVue3 from "qrcode-vue3";
+import { useWindowSize } from 'vue-window-size';
+
+const size = useWindowSize();
 
 const props = defineProps({
     solicitud: Object
@@ -31,6 +34,7 @@ let dtConfig = {
 }
 let selectedQr = ref(null);
 let modal = ref(null);
+let screenWidth = ref(null);
 onMounted(()=>{
     const options = {
         backdrop: 'static'
@@ -75,8 +79,8 @@ const ocultarQr = () => {
                             <div class="card-header">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item fw-bold"><Link href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</Link></li>
-                                    <li class="breadcrumb-item active fw-bold"><Link href="/solicitudes"> <i class="fa fa-users"></i> Usuarios </Link></li>
-                                    <li class="breadcrumb-item active fw-bold"><i class="fa fa-user-cog"></i>Solicitud (<Link :href="`/solicitudes/${props.solicitud.id}/edit`">Editar</Link>)</li>
+                                    <li class="breadcrumb-item active fw-bold"><Link href="/solicitudes"> <i class="fa fa-book-medical"></i> Solicitudes </Link></li>
+                                    <li class="breadcrumb-item active fw-bold"><i class="fa fa-plus-circle"></i>Solicitud (<Link :href="`/solicitudes/${props.solicitud.id}/edit`">Editar</Link>)</li>
                                 </ol>
                             </div>
                             <div class="card-body table-responsive">
@@ -84,7 +88,7 @@ const ocultarQr = () => {
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th class="w-25">Propiedades</th>
+                                            <th>Propiedades</th>
                                             <td class="fw-bold">Datos</td>
                                         </tr>
                                     </thead>
@@ -100,7 +104,7 @@ const ocultarQr = () => {
                                                     <div class="col-lg-10 col-md-9">
                                                         <div class="text-base fw-bold">{{ props.solicitud.user.nombre }}</div>
                                                         <div class="font-normal">{{ props.solicitud.user.email }}</div>
-                                                        <div class="text-base fw-bold">{{ props.solicitud.user.empresa }}</div>
+                                                        <div class="text-base fw-bold">{{ props.solicitud.user.empresa.nombre }}</div>
                                                         <div class="font-normal">{{ props.solicitud.user.cargo }}</div>
                                                     </div>
                                                 </div>
@@ -108,20 +112,36 @@ const ocultarQr = () => {
                                         </tr>
                                         <tr>
                                             <th>2</th>
-                                            <th>Trabajadores</th>
-                                            <td>{{props.solicitud.trabajadores}}</td>
+                                            <th>Fecha Solicitud</th>
+                                            <td>{{props.solicitud.created_at}}</td>
+
                                         </tr>
                                         <tr>
                                             <th>3</th>
-                                            <th>Fecha Solicitud</th>
-                                            <td>{{props.solicitud.created_at}}</td>
+                                            <th>Trabajadores</th>
+                                            <td>
+                                                <div class="row justify-content-center align-items-center'">
+                                                    <div class="col-md-2 text-center">
+                                                        {{props.solicitud.trabajadores}}
+                                                    </div>
+                                                    <div class="text-base fw-bold col-md-10 text-center row justify-content-between align-items-center">
+                                                        <span v-if="$windowWidth > 800" style="font-size: 14px" class="col-md-3"><i class="fa fa-clipboard-user"></i> Cuestionarios <i class="fa fa-arrow-right"></i></span>
+                                                        <span v-else style="font-size: 14px" class="col-md-3"><i class="fa fa-clipboard-user"></i> Cuestionarios <i class="fa fa-arrow-down"></i></span>
+                                                        <div class="col-md-3"><span style="font-size: 10px" class="badge bg-secondary w-75"><i class="fa fa-question-circle"></i> Pendiente: {{props.solicitud.vouchers.filter(voucher => voucher.estado === 1).length}}</span></div>
+                                                        <div class="col-md-3"><span style="font-size: 10px" class="badge bg-info w-75"><i class="fa fa-info-circle"></i> En Proceso: {{props.solicitud.vouchers.filter(voucher => voucher.estado === 2).length}}</span></div>
+                                                        <div class="col-md-3"><span style="font-size: 10px" class="badge bg-success w-75"><i class="fa fa-check-circle"></i> Terminado: {{props.solicitud.vouchers.filter(voucher => voucher.estado === 3).length}}</span></div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>4</th>
                                             <th>Vouchers</th>
                                             <td>
-                                                <div class="row justify-content-between align-items-center w-100">
-                                                    <span v-for="voucher in props.solicitud.vouchers" @click="mostrarQr(voucher.voucher)" :class="`btn ${voucher.estado === 1 ? 'btn-outline-secondary' : ''} ${voucher.estado === 2 ? 'btn-outline-primary' : ''} ${voucher.estado === 3 ? 'btn-outline-success' : ''} rounded rounded-4 m-1 col-md-3`"  :key="voucher.id"><i :class="`fa ${voucher.estado === 1 ? 'fa-question-circle' : ''} ${voucher.estado === 2 ? 'fa-info-circle' : ''} ${voucher.estado === 3 ? 'fa-check-circle' : ''}`"></i> {{voucher.voucher}}</span>
+                                                <div class="row justify-content-start align-items-start w-100">
+                                                    <div v-for="voucher in props.solicitud.vouchers" class="col-md-3">
+                                                        <span @click="voucher.estado === 3 ? router.get(`/cuestionarios/${voucher.cuestionario.id}`) : mostrarQr(voucher.voucher)" :class="`m-1 btn ${voucher.estado === 1 ? 'btn-outline-secondary' : ''} ${voucher.estado === 2 ? 'btn-outline-primary' : ''} ${voucher.estado === 3 ? 'btn-outline-success' : ''} rounded rounded-4`"  :key="voucher.id"><i :class="`fa ${voucher.estado === 1 ? 'fa-question-circle' : ''} ${voucher.estado === 2 ? 'fa-info-circle' : ''} ${voucher.estado === 3 ? 'fa-check-circle' : ''}`"></i> {{voucher.voucher}}</span>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>

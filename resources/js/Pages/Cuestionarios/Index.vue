@@ -121,8 +121,9 @@ const deleteCuestionario = (id) =>{
                                             <div class="text-base fw-bold">{{ cuest.created_at }}</div>
                                         </div>
                                     </td>
-                                    <td width="160px">
+                                    <td>
                                         <a :href="`/certificado/${cuest.id}`" target="_blank" class="btn btn-info m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Generar Certificado Médico ${cuest.id}`"><i class="fa fa-file-pdf fs-6 text-white"></i></a>
+                                        <Link :href="`/cuestionarios/${cuest.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Ver Cuestionario ${cuest.id}`"><i class="fa fa-eye fs-6 text-white"></i></Link>
                                         <Link :href="`/cuestionarios/${cuest.id}/edit`" class="btn btn-primary m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Revisión Cuestionario ${cuest.id}`"><i class="fa fa-user-doctor fs-6 text-white"></i></Link>
                                         <button @click="deleteCuestionario(cuest.id)" class="btn btn-danger m-1 rounded-3" :id="cuest.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Cuestionario ${cuest.id}`"> <i :hidden="idProcessing !== null && idProcessing === cuest.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === cuest.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
                                     </td>

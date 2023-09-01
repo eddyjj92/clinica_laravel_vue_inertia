@@ -18,7 +18,7 @@ const emit = defineEmits(['update:modelValue']);
 let form = useForm({
     correo: props.usuario.email,
     nombre: props.usuario.nombre,
-    empresa: props.usuario.empresa,
+    empresa: props.usuario.empresa_id,
     cargo: props.usuario.cargo,
     rol: props.usuario.roles[0],
     avatar: null,
@@ -26,6 +26,7 @@ let form = useForm({
 });
 
 let selectedRole = ref(props.usuario.roles[0].id);
+let selectedEmpresa = ref(props.usuario.empresa_id);
 const upload = ref();
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -133,6 +134,10 @@ const setRole = (role) => {
     filterPerm();
 }
 
+const setEmpresa = (id) => {
+    form.empresa = id;
+}
+
 </script>
 
 <template>
@@ -192,8 +197,14 @@ const setRole = (role) => {
                                             <el-input v-model="form.nombre" type="text" size="large" class="extra-large" id="floatingInput2" placeholder="Nombre y Apellidos"><template #prepend>Nombre</template></el-input>
                                         </div>
                                         <div class="form-floating col-md-4 mb-4">
-                                            <el-select v-model="form.empresa" size="large" class="extra-large" id="floatingInput3" placeholder="Seleccionar Empresa">
-                                                <el-option v-for="empresa in empresas" :value="empresa.nombre">{{empresa.nombre}}</el-option>
+                                            <el-select
+                                                v-model="selectedEmpresa"
+                                                size="large" class="extra-large"
+                                                id="floatingInput3"
+                                                placeholder="Seleccionar Empresa"
+                                                @change="setEmpresa(selectedEmpresa)"
+                                            >
+                                                <el-option v-for="empresa in empresas" :key="empresa.id" :label="empresa.nombre" :value="empresa.id"/>
                                             </el-select>
                                         </div>
                                         <div class="form-floating col-md-4 mb-4">
@@ -212,7 +223,7 @@ const setRole = (role) => {
                                             </el-select>
                                         </div>
                                         <div class="col-md-12 mb-4 row justify-content-start align-items-start">
-                                            <h4 class="text-center"><i class="fa fa-user-secret"></i> Rol {{form.rol.name}}<br><Link class="btn btn-success" :href="`/roles/${form.rol.id}/edit`"><i class="fa fa-edit"></i> Editar Permisos</Link></h4>
+                                            <h4 class="text-center"><i class="fa fa-user-secret"></i> Rol {{form.rol.name}}<br><Link v-if="$page.props.auth.user.roles[0].permissions.filter(perm => perm.id === 3).length > 0" class="btn btn-success" :href="`/roles/${form.rol.id}/edit`"><i class="fa fa-edit"></i> Editar Permisos</Link></h4>
                                             <div v-for="permiso in permisos" class="col-md-3 form-check">
                                                 <input disabled @change="validaPermiso(permiso.id)" :checked="form.permisos.includes(permiso.id)" type="checkbox" class="form-check-input" :id="`permiso${permiso.id}`">
                                                 <label class="form-check-label" :for="`permiso${permiso.id}`">{{permiso.name}}</label>

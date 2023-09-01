@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuestionario;
 use App\Models\Solicitud;
 use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -16,9 +18,11 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitud::all();
+
+        $solicitudes = Auth::user()->can('ver-solicitud') ? Solicitud::all() : Auth::user()->solicituds;
         foreach ($solicitudes as $solicitud){
             $solicitud->user;
+            $solicitud->vouchers;
         }
         return Inertia::render('Solicitudes/Index', [
             'solicitudes' => $solicitudes,
@@ -47,8 +51,9 @@ class SolicitudController extends Controller
             return back()->withErrors(['validacion' => 'Ha ocurrido un error '.$validator->errors()]);
         }
         $sol = new Solicitud();
-        $sol->usuario_id = $input['usuario'];
+        $sol->user_id = $input['usuario'];
         $sol->trabajadores = $input['trabajadores'];
+        $sol->estado = 1;
         $sol->save();
         for($i = 0; $i < (int) $sol->trabajadores; $i++){
             $voucher = new Voucher();
@@ -65,8 +70,12 @@ class SolicitudController extends Controller
      */
     public function show(Solicitud $solicitude)
     {
-        $solicitude->user;
+        $solicitude->user->empresa;
         $solicitude->vouchers;
+        foreach ($solicitude->vouchers as $voucher) {
+            $voucher->cuestionario;
+        }
+
         return Inertia::render('Solicitudes/Ver', ['solicitud' => $solicitude]);
     }
 

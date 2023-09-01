@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Empresa;
 use App\Models\Permiso;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -19,10 +20,14 @@ class AdminUserSeeder extends Seeder
     {
         /*Comando para Correr el Seeder*/
         /*php artisan db:seed --class=AdminUserSeeder*/
+        $empresa = new Empresa();
+        $empresa->nombre = 'Laboratorio Clícino y Patológico';
+        $empresa->save();
+
         $user = User::create([
             'nombre' => 'Eddy Javier Jorge Herrera',
             'email' => 'eddyjj92@gmail.com',
-            'empresa' => 'Laboratorio Clínico y Patológico',
+            'empresa_id' => $empresa->id,
             'cargo' => 'Desarrollador',
             'avatar' => 'user.png',
             'password' => bcrypt('Ej8547/*-'),

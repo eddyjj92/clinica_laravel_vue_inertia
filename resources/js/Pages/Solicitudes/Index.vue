@@ -39,7 +39,7 @@ let dtConfig = {
             action: function ( e, dt, node, config ) {
                 router.get('/solicitudes/create');
             },
-            className: page.props.auth.user.roles[0].permissions.filter(value => value.id === 6).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
+            className: page.props.auth.user.roles[0].permissions.filter(value => value.id === 14).length > 0 ? `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white` : `text-white bg-primary fw-bold border-black border-2 border ripple ripple-surface-white disabled`,
         },
     ],
 }
@@ -132,37 +132,43 @@ const buscar = async(key) => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="sol in solicitudes" :key="sol.id">
-                                    <td hidden>{{ sol.id }}</td>
-                                    <td style="width: 45%">
-                                        <div class="row justify-content-center align-items-center w-100">
-                                            <div class="col-lg-4 col-md-5">
-                                                <img class="rounded rounded-3 border border-2 border-primary w-100 h-100" :src="`/img/profile/${sol.user.avatar}`">
+                                    <tr v-for="sol in solicitudes" :key="sol.id">
+                                        <td hidden>{{ sol.id }}</td>
+                                        <td style="width: 45%">
+                                            <div class="row justify-content-center align-items-center w-100">
+                                                <div class="col-lg-4 col-md-5">
+                                                    <img class="rounded rounded-3 border border-2 border-primary w-100 h-100" :src="`/img/profile/${sol.user.avatar}`">
+                                                </div>
+                                                <div class="col-lg-8 col-md-7">
+                                                    <div class="text-base fw-bold">{{ sol.user.nombre }}</div>
+                                                    <div class="font-normal">{{ sol.user.email }}</div>
+                                                    <div class="text-base fw-bold">{{ sol.user.empresa }}</div>
+                                                    <div class="font-normal">{{ sol.user.cargo }}</div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-7">
-                                                <div class="text-base fw-bold">{{ sol.user.nombre }}</div>
-                                                <div class="font-normal">{{ sol.user.email }}</div>
-                                                <div class="text-base fw-bold">{{ sol.user.empresa }}</div>
-                                                <div class="font-normal">{{ sol.user.cargo }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="row align-items-center justify-content-center w-100">
+                                                <div class="text-base fw-bold fs-5 col-12 text-center">{{ sol.trabajadores }}</div>
+                                                <div class="text-base fw-bold col-12 text-center row justify-content-between align-items-center">
+                                                    <span style="font-size: 11px" class="col-12"><i class="fa fa-clipboard-user"></i> Cuestionario</span>
+                                                    <span style="font-size: 10px" class="col-12 badge bg-secondary"><i class="fa fa-question-circle"></i> Pendiente: {{sol.vouchers.filter(voucher => voucher.estado === 1).length}}</span>
+                                                    <span style="font-size: 10px" class="col-12 badge bg-info"><i class="fa fa-info-circle"></i> En Proceso: {{sol.vouchers.filter(voucher => voucher.estado === 2).length}}</span>
+                                                    <span style="font-size: 10px" class="col-12 badge bg-success"><i class="fa fa-check-circle"></i> Terminado: {{sol.vouchers.filter(voucher => voucher.estado === 3).length}}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="row align-items-center justify-content-center w-100">
-                                            <div class="text-base fw-bold fs-1 col-12 text-center">{{ sol.trabajadores }}</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="">
-                                            <div class="text-base fw-bold">{{ sol.created_at }}</div>
-                                        </div>
-                                    </td>
-                                    <td width="180px">
-                                        <Link :href="`/solicitudes/${sol.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Ver Solicitud ${sol.id}`"><i class="bi bi-eye-fill fs-6"></i></Link>
-                                        <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${sol.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Solicitud ${sol.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
-                                        <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteUser(sol.id)" class="btn btn-danger m-1 rounded-3" :id="sol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Solicitud ${sol.id}`"> <i :hidden="idProcessing !== null && idProcessing === sol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === sol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <div class="text-base fw-bold">{{ sol.created_at }}</div>
+                                            </div>
+                                        </td>
+                                        <td width="180px">
+                                            <Link :href="`/solicitudes/${sol.id}`" class="btn btn-success m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Ver Solicitud ${sol.id}`"><i class="bi bi-eye-fill fs-6"></i></Link>
+                                            <Link :class="$page.props.auth.user.roles[0].permissions.filter(value => value.id === 7).length > 0 ? 'btn-info' : 'disabled btn-secondary'" :href="`/usuario/editar/${sol.id}`" class="btn m-1 rounded-3" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Editar Solicitud ${sol.id}`"><i class="bi bi-pencil-square fs-6"></i></Link>
+                                            <button :disabled="!$page.props.auth.user.roles[0].permissions.filter(value => value.id === 8).length > 0" @click="deleteUser(sol.id)" class="btn btn-danger m-1 rounded-3" :id="sol.id" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="`Eliminar Solicitud ${sol.id}`"> <i :hidden="idProcessing !== null && idProcessing === sol.id"  class="bi bi-trash fs-6"></i> <span :hidden="!(idProcessing === sol.id)" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span></button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

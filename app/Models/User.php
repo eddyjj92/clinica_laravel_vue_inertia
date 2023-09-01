@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,8 +55,14 @@ class User extends Authenticatable
         return $date->format('d/m/Y');
     }
 
-    public function solicitudes(): HasMany
+    public function solicituds(): HasMany
     {
-        return $this->hasMany(Solicitud::class);
+        return $this->hasMany(Solicitud::class,'user_id');
     }
+
+    public function empresa(): BelongsTo
+    {
+        return $this->belongsTo(Empresa::class,'empresa_id');
+    }
+
 }

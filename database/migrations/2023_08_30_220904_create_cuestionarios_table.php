@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('cuestionarios', function (Blueprint $table) {
             $table->id();
             $table->string('paciente');
+            $table->integer('estado');
             $table->json('data');
+            $table->unsignedBigInteger('voucher_id')->nullable();
+            $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade');
             $table->timestamps();
         });
     }

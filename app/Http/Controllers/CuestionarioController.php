@@ -6,6 +6,7 @@ use App\Models\Cuestionario;
 use App\Models\Empresa;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -16,7 +17,21 @@ class CuestionarioController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Cuestionarios/Index', ['cuestionarios' => Cuestionario::all()]);
+        if(Auth::user()->can('ver-cuestionario')){
+            $cuestionarios =  Cuestionario::all();
+        }else{
+            $cuestionarios = [];
+            $solicitudes = Auth::user()->solicituds;
+            foreach ($solicitudes as $solicitude){
+                $vouchers = $solicitude->vouchers;
+                foreach($vouchers as $voucher){
+                    if($voucher->cuestionario){
+                        array_push($cuestionarios,$voucher->cuestionario);
+                    }
+                }
+            }
+        }
+        return Inertia::render('Cuestionarios/Index', ['cuestionarios' => $cuestionarios]);
     }
 
     /**
@@ -34,7 +49,7 @@ class CuestionarioController extends Controller
             }
             $voucher = Voucher::where('voucher', $input['voucher'])->first();
             if(!$voucher) return back()->withErrors(['validacion' => 'El voucher ingresado no es válido']);
-            session(['voucher' => $voucher]);
+            session(['voucher' => $voucher->id]);
             $voucher->estado = 2;
             $voucher->save();
         }
@@ -62,8 +77,10 @@ class CuestionarioController extends Controller
         }
 
         $cuestionario->data = $input;
+        $cuestionario->estado = 1;
+        $voucher = Voucher::find(session('voucher'));
+        $cuestionario->voucher_id = $voucher->id;
         $cuestionario->save();
-        $voucher = session('voucher');
         $voucher->estado = 3;
         $voucher->save();
         session()->remove('voucher');
@@ -75,7 +92,10 @@ class CuestionarioController extends Controller
      */
     public function show(Cuestionario $cuestionario)
     {
-        //
+        return Inertia::render('Cuestionarios/Ver', [
+            'cuestionario' => $cuestionario,
+            'empresas' => Empresa::all()
+        ]);
     }
 
     /**
