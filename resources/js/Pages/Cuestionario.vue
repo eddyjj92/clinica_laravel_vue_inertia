@@ -118,6 +118,8 @@ let form = useForm({
         patologias_familia: formGuardado.value !== null ? formGuardado.value.discapacidades.patologias : [],
     },
     avatar: null,
+    resultados_analisis: null,
+    evaluacion: null
 })
 let discapacidad_visual_otros = ref(null);
 let aceptar_politica = ref(JSON.parse(localStorage.getItem('aceptar_politica')) === true ? true: false);

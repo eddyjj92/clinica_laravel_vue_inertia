@@ -19,7 +19,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 1000,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -61,7 +61,7 @@ const save = async() => {
                 message: `<span class="text-success">${response.data.message}</span>`,
                 offset: 0,
                 position: 'top-right',
-                duration: 1000,
+                duration: 2000,
                 icon: 'Edit',
                 customClass: 'text-success'
             })
@@ -603,6 +603,32 @@ const save = async() => {
                                         <th>69</th>
                                         <th>Empastes</th>
                                         <td><el-input @change="save" size="large" v-model="form.discapacidades.empastes" type="text"/></td>
+                                    </tr>
+                                    <tr class="bg-primary">
+                                        <th>80</th>
+                                        <th></th>
+                                        <th></th>
+                                        <td class="fw-bold text-white w-100">Evaluación Médica</td>
+                                    </tr>
+                                    <tr>
+                                        <th>81</th>
+                                        <th>70</th>
+                                        <th>Resultados Análisis</th>
+                                        <td><el-input @change="save" size="large" v-model="form.resultados_analisis" type="textarea" :rows="4" placeholder="Resultados de los Análisis" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>82</th>
+                                        <th>71</th>
+                                        <th>Evaluación Médica</th>
+                                        <td>
+                                            <div class="mb-2 flex items-center text-sm">
+                                                <el-radio-group @change="save" v-model="form.evaluacion" class="ml-4">
+                                                    <el-radio label="apto" size="large" border>Apto</el-radio>
+                                                    <el-radio label="apto con recomendaciones" size="large" border>Apto con recomendaciones</el-radio>
+                                                    <el-radio label="no apto" size="large" border>No Apto</el-radio>
+                                                </el-radio-group>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
